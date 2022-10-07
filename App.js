@@ -8,6 +8,9 @@ import HomeScreen from './screens/Home';
 import LoginScreen from './screens/Login';
 import RegisterScreen from './screens/Register';
 import WelcomeScreen from './screens/Welcome';
+import AppointmentProcedureScreen from './screens/AppointmentProcedure';
+import AppointmentDateAndTimeScreen from './screens/AppointmentDateAndTime';
+import AppointmentSelectPetScreen from './screens/AppointmentSelectPet';
 
 import TabNavigator from './navs/TabNavigator';
 
@@ -51,6 +54,9 @@ const MyStack = () => {
           headerShown: false
               
         }} />
+        <Stack.Screen name="AppointmentProcedure" component={ AppointmentProcedureScreen } options = {{ title: 'Select Procedure' }} />
+        <Stack.Screen name="AppointmentDateAndTime" component={ AppointmentDateAndTimeScreen } options = {{ title: 'Select Date and Time' }} />
+        <Stack.Screen name="AppointmentSelectPet" component={ AppointmentSelectPetScreen } options = {{ title: 'Select Pet' }} />
       </Stack.Navigator>
     </NavigationContainer>
   );
