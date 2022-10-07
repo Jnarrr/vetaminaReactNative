@@ -1,15 +1,18 @@
 import React from 'react';
 import { View, Text, Button, Image } from 'react-native';
-import { NavigationContainer } from '@react-navigation/native';
+import { NavigationContainer, TabActions } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
 import HomeScreen from './screens/Home';
 import LoginScreen from './screens/Login';
 import RegisterScreen from './screens/Register';
 import WelcomeScreen from './screens/Welcome';
 
+import TabNavigator from './navs/TabNavigator';
 
 const Stack = createNativeStackNavigator();
+const Tab = createBottomTabNavigator();
 
 const MyStack = () => {
   return (
@@ -34,7 +37,7 @@ const MyStack = () => {
               title="Info"
               color="#000"></Button>) }} />
         <Stack.Screen name="Register" component={ RegisterScreen } options = {{ headerShown: false }} />
-        <Stack.Screen name="Home" component={ HomeScreen } options = {{ 
+        <Stack.Screen name="Home" component={ TabNavigator } options = {{ 
           headerRight: () => (
               <Button
               onPress={() => alert('This is a button!')}
@@ -45,6 +48,7 @@ const MyStack = () => {
             onPress={() => alert('This is a button!')}
             title="Profile"
             color="#000"></Button>),
+          headerShown: false
               
         }} />
       </Stack.Navigator>
