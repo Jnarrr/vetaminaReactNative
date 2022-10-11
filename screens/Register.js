@@ -16,24 +16,26 @@ import {
 } from 'react-native';
 
 const RegisterScreen = ( {navigation} ) => {
-    const [name, setName] = useState('');
-    const [checkValidName, setCheckValidName] = useState(false);
     const [date, setDate] = useState('');
     const [checkValidDate, setCheckValidDate] = useState(false);
     const [username, setUsername] = useState('');
     const [checkValidUsername, setCheckValidUsername] = useState(false);
     const [password, setPassword] = useState('');
     const [checkValidPassword, setCheckValidPassword] = useState(false);
+    const [confirmPassword, setConfirmPassword] = useState('');
+    const [checkValidConfirmPassword, setCheckValidConfirmPassword] = useState(false);
+    const [email, setEmail] = useState('');
+    const [checkValidEmail, setCheckValidEmail] = useState(false);
     const [mobileNum, setMobileNum] = useState('');
     const [checkValidMobileNumber, setCheckValidMobileNumber] = useState(false);
 
-    const handleCheckName = text => {
-        if (text.length < 1){
-                setCheckValidName(true);
-            }else{
-                setCheckValidName(false);
-            }
+    const handleCheckUsername = text => {
+        if (text.length < 8){
+            setCheckValidUsername(true);
+        }else{
+            setCheckValidUsername(false);
         }
+    }
 
     const handleCheckDate = text => {
         let regex = /^(0[1-9]|1[012])[- /.](0[1-9]|[12][0-9]|3[01])[-/.](19|20)\d\d$/;
@@ -45,19 +47,29 @@ const RegisterScreen = ( {navigation} ) => {
         }
     }
 
-    const handleCheckUsername = text => {
-        if (text.length < 8){
-            setCheckValidUsername(true);
-        }else{
-            setCheckValidUsername(false);
-        }
-    }
-
     const handleCheckPassword = text => {
         if (text.length < 8){
             setCheckValidPassword(true);
         }else{
             setCheckValidPassword(false);
+        }
+    }
+
+    const handleCheckConfirmPassword = (text, password) => {
+        if (text != password){
+            setCheckValidConfirmPassword(true);
+        }else{
+            setCheckValidConfirmPassword(false);
+        }
+    }
+
+    const handleCheckEmail = text => {
+        let regex = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+        setEmail(text)
+        if(regex.test(text)){
+            setCheckValidEmail(false);
+        } else {
+            setCheckValidEmail(true);
         }
     }
 
@@ -71,14 +83,15 @@ const RegisterScreen = ( {navigation} ) => {
 
     const handleUserValidation = () => {
     errors = [];
-    if ( name.length == 0 ){
-        errors.push("Name is Required!")
-    }
 
     let regex = /^(0[1-9]|1[012])[- /.](0[1-9]|[12][0-9]|3[01])[-/.](19|20)\d\d$/;
     setDate(date)
     if (regex.test(date) == false){
         errors.push("Invalid Date format")
+    }
+    let regex2 = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    if(regex2.test(email) == false){
+        errors.push("Invalid Email format")
     }
     if (username.length < 8){
         errors.push("Username should have at least 8 characters")
@@ -90,7 +103,7 @@ const RegisterScreen = ( {navigation} ) => {
         errors.push("Mobile number should be valid 11 digit number")
     }
     if (errors.length == 0){
-        Alert.alert("Success!", "Name: " + name + "\nBirthDate: " + date + "\nUsername: " + username + "\nMobile Number: " + mobileNum)
+        Alert.alert("Success!", "username: " + username + "\nBirthDate: " + date + "\nEmail: " + email + "\nMobile Number: " + mobileNum)
         navigation.navigate('Login')
     }else{
         Alert.alert("Error!", errors.join('\n'))
@@ -112,14 +125,14 @@ const RegisterScreen = ( {navigation} ) => {
         
             <TextInput 
             style = { styles.input }
-            onChangeText = { (text) => [handleCheckName(text), setName(text)] }
-            placeholder='Enter Name'
+            onChangeText = { (text) => [handleCheckUsername(text), setUsername(text)] }
+            placeholder='Enter Username'
             placeholderTextColor= 'gray'
             maxLength={15} 
             />
             <Image source = { require('../images/userIcon.png')} style = {styles.userIcon}/>
             {
-            checkValidName ? (
+            checkValidUsername ? (
                 <Text style = {styles.textFailed}>Name is Required</Text>
                 ) : (
                 <Text style = {styles.textFailed}> </Text>
@@ -128,7 +141,7 @@ const RegisterScreen = ( {navigation} ) => {
 
             <TextInput 
             style = { styles.input }
-            placeholder = 'Enter BirthDate'
+            placeholder = 'Enter Birthdate'
             placeholderTextColor= 'gray'
             maxLength={10}
             onChangeText = { (text) => [handleCheckDate(text), setDate(text)] } />
@@ -136,21 +149,6 @@ const RegisterScreen = ( {navigation} ) => {
             {
             checkValidDate ? (
                 <Text style = {styles.textFailed}>BirthDate format should be MM/DD/YYYY</Text>
-                ) : (
-                <Text style = {styles.textFailed}> </Text>
-            )
-            }
-
-            <TextInput 
-            style = { styles.input }
-            placeholder = 'Enter Username'
-            placeholderTextColor= 'gray'
-            maxLength={15}
-            onChangeText = { (text) => [handleCheckUsername(text), setUsername(text)] } />
-            <Image source = { require('../images/userIcon.png')} style = {styles.userIcon}/>
-            {
-            checkValidUsername ? (
-                <Text style = {styles.textFailed}>Username should be at least 8 Characters</Text>
                 ) : (
                 <Text style = {styles.textFailed}> </Text>
             )
@@ -168,6 +166,38 @@ const RegisterScreen = ( {navigation} ) => {
             {
             checkValidPassword ? (
                 <Text style = {styles.textFailed}>Password should be at least 8 Characters</Text>
+                ) : (
+                <Text style = {styles.textFailed}> </Text>
+            )
+            }
+
+            <TextInput 
+            style = { styles.input }
+            placeholder = 'Confirm Password'
+            placeholderTextColor= 'gray'
+            maxLength={15}
+            secureTextEntry = {true}
+            onChangeText = { (text) => [handleCheckConfirmPassword(text, password), setConfirmPassword(text)] } />
+            <Image source = { require('../images/password.png')} style = {styles.userIcon}/>
+            {
+            checkValidConfirmPassword ? (
+                <Text style = {styles.textFailed}>Password and Confirm Password isnt the same</Text>
+                ) : (
+                <Text style = {styles.textFailed}> </Text>
+            )
+            }
+
+            <TextInput 
+            style = { styles.input }
+            onChangeText = { (text) => [handleCheckEmail(text), setEmail(text)] }
+            placeholder='Enter Email'
+            placeholderTextColor= 'gray'
+            maxLength={15} 
+            />
+            <Image source = { require('../images/email.png')} style = {styles.email}/>
+            {
+            checkValidEmail ? (
+                <Text style = {styles.textFailed}>Invalid Email format</Text>
                 ) : (
                 <Text style = {styles.textFailed}> </Text>
             )
@@ -210,6 +240,12 @@ const styles = StyleSheet.create({
     width:20,
     height:20,
     marginLeft: 300,
+    marginTop: -35
+    },
+    email: {
+    width:25,
+    height:20,
+    marginLeft: 295,
     marginTop: -35
     },
     textFailed: {

@@ -1,5 +1,6 @@
-import React from 'react';
-import {View, Button, Text} from 'react-native';
+import React, { useState } from 'react';
+import {View, Button, Text, StyleSheet} from 'react-native';
+import CoffeeAutonomous from "../components/CoffeeAutonomous";
 
 const SearchScreen = ( {navigation} ) => {
     return(
@@ -9,5 +10,6 @@ const SearchScreen = ( {navigation} ) => {
         </View>
     );
 };
+
 
 export default SearchScreen;

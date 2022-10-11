@@ -12,7 +12,7 @@ import AppointmentProcedureScreen from './screens/AppointmentProcedure';
 import AppointmentDateAndTimeScreen from './screens/AppointmentDateAndTime';
 import AppointmentSelectPetScreen from './screens/AppointmentSelectPet';
 
-import TabNavigator from './navs/TabNavigator';
+import TabNavigator from './navs/tabNavigator';
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -34,13 +34,15 @@ const MyStack = () => {
           }}
           
         />
-        <Stack.Screen name="Login" component={ LoginScreen } options = {{ headerRight: () => (
+        <Stack.Screen name="Login" component={ LoginScreen } options = {{ 
+          headerRight: () => (
               <Button
               onPress={() => alert('This is a button!')}
               title="Info"
-              color="#000"></Button>) }} />
+              color="#000"></Button>),
+              headerShown: false }} />
         <Stack.Screen name="Register" component={ RegisterScreen } options = {{ headerShown: false }} />
-        <Stack.Screen name="Home" component={ TabNavigator } options = {{ 
+        <Stack.Screen name="tabNavigator" component={ TabNavigator } options = {{ 
           headerRight: () => (
               <Button
               onPress={() => alert('This is a button!')}
