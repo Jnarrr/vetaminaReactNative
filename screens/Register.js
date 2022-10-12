@@ -104,7 +104,7 @@ const RegisterScreen = ( {navigation} ) => {
     }
     if (errors.length == 0){
         Alert.alert("Success!", "username: " + username + "\nBirthDate: " + date + "\nEmail: " + email + "\nMobile Number: " + mobileNum)
-        navigation.navigate('Login')
+        navigation.navigate('Welcome')
     }else{
         Alert.alert("Error!", errors.join('\n'))
     }
