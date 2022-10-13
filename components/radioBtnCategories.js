@@ -1,11 +1,16 @@
 import React, { useState } from 'react';
 import { View, Text, StyleSheet, Pressable} from 'react-native';
+const data = [
+    { value: 'Nearby' },
+    { value: 'Popular' },
+    { value: 'Last Visited' },
+];
 
-export default function RadioButton({ data, onSelect }) {
+export default function RadioButton({ data }) {
     const [userOption, setUserOption] = useState(null);
+    
 
     return (
-    <View>
     <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginTop: 10 }}>
         {data.map((item) => {
             return(
@@ -19,7 +24,6 @@ export default function RadioButton({ data, onSelect }) {
             </Pressable>
             );
         })}
-    </View>
     </View>
 
     );

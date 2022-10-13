@@ -1,13 +1,29 @@
 import React from 'react';
-import {View, Button, Text} from 'react-native';
+import {View, Button, Text, ScrollView, StyleSheet} from 'react-native';
+import AppointmentItem from '../components/appointmentContainer';
 
 const AppointmentScreen = ( {navigation} ) => {
     return(
-        <View style = {{ flex: 1, justifyContent: 'center', justifyContent: 'center', alignItems: 'center'}}>
-            <Text style = {{ fontSize: 20, color: 'black'}}>Appointment View</Text>
-            <Text style = {{ fontSize: 20, color: 'black'}}>Appointment Lists</Text>
+        <View style = {{ padding: 30 }}>
+            <Text style = { styles.header }>Your Appointments</Text>
+            <ScrollView style = {{ height: 550 }}>
+                <AppointmentItem />
+                <AppointmentItem />
+                <AppointmentItem />
+                <AppointmentItem />
+                <AppointmentItem />
+            </ScrollView>
         </View>
     );
 };
+
+const styles = StyleSheet.create({
+    header: {
+    fontSize: 30,
+    marginLeft: -15,
+    color: 'rgb(73, 80, 74)',
+    fontWeight: 'bold'
+    },
+})
 
 export default AppointmentScreen;

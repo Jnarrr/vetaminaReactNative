@@ -1,12 +1,32 @@
 import React, { useState } from 'react';
-import {View, Button, Text, StyleSheet, TextInput} from 'react-native';
+import {View, Button, Text, StyleSheet, ScrollView, TouchableOpacity} from 'react-native';
+import PetItem from '../components/petContainer';
 
 function PetsScreen( {navigation} ) {
-    return (
-      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-        <Text style = {{ fontSize: 20, color: 'black'}}>Pets View</Text>
-      </View>
-    );
-  }
+  return (
+    <View style = {{ padding: 30 }}>
+      <Text style = { styles.header }>Your Pets</Text>
+      <ScrollView style = {{ height: 550 }}>
+          <PetItem />
+          <PetItem />
+          <PetItem />
+          <PetItem />
+          <PetItem />
+      </ScrollView>
+      <TouchableOpacity>
+        
+      </TouchableOpacity>
+    </View>
+  );
+}
+
+const styles = StyleSheet.create({
+  header: {
+  fontSize: 30,
+  marginLeft: -15,
+  color: 'rgb(73, 80, 74)',
+  fontWeight: 'bold'
+  },
+})
 
 export default PetsScreen;
