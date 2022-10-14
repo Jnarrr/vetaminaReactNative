@@ -1,11 +1,13 @@
 import React from 'react';
-import { View, Text, StyleSheet, Image} from 'react-native';
+import { View, Text, StyleSheet, Image, TouchableOpacity} from 'react-native';
 
-export default function ClinicItem() {
+export default function ClinicItem({navigation}) {
     return (
-    <View style = {[styles.box, styles.elevation]}>
-        <Image source = { require('../images/clinicDefault.png')} style = {styles.pic}/>
-        <Text style = {styles.header}>Domingo Veterinary Clinic</Text>
+    <View>
+        <TouchableOpacity style = {[styles.box, styles.elevation]}>
+            <Image source = { require('../images/clinicDefault.png')} style = {styles.pic}/>
+            <Text style = {styles.header}>Domingo Veterinary Clinic</Text>
+        </TouchableOpacity>
     </View>
     );
 }

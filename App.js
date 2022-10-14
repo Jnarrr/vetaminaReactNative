@@ -13,6 +13,8 @@ import AppointmentDateAndTimeScreen from './screens/AppointmentDateAndTime';
 import AppointmentSelectPetScreen from './screens/AppointmentSelectPet';
 
 import TabNavigator from './navs/tabNavigator';
+import NotificationScreen from './screens/Notifications';
+import ClinicDetailsScreen from './screens/ClinicDetails';
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -59,6 +61,8 @@ const MyStack = () => {
         <Stack.Screen name="AppointmentProcedure" component={ AppointmentProcedureScreen } options = {{ title: 'Select Procedure' }} />
         <Stack.Screen name="AppointmentDateAndTime" component={ AppointmentDateAndTimeScreen } options = {{ title: 'Select Date and Time' }} />
         <Stack.Screen name="AppointmentSelectPet" component={ AppointmentSelectPetScreen } options = {{ title: 'Select Pet' }} />
+        <Stack.Screen name="Notifications" component={ NotificationScreen } options = {{ title: 'Notifications' }} />
+        <Stack.Screen name="ClinicDetails" component={ ClinicDetailsScreen } options = {{ title: 'Clinic Details' }} />
       </Stack.Navigator>
     </NavigationContainer>
   );

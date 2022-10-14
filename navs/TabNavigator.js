@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Text, Image, Button } from 'react-native';
+import { Text, Image, Button, TouchableOpacity, StyleSheet } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
@@ -12,7 +12,7 @@ import SearchScreen from '../screens/Search';
 
 const Tab = createBottomTabNavigator();
 
-const TabNavigator = () => {
+const TabNavigator = ({navigation}) => {
     return (
     <Tab.Navigator 
     screenOptions={{ headerTitleAlign: 'center', tabBarShowLabel: false }}
@@ -22,10 +22,9 @@ const TabNavigator = () => {
         component={HomeScreen} 
         options = {{ 
           headerRight: () => (
-            <Button
-            onPress={() => alert('This is a button!')}
-            title="Info"
-            color="#000"></Button>),
+            <TouchableOpacity onPress={ () => navigation.navigate('Notifications')}>
+                <Image source = { require('../images/notification.png')} style = {styles.icon}/>
+            </TouchableOpacity>),
           headerLeft: () => (
             <Button
             onPress={() => alert('This is a button!')}
@@ -51,6 +50,10 @@ const TabNavigator = () => {
         name="Pets" 
         component={PetsScreen}
         options={{ 
+          headerRight: () => (
+            <TouchableOpacity onPress={ () => navigation.navigate('Notifications')}>
+                <Image source = { require('../images/notification.png')} style = {styles.icon}/>
+            </TouchableOpacity>),
           tabBarIcon: ({ focused, color, size }) => (
             <Image
               source={
@@ -71,6 +74,10 @@ const TabNavigator = () => {
         name="Appointment" 
         component={AppointmentScreen} 
         options={{ 
+          headerRight: () => (
+            <TouchableOpacity onPress={ () => navigation.navigate('Notifications')}>
+                <Image source = { require('../images/notification.png')} style = {styles.icon}/>
+            </TouchableOpacity>),
           tabBarIcon: ({ focused, color, size }) => (
             <Image
               source={
@@ -91,6 +98,10 @@ const TabNavigator = () => {
         name="Message" 
         component={MessageScreen} 
         options={{ 
+          headerRight: () => (
+            <TouchableOpacity onPress={ () => navigation.navigate('Notifications')}>
+                <Image source = { require('../images/notification.png')} style = {styles.icon}/>
+            </TouchableOpacity>),
           tabBarIcon: ({ focused, color, size }) => (
             <Image
               source={
@@ -111,6 +122,10 @@ const TabNavigator = () => {
         name="Search" 
         component={SearchScreen} 
         options={{ 
+          headerRight: () => (
+            <TouchableOpacity onPress={ () => navigation.navigate('Notifications')}>
+                <Image source = { require('../images/notification.png')} style = {styles.icon}/>
+            </TouchableOpacity>),
           tabBarIcon: ({ focused, color, size }) => (
             <Image
               source={
@@ -130,5 +145,13 @@ const TabNavigator = () => {
     </Tab.Navigator>
     );
   }
+
+const styles = StyleSheet.create({
+  icon: {
+  width:25,
+  height:25,
+  marginRight: 20,
+  },
+});
 
 export default TabNavigator;

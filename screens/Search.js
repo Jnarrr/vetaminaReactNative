@@ -3,6 +3,7 @@ import {View, Button, Text, StyleSheet, TextInput, Image, ScrollView} from 'reac
 import CoffeeAutonomous from "../components/CoffeeAutonomous";
 import RadioButton from '../components/radioBtnCategories';
 import ClinicItem from '../components/clinicContainer';
+import { TouchableOpacity } from 'react-native-gesture-handler';
 
 const SearchScreen = ( {navigation} ) => {
     const data = [
