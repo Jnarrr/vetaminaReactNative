@@ -1,32 +1,49 @@
-import React, { useState } from 'react';
-import {View, Button, Text, StyleSheet, ScrollView, TouchableOpacity} from 'react-native';
-import PetItem from '../components/petContainer';
+import React, { Component, useEffect, useState } from 'react';
+import { ActivityIndicator, FlatList, Text, View } from 'react-native';
 
-function PetsScreen( {navigation} ) {
-  return (
-    <View style = {{ padding: 30 }}>
-      <Text style = { styles.header }>Your Pets</Text>
-      <ScrollView style = {{ height: 550 }}>
-          <PetItem />
-          <PetItem />
-          <PetItem />
-          <PetItem />
-          <PetItem />
-      </ScrollView>
-      <TouchableOpacity>
-        
-      </TouchableOpacity>
-    </View>
-  );
+export default class PetsScreen extends Component {
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            data: [],
+            isLoading: true
+        }
+    }
+
+    async getData() {
+        try {
+            const response = await fetch('http://10.0.2.2:8000/api/pets');
+            const json = await response.json();
+
+            this.setState({ data: json.pet })
+        }
+        catch(error) {
+            console.error(error);
+        } finally {
+            this.setState({ isLoading: false })
+        }
+    }
+
+    componentDidMount(){
+        this.getData();
+    }
+
+    render(){
+        const { data, isLoading } = this.state;
+
+        return(
+            <View style={{ flex: 1, padding: 24 }}>
+                { isLoading ? <ActivityIndicator /> : (
+                    <FlatList
+                        data={ data }
+                        keyExtractor={({ id }, index) => id}
+                        renderItem={({ item }) => (
+                        <Text>{item.pet_name}, {item.pet_type}</Text>
+                        )}
+                        />
+                )}
+            </View>
+        );
+    }
 }
-
-const styles = StyleSheet.create({
-  header: {
-  fontSize: 30,
-  marginLeft: -15,
-  color: 'rgb(73, 80, 74)',
-  fontWeight: 'bold'
-  },
-})
-
-export default PetsScreen;
