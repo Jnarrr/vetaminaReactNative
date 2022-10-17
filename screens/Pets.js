@@ -1,49 +1,70 @@
-import React, { Component, useEffect, useState } from 'react';
-import { ActivityIndicator, FlatList, Text, View } from 'react-native';
+import React, { useEffect, useState } from 'react';
+import {View, Button, Text, StyleSheet, ScrollView, TouchableOpacity, ActivityIndicator, FlatList, VirtualizedList} from 'react-native';
+import PetItem from '../components/petContainer';
 
-export default class PetsScreen extends Component {
-    constructor(props) {
-        super(props);
+const PetsScreen = ( {navigation} ) => {
+  const [isLoading, setLoading] = useState(true);
+  const [data, setData] = useState([]);
 
-        this.state = {
-            data: [],
-            isLoading: true
-        }
+  const getPets = async () => {
+    try {
+    const response = await fetch('http://localhost:8000/api/pets');
+    const json = await response.json();
+    setData(json.pets);
+    } catch (error) {
+      console.error(error);
+    } finally {
+      setLoading(false);
     }
+  }
 
-    async getData() {
-        try {
-            const response = await fetch('http://10.0.2.2:8000/api/pets');
-            const json = await response.json();
+  useEffect(() => {
+    getPets();
+  }, []);    
 
-            this.setState({ data: json.pet })
-        }
-        catch(error) {
-            console.error(error);
-        } finally {
-            this.setState({ isLoading: false })
-        }
-    }
-
-    componentDidMount(){
-        this.getData();
-    }
-
-    render(){
-        const { data, isLoading } = this.state;
-
-        return(
-            <View style={{ flex: 1, padding: 24 }}>
-                { isLoading ? <ActivityIndicator /> : (
-                    <FlatList
-                        data={ data }
-                        keyExtractor={({ id }, index) => id}
-                        renderItem={({ item }) => (
-                        <Text>{item.pet_name}, {item.pet_type}</Text>
-                        )}
-                        />
-                )}
-            </View>
-        );
-    }
+  return (
+    <View style = {{ padding: 30 }}>
+      <Text style = { styles.header }>Your Pets</Text>
+        {isLoading ? <ActivityIndicator/> : (
+          <FlatList
+            style = {{ height: 550 }}
+            data={data}
+            keyExtractor={({ id }, index) => id}
+            renderItem={({ item }) => (
+              <Text style = {styles.petText}>{item.pet_name}, {item.pet_type}</Text>
+            )}
+          />
+        )}
+      <TouchableOpacity style = {styles.addButton} onPress={ () => navigation.navigate('AddPet')}>
+        <Text style = {{ fontSize: 30 }}>+</Text>
+      </TouchableOpacity>
+    </View>
+  );
 }
+
+const styles = StyleSheet.create({
+    petText: {
+    fontSize: 30,
+    color: 'black',
+    fontWeight: 'bold'
+    },
+    header: {
+    fontSize: 30,
+    marginLeft: -15,
+    color: 'rgb(73, 80, 74)',
+    fontWeight: 'bold'
+    },
+    addButton: {
+    position: 'absolute',
+    width: 50,
+    height: 50,
+    alignItems: 'center',
+    justifyContent: 'center',
+    right: 30,
+    bottom: 30,
+    backgroundColor: '#15D005',
+    borderRadius: 50,
+    },
+})
+
+export default PetsScreen;
