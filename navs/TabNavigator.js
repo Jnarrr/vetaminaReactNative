@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Text, Image, Button, TouchableOpacity, StyleSheet } from 'react-native';
+import { Text, Image, Button, TouchableOpacity, StyleSheet, View } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
@@ -26,10 +26,10 @@ const TabNavigator = ({navigation}) => {
                 <Image source = { require('../images/notification.png')} style = {styles.icon}/>
             </TouchableOpacity>),
           headerLeft: () => (
-            <Button
-            onPress={() => alert('This is a button!')}
-            title="Profile"
-            color="#000"></Button>),
+            <TouchableOpacity onPress={ () => navigation.navigate('Profile')} style = {{ marginLeft: 10 }}>
+                <View style = { styles.profileIcon }>
+                </View>
+            </TouchableOpacity>),
           tabBarIcon: ({ focused, color, size }) => (
             <Image
               source={
@@ -53,6 +53,11 @@ const TabNavigator = ({navigation}) => {
           headerRight: () => (
             <TouchableOpacity onPress={ () => navigation.navigate('Notifications')}>
                 <Image source = { require('../images/notification.png')} style = {styles.icon}/>
+            </TouchableOpacity>),
+          headerLeft: () => (
+            <TouchableOpacity onPress={ () => navigation.navigate('Profile')} style = {{ marginLeft: 10 }}>
+                <View style = { styles.profileIcon }>
+                </View>
             </TouchableOpacity>),
           tabBarIcon: ({ focused, color, size }) => (
             <Image
@@ -78,6 +83,11 @@ const TabNavigator = ({navigation}) => {
             <TouchableOpacity onPress={ () => navigation.navigate('Notifications')}>
                 <Image source = { require('../images/notification.png')} style = {styles.icon}/>
             </TouchableOpacity>),
+          headerLeft: () => (
+            <TouchableOpacity onPress={ () => navigation.navigate('Profile')} style = {{ marginLeft: 10 }}>
+                <View style = { styles.profileIcon }>
+                </View>
+            </TouchableOpacity>),
           tabBarIcon: ({ focused, color, size }) => (
             <Image
               source={
@@ -102,6 +112,11 @@ const TabNavigator = ({navigation}) => {
             <TouchableOpacity onPress={ () => navigation.navigate('Notifications')}>
                 <Image source = { require('../images/notification.png')} style = {styles.icon}/>
             </TouchableOpacity>),
+          headerLeft: () => (
+            <TouchableOpacity onPress={ () => navigation.navigate('Profile')} style = {{ marginLeft: 10 }}>
+                <View style = { styles.profileIcon }>
+                </View>
+            </TouchableOpacity>),
           tabBarIcon: ({ focused, color, size }) => (
             <Image
               source={
@@ -125,6 +140,11 @@ const TabNavigator = ({navigation}) => {
           headerRight: () => (
             <TouchableOpacity onPress={ () => navigation.navigate('Notifications')}>
                 <Image source = { require('../images/notification.png')} style = {styles.icon}/>
+            </TouchableOpacity>),
+          headerLeft: () => (
+            <TouchableOpacity onPress={ () => navigation.navigate('Profile')} style = {{ marginLeft: 10 }}>
+                <View style = { styles.profileIcon }>
+                </View>
             </TouchableOpacity>),
           tabBarIcon: ({ focused, color, size }) => (
             <Image
@@ -152,6 +172,12 @@ const styles = StyleSheet.create({
   height:25,
   marginRight: 20,
   },
+  profileIcon: {
+  width:40,
+  height:40,
+  borderWidth: 1,
+  borderRadius: 50
+  }
 });
 
 export default TabNavigator;

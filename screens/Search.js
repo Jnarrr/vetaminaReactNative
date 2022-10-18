@@ -21,7 +21,7 @@ const SearchScreen = ( {navigation} ) => {
                 <ScrollView style = {{ height: 450 }}>
                     <TouchableOpacity style = {[styles.box, styles.elevation]} onPress={ () => navigation.navigate('ClinicDetails')}>
                         <Image source = { require('../images/clinicDefault.png')} style = {styles.pic}/>
-                        <Text style = {styles.header}>Domingo Veterinary Clinic</Text>
+                        <Text style = {styles.header2}>Domingo Veterinary Clinic</Text>
                     </TouchableOpacity>
                 </ScrollView>
             </View>
@@ -70,7 +70,7 @@ const styles = StyleSheet.create({
     height: 100,
     borderRadius: 10,
     },
-    header: {
+    header2: {
     fontSize: 16,
     marginTop: -95,
     marginLeft: 110,
