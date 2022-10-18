@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import {View, Button, Text, StyleSheet, ScrollView, TouchableOpacity, ActivityIndicator, FlatList, VirtualizedList} from 'react-native';
+import {View, Button, Text, StyleSheet, ScrollView, TouchableOpacity, ActivityIndicator, FlatList} from 'react-native';
 import PetItem from '../components/petContainer';
 
 const PetsScreen = ( {navigation} ) => {

@@ -138,7 +138,7 @@ const TabNavigator = ({navigation}) => {
                 height: 22,
               }}
             />
-          ),
+          )
           
         }}
         />

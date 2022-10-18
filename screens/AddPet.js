@@ -59,6 +59,7 @@ const AddPetScreen = ( {navigation} ) => {
                 getPets();
             }
             Alert.alert('Pet Added!')
+            navigation.navigate('Appointment');
         const json = await response.json();
         setData(json.pets);
         } catch (error) {

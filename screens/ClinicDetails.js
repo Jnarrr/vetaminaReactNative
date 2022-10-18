@@ -29,65 +29,12 @@ const ClinicDetailsScreen = ( {navigation} ) => {
 
     return(
         <View style = { styles.body }>
-            <Image source = { require('../images/paw.png')} style = {styles.paw}/>
-            <Image source = { require('../images/bone.png')} style = {styles.bone}/>
-            <TouchableOpacity onPress={ () => navigation.navigate('Welcome')} style = {{ marginBottom: -80 }}>
-                <Image source = { require('../images/back.png')} style = {styles.back}/>
-            </TouchableOpacity>
 
             <ScrollView style = {styles.whiteBox}>
-            <Text style = { styles.header }>Login</Text>
+            <Text style = { styles.header }>Clinic Name</Text>
 
-            <TextInput 
-            style = { styles.input }
-            onChangeText = { (text) => [handleCheckUsername(text), setUsername(text)] }
-            placeholder='Enter Username'
-            placeholderTextColor= 'gray'
-            maxLength={15} 
-            />
-            <Image source = { require('../images/userIcon.png')} style = {styles.userIcon}/>
-            {
-            checkValidUsername ? (
-                <Text style = {styles.textFailed}>Username is Required</Text>
-                ) : (
-                <Text style = {styles.textFailed}> </Text>
-            )
-            }
-
-
-            <TextInput 
-            style = { styles.input }
-            onChangeText = { (text) => [handleCheckPassword(text), setPassword(text)] }
-            placeholder='Enter Password'
-            placeholderTextColor= 'gray'
-            maxLength={15} 
-            secureTextEntry = {true}
-            />
-            <Image source = { require('../images/password.png')} style = {styles.userIcon}/>
-            {
-            checkValidPassword ? (
-                <Text style = {styles.textFailed}>Password cannot be empty</Text>
-                ) : (
-                <Text style = {styles.textFailed}> </Text>
-            )
-            }
-
-            <CheckBox
-            value={isSelected}
-            onValueChange={setSelection}
-            style={styles.checkbox}
-            tintColors={{ true: 'green', false: 'gray' }}
-            />
-            <Text style={styles.label}>Remember me</Text>
-
-            {/*<Text>Is CheckBox selected: {isSelected ? "👍" : "👎"}</Text>*/}
-
-            <TouchableOpacity style = { styles.btn } onPress={ () => navigation.navigate('tabNavigator') }>
-                <Text style = {styles.btnText}>Login</Text>
-            </TouchableOpacity>
-
-            <TouchableOpacity>
-            <Text style = {styles.btnText2}>Forgot Password</Text>
+            <TouchableOpacity style = { styles.btn } onPress={ () => navigation.navigate('AppointmentDateAndTime') }>
+                <Text style = {styles.btnText}>Appoint now</Text>
             </TouchableOpacity>
 
             
