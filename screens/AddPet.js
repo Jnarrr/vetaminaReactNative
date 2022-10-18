@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import {View, Button, Image, Text, StyleSheet, TextInput, ScrollView, TouchableOpacity} from 'react-native';
+import React, { useState, useEffect } from 'react';
+import {View, Button, Image, Text, StyleSheet, TextInput, ScrollView, Alert, TouchableOpacity} from 'react-native';
 import { withSafeAreaInsets } from 'react-native-safe-area-context';
 
 const AddPetScreen = ( {navigation} ) => {
@@ -10,6 +10,63 @@ const AddPetScreen = ( {navigation} ) => {
     const [birthdate, setBirthdate] = useState('');
     const [weight, setWeight] = useState('');
     const [description, setDescription] = useState('');
+
+    const [isLoading, setLoading] = useState(true);
+    const [data, setData] = useState([]);
+
+    const getPets = async () => {
+        try {
+        const response = await fetch('http://localhost:8000/api/pets');
+        const json = await response.json();
+        setData(json.pets);
+        } catch (error) {
+        console.error(error);
+        } finally {
+        setLoading(false);
+        }
+    }
+
+    useEffect(() => {
+        getPets();
+    }, []);
+
+    const AddPetBtn = async () => {
+        try{
+            const response = await fetch('http://localhost:8000/api/pets', {
+                method: 'POST',
+                headers: {
+                    Accept: 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    pet_name: name,
+                    pet_type: type,
+                    pet_sex: sex,
+                    pet_breed: breed,
+                    pet_birthdate: birthdate,
+                    pet_weight: weight,
+                    pet_description: description
+                })
+            });
+            if ((response).status === 201) {
+                setName('');
+                setType('');
+                setSex('');
+                setBreed('');
+                setBirthdate('');
+                setWeight('');
+                setDescription('');
+                getPets();
+            }
+            Alert.alert('Pet Added!')
+        const json = await response.json();
+        setData(json.pets);
+        } catch (error) {
+        console.error(error);
+        } finally {
+        setLoading(false);
+        }
+    }
 
     return (
     <View style = {{ padding: 30, alignItems: 'center' }}>
@@ -65,7 +122,7 @@ const AddPetScreen = ( {navigation} ) => {
         maxLength={15} 
         />
         
-        <TouchableOpacity style = {styles.addButton}>
+        <TouchableOpacity style = {styles.addButton} onPress = { AddPetBtn }>
             <Text style = { styles.addButtonText }>Finish</Text>
         </TouchableOpacity>
     </View>
