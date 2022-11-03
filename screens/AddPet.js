@@ -14,9 +14,11 @@ const AddPetScreen = ( {navigation} ) => {
     const [isLoading, setLoading] = useState(true);
     const [data, setData] = useState([]);
 
+    var userID = global.id;
+
     const getPets = async () => {
         try {
-        const response = await fetch('http://localhost:8000/api/pets');
+        const response = await fetch('http://localhost:8000/api/pets/{id}');
         const json = await response.json();
         setData(json.pets);
         } catch (error) {
@@ -32,13 +34,14 @@ const AddPetScreen = ( {navigation} ) => {
 
     const AddPetBtn = async () => {
         try{
-            const response = await fetch('http://localhost:8000/api/pets', {
+            const response = await fetch('http://localhost:8000/api/add-pets', {
                 method: 'POST',
                 headers: {
                     Accept: 'application/json',
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify({
+                    user_id: userID,
                     pet_name: name,
                     pet_type: type,
                     pet_sex: sex,
@@ -59,7 +62,7 @@ const AddPetScreen = ( {navigation} ) => {
                 getPets();
             }
             Alert.alert('Pet Added!')
-            navigation.navigate('Appointment');
+            navigation.navigate('Pets');
         const json = await response.json();
         setData(json.pets);
         } catch (error) {

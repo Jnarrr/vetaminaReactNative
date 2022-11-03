@@ -11,6 +11,30 @@ const LoginScreen = ( {navigation} ) => {
     const [checkValidPassword, setCheckValidPassword] = useState(false);
     const [isSelected, setSelection] = useState(false);
 
+    const verifyLogin = async () => {
+        await fetch('http://localhost:8000/api/customerlogin', {
+          method:'POST',
+          headers:{
+            'Accept':'application/json',
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({'username':username, 'password':password})
+        }).then(res => res.json())
+        .then(resData =>{
+          if ("error" in resData) {
+            alert('Test')
+          } else {
+            //console.log(resData)
+            global.id = resData.id
+            global.username = resData.username
+            global.birthdate = resData.birthdate
+            global.email = resData.email
+            global.mobile_number = resData.mobile_number
+            navigation.navigate('tabNavigator')
+          }
+        })
+    }
+
     const handleCheckUsername = text => {
         if (text.length < 1){
             setCheckValidUsername(true);
@@ -82,7 +106,7 @@ const LoginScreen = ( {navigation} ) => {
 
             {/*<Text>Is CheckBox selected: {isSelected ? "👍" : "👎"}</Text>*/}
 
-            <TouchableOpacity style = { styles.btn } onPress={ () => navigation.navigate('tabNavigator') }>
+            <TouchableOpacity style = { styles.btn } onPress={ verifyLogin }>
                 <Text style = {styles.btnText}>Login</Text>
             </TouchableOpacity>
 

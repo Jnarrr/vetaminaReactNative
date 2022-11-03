@@ -29,6 +29,43 @@ const RegisterScreen = ( {navigation} ) => {
     const [mobileNum, setMobileNum] = useState('');
     const [checkValidMobileNumber, setCheckValidMobileNumber] = useState(false);
 
+    const [isLoading, setLoading] = useState(true);
+    const [data, setData] = useState([]);
+
+    const RegisterUser = async () => {
+        try{
+            const response = await fetch('http://localhost:8000/api/customerregister', {
+                method: 'POST',
+                headers: {
+                    Accept: 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    username: username,
+                    birthdate: date,
+                    password: password,
+                    email: email,
+                    mobile_number: mobileNum
+                })
+            });
+            if ((response).status === 201) {
+                setUsername('');
+                setDate('');
+                setPassword('');
+                setEmail('');
+                setMobileNum('');
+            }
+            Alert.alert('User Created!');
+            navigation.navigate('Login')
+        const json = await response.json();
+        setData(json.customeruser);
+        } catch (error) {
+        console.error(error);
+        } finally {
+        setLoading(false);
+        }
+    }
+
     const handleCheckUsername = text => {
         if (text.length < 8){
             setCheckValidUsername(true);
@@ -133,7 +170,7 @@ const RegisterScreen = ( {navigation} ) => {
             <Image source = { require('../images/userIcon.png')} style = {styles.userIcon}/>
             {
             checkValidUsername ? (
-                <Text style = {styles.textFailed}>Name is Required</Text>
+                <Text style = {styles.textFailed}>Username should contain atleast 8 characters</Text>
                 ) : (
                 <Text style = {styles.textFailed}> </Text>
             )
@@ -219,7 +256,7 @@ const RegisterScreen = ( {navigation} ) => {
             )
             }
                 
-            <TouchableOpacity style = { styles.btn } onPress={ handleUserValidation }>
+            <TouchableOpacity style = { styles.btn } onPress={ RegisterUser }>
             <Text style = {styles.btnText}>Sign Up</Text>
             </TouchableOpacity>
 

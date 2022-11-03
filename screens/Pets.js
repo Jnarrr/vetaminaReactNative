@@ -8,7 +8,7 @@ const PetsScreen = ( {navigation} ) => {
 
   const getPets = async () => {
     try {
-    const response = await fetch('http://localhost:8000/api/pets');
+    const response = await fetch(`http://localhost:8000/api/pets/${id}`);
     const json = await response.json();
     setData(json.pets);
     } catch (error) {
@@ -16,6 +16,11 @@ const PetsScreen = ( {navigation} ) => {
     } finally {
       setLoading(false);
     }
+  }
+
+  const refresh =  () => {
+    setLoading(true);
+    getPets();
   }
 
   useEffect(() => {
@@ -31,12 +36,17 @@ const PetsScreen = ( {navigation} ) => {
             data={data}
             keyExtractor={({ id }, index) => id}
             renderItem={({ item }) => (
+              <TouchableOpacity onPress={ () => navigation.navigate('AddPet')}>
               <Text style = {styles.petText}>{item.pet_name}, {item.pet_type}</Text>
+              </TouchableOpacity>
             )}
           />
         )}
+      <TouchableOpacity style = {styles.refresh} onPress={ refresh }>
+        <Text style = {{ fontSize: 16, color: 'white' }}>Refresh</Text>
+      </TouchableOpacity>
       <TouchableOpacity style = {styles.addButton} onPress={ () => navigation.navigate('AddPet')}>
-        <Text style = {{ fontSize: 30 }}>+</Text>
+        <Text style = {{ fontSize: 30, color: 'white' }}>+</Text>
       </TouchableOpacity>
     </View>
   );
@@ -63,6 +73,17 @@ const styles = StyleSheet.create({
     right: 30,
     bottom: 30,
     backgroundColor: '#15D005',
+    borderRadius: 50,
+    },
+    refresh: {
+    position: 'absolute',
+    width: 100,
+    height: 50,
+    alignItems: 'center',
+    justifyContent: 'center',
+    left: 30,
+    bottom: 30,
+    backgroundColor: 'brown',
     borderRadius: 50,
     },
 })

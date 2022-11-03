@@ -8,7 +8,7 @@ const AppointmentScreen = ( {navigation} ) => {
 
     const getAppointments = async () => {
         try {
-        const response = await fetch('http://localhost:8000/api/appointments');
+        const response = await fetch(`http://localhost:8000/api/appointments/${id}`);
         const json = await response.json();
         setData(json.appointments);
         } catch (error) {
