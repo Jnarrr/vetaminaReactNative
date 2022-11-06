@@ -4,7 +4,7 @@ import CheckBox from '@react-native-community/checkbox';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
-const ClinicDetailsScreen = ( {navigation} ) => {
+const ClinicDetailsScreen = ( {navigation, route} ) => {
     const [username, setUsername] = useState('');
     const [checkValidUsername, setCheckValidUsername] = useState(false);
     const [password, setPassword] = useState('');
@@ -31,10 +31,15 @@ const ClinicDetailsScreen = ( {navigation} ) => {
         <View style = { styles.body }>
 
             <ScrollView style = {styles.whiteBox}>
-            <Text style = { styles.header }>Clinic Name</Text>
+            <Text style = { styles.header }>{route.params.item.clinic_name}</Text>
+            <Text style = { styles.petText }>ID: {route.params.item.id}</Text>
+            <Text style = { styles.petText }>{route.params.item.phone_number}</Text>
+            <Text style = { styles.petText }>{route.params.item.address}</Text>
+            <Text style = { styles.petText }>{route.params.item.email}</Text>
 
-            <TouchableOpacity style = { styles.btn } onPress={ () => navigation.navigate('AppointmentDateAndTime') }>
+            <TouchableOpacity style = { styles.btn } onPress={ () => navigation.navigate('AppointmentDateAndTime', {clinicID:route.params.item.id}) }>
                 <Text style = {styles.btnText}>Appoint now</Text>
+
             </TouchableOpacity>
 
             
@@ -148,6 +153,11 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     marginTop: 20,
     },
+    petText: {
+        fontSize: 30,
+        color: 'black',
+        fontWeight: 'bold'
+        },
 });
 
 export default ClinicDetailsScreen;

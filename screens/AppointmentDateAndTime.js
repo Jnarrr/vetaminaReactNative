@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import {View, Button, Text, TextInput, StyleSheet, Alert} from 'react-native';
 
-const AppointmentDateAndTimeScreen = ( {navigation} ) => {
+const AppointmentDateAndTimeScreen = ( {navigation, route} ) => {
     const [procedure, setProcedure] = useState('');
     const [date, setDate] = useState('');
     const [time, setTime] = useState('');
@@ -11,6 +11,7 @@ const AppointmentDateAndTimeScreen = ( {navigation} ) => {
     const [data, setData] = useState([]);
 
     var userID = global.id;
+    var x = route.params.clinicID;
 
     const getAppointments = async () => {
         try {
@@ -63,6 +64,7 @@ const AppointmentDateAndTimeScreen = ( {navigation} ) => {
 
     return(
         <View style = {{ flex: 1, justifyContent: 'center', justifyContent: 'center', alignItems: 'center'}}>
+            <Text style = { styles.petText }>ID: {x}</Text>
             <TextInput 
             style = { styles.input }
             onChangeText = { (text) => [setProcedure(text)] }
@@ -109,6 +111,11 @@ const styles = StyleSheet.create({
     fontSize: 20,
     color: 'black',
     },
+    petText: {
+        fontSize: 30,
+        color: 'black',
+        fontWeight: 'bold'
+        },
 })
 
 export default AppointmentDateAndTimeScreen;

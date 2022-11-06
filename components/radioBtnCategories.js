@@ -1,8 +1,13 @@
 import React, { useState } from 'react';
 import { View, Text, StyleSheet, Pressable} from 'react-native';
 
-export default function RadioButton({ data }) {
+export default function RadioButton() {
     const [userOption, setUserOption] = useState(null);
+    const data = [
+        { key: '1', value: 'Nearby' },
+        { key: '2', value: 'Popular' },
+        { key: '3', value: 'Last Visited' },
+    ];
 
     return (
     <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginTop: 10 }}>

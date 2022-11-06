@@ -36,7 +36,7 @@ const PetsScreen = ( {navigation} ) => {
             data={data}
             keyExtractor={({ id }, index) => id}
             renderItem={({ item }) => (
-              <TouchableOpacity onPress={ () => navigation.navigate('AddPet')}>
+              <TouchableOpacity onPress={ () => navigation.navigate('PetDetails', {item:item})}>
               <Text style = {styles.petText}>{item.pet_name}, {item.pet_type}</Text>
               </TouchableOpacity>
             )}

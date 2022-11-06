@@ -16,7 +16,7 @@ const AddPetScreen = ( {navigation} ) => {
 
     var userID = global.id;
 
-    const getPets = async () => {
+    /*const getPets = async () => {
         try {
         const response = await fetch('http://localhost:8000/api/pets/{id}');
         const json = await response.json();
@@ -30,7 +30,7 @@ const AddPetScreen = ( {navigation} ) => {
 
     useEffect(() => {
         getPets();
-    }, []);
+    }, []);*/
 
     const AddPetBtn = async () => {
         try{
@@ -59,7 +59,7 @@ const AddPetScreen = ( {navigation} ) => {
                 setBirthdate('');
                 setWeight('');
                 setDescription('');
-                getPets();
+                //getPets();
             }
             Alert.alert('Pet Added!')
             navigation.navigate('Pets');

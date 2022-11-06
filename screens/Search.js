@@ -1,15 +1,29 @@
-import React, { useState } from 'react';
-import {View, Button, Text, StyleSheet, TextInput, Image, ScrollView, TouchableOpacity} from 'react-native';
+import React, { useEffect, useState } from 'react';
+import {View, Button, Text, StyleSheet, TextInput, Image, ScrollView, TouchableOpacity, ActivityIndicator, FlatList} from 'react-native';
 import CoffeeAutonomous from "../components/CoffeeAutonomous";
 import RadioButton from '../components/radioBtnCategories';
 //import ClinicItem from '../components/clinicContainer';
 
 const SearchScreen = ( {navigation} ) => {
-    const data = [
-        { value: 'Nearby' },
-        { value: 'Popular' },
-        { value: 'Last Visited' },
-    ];
+
+    const [isLoading, setLoading] = useState(true);
+    const [data, setData] = useState([]);
+
+    const getClinics = async () => {
+        try {
+        const response = await fetch(`http://localhost:8000/api/clinics2`);
+        const json = await response.json();
+        setData(json.clinics2);
+        } catch (error) {
+        console.error(error);
+        } finally {
+        setLoading(false);
+        }
+    }
+
+    useEffect(() => {
+        getClinics();
+    }, []);
 
     return(
         <View>
@@ -17,13 +31,26 @@ const SearchScreen = ( {navigation} ) => {
                 <TextInput style = {styles.input} placeholder = 'Search name of a clinic' placeholderTextColor = 'gray'></TextInput>
                 <Image source = { require('../images/search.png')} style = {styles.icon}/>
                 <Text style = { styles.header }>Categories</Text>
-                <RadioButton data = {data} />
-                <ScrollView style = {{ height: 450 }}>
+                <RadioButton/>
+                {isLoading ? <ActivityIndicator/> : (
+                <FlatList
+                    style = {{ height: 550 }}
+                    data={data}
+                    keyExtractor={({ id }, index) => id}
+                    renderItem={({ item }) => (
+                    <TouchableOpacity onPress={ () => navigation.navigate('ClinicDetails', {item:item})}>
+                        <Text style = {styles.petText}>{item.clinic_name}, {item.phone_number}, {item.address}</Text>
+                    </TouchableOpacity>
+                    
+                    )}
+                />
+                )}
+                {/*<ScrollView style = {{ height: 450 }}>
                     <TouchableOpacity style = {[styles.box, styles.elevation]} onPress={ () => navigation.navigate('ClinicDetails')}>
                         <Image source = { require('../images/clinicDefault.png')} style = {styles.pic}/>
                         <Text style = {styles.header2}>Domingo Veterinary Clinic</Text>
                     </TouchableOpacity>
-                </ScrollView>
+    </ScrollView>*/}
             </View>
         </View>
     );
@@ -77,6 +104,11 @@ const styles = StyleSheet.create({
     color: 'rgb(73, 80, 74)',
     fontWeight: 'bold'
     },
+    petText: {
+        fontSize: 30,
+        color: 'black',
+        fontWeight: 'bold'
+        },
 })
 
 export default SearchScreen;

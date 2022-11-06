@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import {View, Button, Text, ScrollView, StyleSheet, ActivityIndicator, FlatList} from 'react-native';
+import {View, Button, Text, ScrollView, TouchableOpacity, StyleSheet, ActivityIndicator, FlatList} from 'react-native';
 import AppointmentItem from '../components/appointmentContainer';
 
 const AppointmentScreen = ( {navigation} ) => {
@@ -31,7 +31,10 @@ const AppointmentScreen = ( {navigation} ) => {
                 data={data}
                 keyExtractor={({ id }, index) => id}
                 renderItem={({ item }) => (
-                <Text style = {styles.petText}>{item.procedure}, {item.date}, {item.time}</Text>
+                <TouchableOpacity onPress={ () => navigation.navigate('AppointmentDetails', {item:item})}>
+                    <Text style = {styles.petText}>{item.procedure}, {item.date}, {item.time}</Text>
+                </TouchableOpacity>
+                
                 )}
             />
             )}
