@@ -11,7 +11,7 @@ const AppointmentDateAndTimeScreen = ( {navigation, route} ) => {
     const [data, setData] = useState([]);
 
     var userID = global.id;
-    var x = route.params.clinicID;
+    var clinic_ID = route.params.clinicID;
 
     const getAppointments = async () => {
         try {
@@ -39,6 +39,7 @@ const AppointmentDateAndTimeScreen = ( {navigation, route} ) => {
                 },
                 body: JSON.stringify({
                     user_id: userID,
+                    clinic_id: clinic_ID,
                     procedure: procedure,
                     date: date,
                     time: time,
@@ -64,7 +65,7 @@ const AppointmentDateAndTimeScreen = ( {navigation, route} ) => {
 
     return(
         <View style = {{ flex: 1, justifyContent: 'center', justifyContent: 'center', alignItems: 'center'}}>
-            <Text style = { styles.petText }>ID: {x}</Text>
+            <Text style = { styles.petText }>ID: {clinic_ID}</Text>
             <TextInput 
             style = { styles.input }
             onChangeText = { (text) => [setProcedure(text)] }

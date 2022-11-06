@@ -17,6 +17,11 @@ const AppointmentScreen = ( {navigation} ) => {
         setLoading(false);
         }
     }
+    
+    const refresh = () => {
+        setLoading(true);
+        getAppointments();
+    }
 
     useEffect(() => {
         getAppointments();
@@ -38,6 +43,9 @@ const AppointmentScreen = ( {navigation} ) => {
                 )}
             />
             )}
+            <TouchableOpacity style = {styles.refresh} onPress={ refresh }>
+                <Text style = {{ fontSize: 16, color: 'white' }}>Refresh</Text>
+            </TouchableOpacity>
         </View>
     );
 };
@@ -53,6 +61,17 @@ const styles = StyleSheet.create({
     fontSize: 30,
     color: 'black',
     fontWeight: 'bold'
+    },
+    refresh: {
+    position: 'absolute',
+    width: 100,
+    height: 50,
+    alignItems: 'center',
+    justifyContent: 'center',
+    left: 30,
+    bottom: 30,
+    backgroundColor: 'brown',
+    borderRadius: 50,
     },
 })
 
