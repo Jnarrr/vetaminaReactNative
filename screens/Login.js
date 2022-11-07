@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import {View, Button, Text, StyleSheet, TextInput, ScrollView, Image, TouchableOpacity} from 'react-native';
+import {View, Button, Text, Alert, StyleSheet, TextInput, ScrollView, Image, TouchableOpacity} from 'react-native';
 import CheckBox from '@react-native-community/checkbox';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
@@ -22,7 +22,7 @@ const LoginScreen = ( {navigation} ) => {
         }).then(res => res.json())
         .then(resData =>{
           if ("error" in resData) {
-            alert('Test')
+            Alert.alert('Error', 'Incorrect Username or Password')
           } else {
             //console.log(resData)
             global.id = resData.id
@@ -44,7 +44,7 @@ const LoginScreen = ( {navigation} ) => {
     }
 
     const handleCheckPassword = text => {
-        if (text.length < 8){
+        if (text.length < 1){
             setCheckValidPassword(true);
         }else{
             setCheckValidPassword(false);
@@ -55,7 +55,7 @@ const LoginScreen = ( {navigation} ) => {
         <View style = { styles.body }>
             <Image source = { require('../images/paw.png')} style = {styles.paw}/>
             <Image source = { require('../images/bone.png')} style = {styles.bone}/>
-            <TouchableOpacity onPress={ () => navigation.navigate('Welcome')} style = {{ marginBottom: -80 }}>
+            <TouchableOpacity activeOpacity={.5} onPress={ () => navigation.navigate('Welcome')} style = {{ marginBottom: -80 }}>
                 <Image source = { require('../images/back.png')} style = {styles.back}/>
             </TouchableOpacity>
 
@@ -106,7 +106,7 @@ const LoginScreen = ( {navigation} ) => {
 
             {/*<Text>Is CheckBox selected: {isSelected ? "👍" : "👎"}</Text>*/}
 
-            <TouchableOpacity style = { styles.btn } onPress={ verifyLogin }>
+            <TouchableOpacity activeOpacity={.6} style = { styles.btn } onPress={ verifyLogin }>
                 <Text style = {styles.btnText}>Login</Text>
             </TouchableOpacity>
 
