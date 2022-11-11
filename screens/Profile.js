@@ -11,7 +11,7 @@ const ProfileScreen = ( {navigation} ) => {
                 <Text style = { styles.boxText2 }>{global.email}</Text>
             </View>
             <View style = {styles.whiteBox}>
-                <TouchableOpacity style = {{ marginBottom: 25 }} onPress={ () => Alert.alert("Change Profile") }>
+                <TouchableOpacity style = {{ marginBottom: 25 }} onPress={ () => navigation.navigate('ProfileDetails')}>
                     <Image source = { require('../images/profile.png')} style = {styles.profileIcon}/>
                     <Text style = {{ color: '#181D27', marginLeft: 60, marginTop: -45, fontWeight: 'bold' }}>My Account</Text>
                     <Text style = {{ color: 'gray', marginLeft: 60, marginTop: 3, }}>Make changes to your account</Text>

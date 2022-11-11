@@ -55,8 +55,32 @@ const RegisterScreen = ( {navigation} ) => {
                 setEmail('');
                 setMobileNum('');
             }
-            Alert.alert('User Created!');
-            navigation.navigate('Login')
+            errors = [];
+
+            let regex = /^(0[1-9]|1[012])[- /.](0[1-9]|[12][0-9]|3[01])[-/.](19|20)\d\d$/;
+            setDate(date)
+            if (regex.test(date) == false){
+                errors.push("Invalid Date format")
+            }
+            let regex2 = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+            if(regex2.test(email) == false){
+                errors.push("Invalid Email format")
+            }
+            if (username.length < 8){
+                errors.push("Username should have at least 8 characters")
+            }
+            if (password.length < 8){
+                errors.push("Password should have at least 8 characters")
+            }
+            if (mobileNum.length != 11){
+                errors.push("Mobile number should be valid 11 digit number")
+            }
+            if (errors.length == 0){
+                Alert.alert('User Created!');
+                navigation.navigate('Login')
+            }else{
+                Alert.alert("Error!", errors.join('\n'))
+            }
         const json = await response.json();
         setData(json.customeruser);
         } catch (error) {
@@ -119,40 +143,40 @@ const RegisterScreen = ( {navigation} ) => {
     }
 
     const handleUserValidation = () => {
-    errors = [];
+        errors = [];
 
-    let regex = /^(0[1-9]|1[012])[- /.](0[1-9]|[12][0-9]|3[01])[-/.](19|20)\d\d$/;
-    setDate(date)
-    if (regex.test(date) == false){
-        errors.push("Invalid Date format")
+        let regex = /^(0[1-9]|1[012])[- /.](0[1-9]|[12][0-9]|3[01])[-/.](19|20)\d\d$/;
+        setDate(date)
+        if (regex.test(date) == false){
+            errors.push("Invalid Date format")
+        }
+        let regex2 = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+        if(regex2.test(email) == false){
+            errors.push("Invalid Email format")
+        }
+        if (username.length < 8){
+            errors.push("Username should have at least 8 characters")
+        }
+        if (password.length < 8){
+            errors.push("Password should have at least 8 characters")
+        }
+        if (mobileNum.length != 11){
+            errors.push("Mobile number should be valid 11 digit number")
+        }
+        if (errors.length == 0){
+            Alert.alert("Success!", "username: " + username + "\nBirthDate: " + date + "\nEmail: " + email + "\nMobile Number: " + mobileNum)
+            navigation.navigate('Welcome')
+        }else{
+            Alert.alert("Error!", errors.join('\n'))
+        }
     }
-    let regex2 = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-    if(regex2.test(email) == false){
-        errors.push("Invalid Email format")
-    }
-    if (username.length < 8){
-        errors.push("Username should have at least 8 characters")
-    }
-    if (password.length < 8){
-        errors.push("Password should have at least 8 characters")
-    }
-    if (mobileNum.length != 11){
-        errors.push("Mobile number should be valid 11 digit number")
-    }
-    if (errors.length == 0){
-        Alert.alert("Success!", "username: " + username + "\nBirthDate: " + date + "\nEmail: " + email + "\nMobile Number: " + mobileNum)
-        navigation.navigate('Welcome')
-    }else{
-        Alert.alert("Error!", errors.join('\n'))
-    }
-}
 
 
     return(
         <View style = {styles.body}>
             <Image source = { require('../images/paw.png')} style = {styles.paw}/>
             <Image source = { require('../images/bone.png')} style = {styles.bone}/>
-            <TouchableOpacity onPress={ () => navigation.navigate('Login')} style = {{ marginBottom: -80 }}>
+            <TouchableOpacity onPress={ () => navigation.goBack(null)} style = {{ marginBottom: -80 }}>
                 <Image source = { require('../images/back.png')} style = {styles.back}/>
             </TouchableOpacity>
             

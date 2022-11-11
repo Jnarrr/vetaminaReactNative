@@ -30,16 +30,19 @@ const SearchScreen = ( {navigation} ) => {
             <View style = {{ padding: 30 }}>
                 <TextInput style = {styles.input} placeholder = 'Search name of a clinic' placeholderTextColor = 'gray'></TextInput>
                 <Image source = { require('../images/search.png')} style = {styles.icon}/>
-                <Text style = { styles.header }>Categories</Text>
-                <RadioButton/>
+                <Text style = { styles.header }>Clinics</Text>
+                {/*<RadioButton/>*/}
                 {isLoading ? <ActivityIndicator/> : (
                 <FlatList
                     style = {{ height: 550 }}
                     data={data}
                     keyExtractor={({ id }, index) => id}
                     renderItem={({ item }) => (
-                    <TouchableOpacity onPress={ () => navigation.navigate('ClinicDetails', {item:item})}>
-                        <Text style = {styles.petText}>{item.clinic_name}, {item.phone_number}, {item.address}</Text>
+                    <TouchableOpacity style = {styles.item} onPress={ () => navigation.navigate('ClinicDetails', {item:item})}>
+                        <Text style = {styles.header2}>{item.clinic_name}</Text>
+                        <Text style = {styles.divider}>________________________________</Text>
+                        <Text style = {styles.description}>Owner: {item.owner_name}</Text>
+                        <Text style = {styles.description}>Address: {item.address}</Text>
                     </TouchableOpacity>
                     
                     )}
@@ -50,7 +53,7 @@ const SearchScreen = ( {navigation} ) => {
                         <Image source = { require('../images/clinicDefault.png')} style = {styles.pic}/>
                         <Text style = {styles.header2}>Domingo Veterinary Clinic</Text>
                     </TouchableOpacity>
-    </ScrollView>*/}
+                </ScrollView>*/}
             </View>
         </View>
     );
@@ -92,23 +95,38 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
     borderRadius: 10,
     },
+    divider: {
+    fontSize: 20,
+    color: 'gray',
+    marginTop: -20,
+    },
+    item: {
+    backgroundColor: 'white',
+    padding: 20,
+    marginVertical: 8,
+    borderRadius: 8,
+    height: 120,
+    },
     pic: {
     width: 100,
     height: 100,
     borderRadius: 10,
     },
     header2: {
-    fontSize: 16,
-    marginTop: -95,
-    marginLeft: 110,
-    color: 'rgb(73, 80, 74)',
+    fontSize: 22,
+    color: 'rgb(80, 140, 2)',
     fontWeight: 'bold'
     },
-    petText: {
-        fontSize: 30,
-        color: 'black',
-        fontWeight: 'bold'
-        },
+    description: {
+    fontSize: 18,
+    color: 'black',
+    },
+    description2: {
+    fontSize: 20,
+    color: 'black',
+    marginTop: -25,
+    marginLeft: 125
+    },
 })
 
 export default SearchScreen;

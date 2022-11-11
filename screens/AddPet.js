@@ -74,8 +74,10 @@ const AddPetScreen = ( {navigation} ) => {
 
     return (
     <View style = {{ padding: 30, alignItems: 'center' }}>
+        <ScrollView>
         <Image source = { require('../images/defaultPetImage.png')} style = {styles.pic}/>
         <Text style = { styles.header }>Pet Information</Text>
+        
         <TextInput 
         style = { styles.input }
         onChangeText = { (text) => [setName(text)] }
@@ -125,10 +127,12 @@ const AddPetScreen = ( {navigation} ) => {
         placeholderTextColor= 'gray'
         maxLength={15} 
         />
+        </ScrollView>
         
         <TouchableOpacity style = {styles.addButton} onPress = { AddPetBtn }>
             <Text style = { styles.addButtonText }>Finish</Text>
         </TouchableOpacity>
+        
     </View>
     );
 }

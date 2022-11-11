@@ -32,12 +32,17 @@ const PetsScreen = ( {navigation} ) => {
       <Text style = { styles.header }>Your Pets</Text>
         {isLoading ? <ActivityIndicator/> : (
           <FlatList
-            style = {{ height: 550 }}
+            style = {{ height: 450 }}
             data={data}
             keyExtractor={({ id }, index) => id}
             renderItem={({ item }) => (
-              <TouchableOpacity onPress={ () => navigation.navigate('PetDetails', {item:item})}>
-              <Text style = {styles.petText}>{item.pet_name}, {item.pet_type}</Text>
+              <TouchableOpacity style = {styles.item} onPress={ () => navigation.navigate('PetDetails', {item:item})}>
+                <Text style = {styles.header2}>{item.pet_name}</Text>
+                <Text style = {styles.divider}>________________________________</Text>
+                <Text style = {styles.description}>{item.pet_type}</Text>
+                <Text style = {styles.description2}>{item.pet_birthdate}</Text>
+                <Text style = {styles.description}>{item.pet_breed}</Text>
+                <Text style = {styles.description2}>{item.pet_sex}</Text>
               </TouchableOpacity>
             )}
           />
@@ -53,16 +58,38 @@ const PetsScreen = ( {navigation} ) => {
 }
 
 const styles = StyleSheet.create({
-    petText: {
-    fontSize: 30,
-    color: 'black',
-    fontWeight: 'bold'
+    item: {
+    backgroundColor: 'white',
+    padding: 20,
+    marginVertical: 8,
+    borderRadius: 8,
+    height: 120,
     },
     header: {
     fontSize: 30,
     marginLeft: -15,
     color: 'rgb(73, 80, 74)',
     fontWeight: 'bold'
+    },
+    header2: {
+    fontSize: 22,
+    color: 'rgb(80, 140, 2)',
+    fontWeight: 'bold'
+    },
+    description: {
+    fontSize: 18,
+    color: 'black',
+    },
+    description2: {
+    fontSize: 18,
+    color: 'black',
+    marginTop: -25,
+    marginLeft: 125
+    },
+    divider: {
+    fontSize: 20,
+    color: 'gray',
+    marginTop: -20,
     },
     addButton: {
     position: 'absolute',
@@ -71,7 +98,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     right: 30,
-    bottom: 30,
+    bottom: -50,
     backgroundColor: '#15D005',
     borderRadius: 50,
     },
@@ -82,7 +109,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     left: 30,
-    bottom: 30,
+    bottom: -50,
     backgroundColor: 'brown',
     borderRadius: 50,
     },

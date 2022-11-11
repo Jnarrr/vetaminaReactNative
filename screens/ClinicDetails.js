@@ -40,7 +40,7 @@ const ClinicDetailsScreen = ( {navigation, route} ) => {
             <Text style = { styles.petText }>{route.params.item.address}</Text>
             <Text style = { styles.petText }>{route.params.item.email}</Text>
 
-            <TouchableOpacity style = { styles.btn } onPress={ () => navigation.navigate('AppointmentDateAndTime', {clinicID:route.params.item.id}) }>
+            <TouchableOpacity style = { styles.btn } onPress={ () => navigation.navigate('AppointmentDateAndTime', {clinicID:route.params.item.id, clinicNAME:route.params.item.clinic_name, clinicADDRESS:route.params.item.address}) }>
                 <Text style = {styles.btnText}>Appoint now</Text>
 
             </TouchableOpacity>
@@ -157,10 +157,10 @@ const styles = StyleSheet.create({
     marginTop: 20,
     },
     petText: {
-        fontSize: 30,
-        color: 'black',
-        fontWeight: 'bold'
-        },
+    fontSize: 30,
+    color: 'black',
+    fontWeight: 'bold'
+    },
 });
 
 export default ClinicDetailsScreen;
