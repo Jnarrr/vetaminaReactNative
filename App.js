@@ -68,7 +68,7 @@ const MyStack = () => {
         <Stack.Screen name="AppointmentSelectPet" component={ AppointmentSelectPetScreen } options = {{ title: 'Select Pet' }} />
         <Stack.Screen name="Search" component={ SearchScreen } options = {{ title: 'Search' }} />
         <Stack.Screen name="Notifications" component={ NotificationScreen } options = {{ title: 'Notifications' }} />
-        <Stack.Screen name="ClinicDetails" component={ ClinicDetailsScreen } options = {{ title: 'Clinic Details' }} />
+        <Stack.Screen name="ClinicDetails" component={ ClinicDetailsScreen } options = {{ title: 'Clinic Details', headerShown: false }} />
         <Stack.Screen name="AddPet" component={ AddPetScreen } options = {{ title: 'Add Pet' }} />
         <Stack.Screen name="Profile" component={ ProfileScreen } options = {{ title: 'Profile' }} />
         <Stack.Screen name="PetDetails" component={ PetDetailsScreen } options = {{ title: 'Pet Details' }} />

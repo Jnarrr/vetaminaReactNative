@@ -29,6 +29,9 @@ const ClinicDetailsScreen = ( {navigation, route} ) => {
 
     return(
         <View style = { styles.body }>
+            <TouchableOpacity onPress={ () => navigation.goBack(null)}>
+                <Image source = { require('../images/back.png')} style = {styles.back}/>
+            </TouchableOpacity>
 
             <ScrollView style = {styles.whiteBox}>
             <Text style = { styles.header }>{route.params.item.clinic_name}</Text>
@@ -77,7 +80,7 @@ const styles = StyleSheet.create({
     width: 30,
     height: 30,
     marginLeft: 15,
-    marginTop: -150
+    marginTop: 30
     },
     whiteBox: {
     width: 360,
