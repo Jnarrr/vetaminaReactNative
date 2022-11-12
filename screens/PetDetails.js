@@ -1,5 +1,5 @@
 import React from 'react';
-import {View, Button, Text, StyleSheet, TouchableOpacity, Image, ScrollView} from 'react-native';
+import {View, Text, StyleSheet, TouchableOpacity, Image, ScrollView} from 'react-native';
 
 const PetDetailsScreen = ( {navigation, route} ) => {
     return(
@@ -17,9 +17,8 @@ const PetDetailsScreen = ( {navigation, route} ) => {
             <Text style = { styles.petText }>Weight: {route.params.item.pet_weight}</Text>
             <Text style = { styles.petText }>Description: {route.params.item.pet_description}</Text>
 
-            <TouchableOpacity style = { styles.btn } onPress={ () => navigation.navigate('MedicalRecord') }>
+            <TouchableOpacity style = { styles.btn } onPress={ () => navigation.navigate('MedicalRecord', {petID:route.params.item.id, petNAME:route.params.item.pet_name}) }>
                 <Text style = {styles.btnText}>View Medical Record</Text>
-
             </TouchableOpacity>
 
             

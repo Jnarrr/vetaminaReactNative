@@ -7,8 +7,9 @@ import HomeScreen from '../screens/Home';
 import PetsScreen from '../screens/Pets';
 import AppointmentScreen from '../screens/Appointment';
 import AppointmentProcedureScreen from '../screens/AppointmentProcedure';
-import MessageScreen from '../screens/Message';
+import MessageScreen from '../screens/Products';
 import SearchScreen from '../screens/Search';
+import ProductsScreen from '../screens/Products';
 
 const Tab = createBottomTabNavigator();
 
@@ -105,8 +106,8 @@ const TabNavigator = ({navigation}) => {
          }}
         />
         <Tab.Screen 
-        name="Message" 
-        component={MessageScreen} 
+        name="Products" 
+        component={ProductsScreen} 
         options={{ 
           headerRight: () => (
             <TouchableOpacity onPress={ () => navigation.navigate('Notifications')}>
@@ -121,12 +122,12 @@ const TabNavigator = ({navigation}) => {
             <Image
               source={
                 focused
-                  ? require('../images/chatGreen.png')
-                  : require('../images/chat.png')
+                  ? require('../images/productsGreen.png')
+                  : require('../images/products.png')
               }
               style={{
-                width: 22,
-                height: 22,
+                width: 28,
+                height: 14,
               }}
             />
           ),
