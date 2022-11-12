@@ -6,6 +6,7 @@ const AppointmentDateAndTimeScreen = ( {navigation, route} ) => {
     const [date, setDate] = useState('');
     const [time, setTime] = useState('');
     const [pet, setPet] = useState('');
+    const [status, setStatus] = useState('Waiting for Approval');
 
     const [isLoading, setLoading] = useState(true);
     const [data, setData] = useState([]);
@@ -48,6 +49,7 @@ const AppointmentDateAndTimeScreen = ( {navigation, route} ) => {
                     date: date,
                     time: time,
                     pet: pet,
+                    status: status,
                 })
             });
             if ((response).status === 201) {
@@ -55,6 +57,7 @@ const AppointmentDateAndTimeScreen = ( {navigation, route} ) => {
                 setDate('');
                 setTime('');
                 setPet('');
+                setStatus('');
             }
             Alert.alert('Appointment Added!');
             navigation.navigate('Appointment');

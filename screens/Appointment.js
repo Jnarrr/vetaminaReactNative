@@ -39,8 +39,8 @@ const AppointmentScreen = ( {navigation} ) => {
                 <TouchableOpacity style = {styles.item} onPress={ () => navigation.navigate('AppointmentDetails', {item:item})}>
                     <Text style = {styles.header2}>{item.clinic_name}</Text>
                     <Text style = {styles.divider}>________________________________</Text>
-                    <Text style = {styles.description}>{item.date}</Text>
-                    <Text style = {styles.description}>{item.time}</Text>
+                    <Text style = {styles.description}>{item.date}{'          '}{item.time}</Text>
+                    <Text style = {styles.description}>Status: {item.status}</Text>
                 </TouchableOpacity>
                 
                 )}
@@ -84,7 +84,7 @@ const styles = StyleSheet.create({
     description2: {
     fontSize: 18,
     color: 'black',
-    marginTop: -25,
+    marginTop: -23,
     marginLeft: 125
     },
     divider: {
