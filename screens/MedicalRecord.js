@@ -1,9 +1,33 @@
-import React from 'react';
-import {View, Text, StyleSheet, TouchableOpacity, Image, ScrollView} from 'react-native';
+import React, { useEffect, useState } from 'react';
+import {View, Text, StyleSheet, ScrollView, TouchableOpacity, Image, ActivityIndicator, FlatList} from 'react-native';
 
 const MedicalRecordScreen = ( {navigation, route} ) => {
     var pet_ID = route.params.petID;
     var pet_NAME = route.params.petNAME;
+
+    const [isLoading, setLoading] = useState(true);
+    const [data, setData] = useState([]);
+
+    const getRecords = async () => {
+        try {
+        const response = await fetch(`http://localhost:8000/api/medicalrecord/${pet_ID}`);
+        const json = await response.json();
+        setData(json.medical_records);
+        } catch (error) {
+        console.error(error);
+        } finally {
+        setLoading(false);
+        }
+    }
+
+    const refresh =  () => {
+        setLoading(true);
+        getRecords();
+    }
+
+    useEffect(() => {
+        getRecords();
+    }, []); 
 
     return(
         <View style = { styles.body }>
@@ -11,11 +35,31 @@ const MedicalRecordScreen = ( {navigation, route} ) => {
                 <Image source = { require('../images/back.png')} style = {styles.back}/>
             </TouchableOpacity>
 
-            <ScrollView style = {styles.whiteBox}>
+            <View style = {styles.whiteBox}>
                 <Text style = { styles.header }>Medical Record</Text>
                 <Text style = { styles.petText }>ID: {pet_ID}</Text>
                 <Text style = { styles.petText }>name: {pet_NAME}</Text>
-            </ScrollView>
+                {isLoading ? <ActivityIndicator/> : (
+                <FlatList
+                    style = {{ height: 450 }}
+                    data={data}
+                    keyExtractor={({ id }, index) => id}
+                    renderItem={({ item }) => (
+                    <View>
+                        <Text style = {styles.petText}>{item.date}</Text>
+                        <Text style = {styles.petText}>{item.Weight}</Text>
+                        <Text style = {styles.petText}>{item.Against_Manufacturer_LotNo}</Text>
+                        <Text style = {styles.petText}>{item.vet_name}</Text>
+                        <Text style = {styles.petText}>{item.pet_sex}</Text>
+                    </View>
+                    )}
+                />
+                )}
+            </View>
+            <TouchableOpacity style = {styles.refresh} onPress={ refresh }>
+                <Text style = {{ fontSize: 16, color: 'white' }}>Refresh</Text>
+            </TouchableOpacity>
+            
 
         </View>
     );
@@ -32,11 +76,6 @@ const styles = StyleSheet.create({
         height: 30,
         marginLeft: 15,
         marginTop: 30
-    },
-    header:{
-        fontSize: 20,
-        color: 'black',
-        fontWeight: 'bold'
     },
     header: {
         fontSize: 30,
@@ -75,6 +114,17 @@ const styles = StyleSheet.create({
         borderRadius: 5,
         alignSelf: 'center',
         marginTop: 20,
+    },
+    refresh: {
+        position: 'absolute',
+        width: 100,
+        height: 50,
+        alignItems: 'center',
+        justifyContent: 'center',
+        left: 30,
+        bottom: 20,
+        backgroundColor: 'brown',
+        borderRadius: 50,
     },
 })
 
