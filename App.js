@@ -21,6 +21,7 @@ import ProfileScreen from './screens/Profile';
 import PetDetailsScreen from './screens/PetDetails';
 import AppointmentDetailsScreen from './screens/AppointmentDetails';
 import ProfileDetailsScreen from './screens/ProfileDetails';
+import MedicalRecordScreen from './screens/MedicalRecord';
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -72,9 +73,10 @@ const MyStack = () => {
         <Stack.Screen name="ClinicDetails" component={ ClinicDetailsScreen } options = {{ title: 'Clinic Details', headerShown: false }} />
         <Stack.Screen name="AddPet" component={ AddPetScreen } options = {{ title: 'Add Pet' }} />
         <Stack.Screen name="Profile" component={ ProfileScreen } options = {{ title: 'Profile' }} />
-        <Stack.Screen name="PetDetails" component={ PetDetailsScreen } options = {{ title: 'Pet Details' }} />
+        <Stack.Screen name="PetDetails" component={ PetDetailsScreen } options = {{ title: 'Pet Details', headerShown: false }} />
         <Stack.Screen name="AppointmentDetails" component={ AppointmentDetailsScreen } options = {{ title: 'Appointment Details' }} />
         <Stack.Screen name="ProfileDetails" component={ ProfileDetailsScreen } options = {{ title: 'Profile Details' }} />
+        <Stack.Screen name="MedicalRecord" component={ MedicalRecordScreen } options = {{ title: 'Medical Record' }} />
       </Stack.Navigator>
     </NavigationContainer>
   );

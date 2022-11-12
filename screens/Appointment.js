@@ -32,12 +32,15 @@ const AppointmentScreen = ( {navigation} ) => {
             <Text style = { styles.header }>Your Appointments</Text>
             {isLoading ? <ActivityIndicator/> : (
             <FlatList
-                style = {{ height: 550 }}
+                style = {{ height: 450 }}
                 data={data}
                 keyExtractor={({ id }, index) => id}
                 renderItem={({ item }) => (
-                <TouchableOpacity onPress={ () => navigation.navigate('AppointmentDetails', {item:item})}>
-                    <Text style = {styles.petText}>{item.procedure}, {item.date}, {item.time}</Text>
+                <TouchableOpacity style = {styles.item} onPress={ () => navigation.navigate('AppointmentDetails', {item:item})}>
+                    <Text style = {styles.header2}>{item.clinic_name}</Text>
+                    <Text style = {styles.divider}>________________________________</Text>
+                    <Text style = {styles.description}>{item.date}</Text>
+                    <Text style = {styles.description}>{item.time}</Text>
                 </TouchableOpacity>
                 
                 )}
@@ -57,10 +60,37 @@ const styles = StyleSheet.create({
     color: 'rgb(73, 80, 74)',
     fontWeight: 'bold'
     },
+    item: {
+    backgroundColor: 'white',
+    padding: 20,
+    marginVertical: 8,
+    borderRadius: 8,
+    height: 120,
+    },
     petText: {
     fontSize: 30,
     color: 'black',
     fontWeight: 'bold'
+    },
+    header2: {
+    fontSize: 22,
+    color: 'rgb(80, 140, 2)',
+    fontWeight: 'bold'
+    },
+    description: {
+    fontSize: 18,
+    color: 'black',
+    },
+    description2: {
+    fontSize: 18,
+    color: 'black',
+    marginTop: -25,
+    marginLeft: 125
+    },
+    divider: {
+    fontSize: 20,
+    color: 'gray',
+    marginTop: -20,
     },
     refresh: {
     position: 'absolute',
@@ -69,7 +99,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     left: 30,
-    bottom: 30,
+    bottom: -50,
     backgroundColor: 'brown',
     borderRadius: 50,
     },
