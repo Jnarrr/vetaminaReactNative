@@ -88,7 +88,7 @@ const styles = StyleSheet.create({
     },
     whiteBox: {
         width: 360,
-        height: 300,
+        height: 500,
         marginTop: 200,
         padding: 30,
         borderTopLeftRadius: 30,
