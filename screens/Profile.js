@@ -16,7 +16,7 @@ const ProfileScreen = ( {navigation} ) => {
                     <Text style = {{ color: '#181D27', marginLeft: 60, marginTop: -45, fontWeight: 'bold' }}>My Account</Text>
                     <Text style = {{ color: 'gray', marginLeft: 60, marginTop: 3, }}>Make changes to your account</Text>
                 </TouchableOpacity>
-                <TouchableOpacity style = {{ marginBottom: 25 }} onPress={ () => Alert.alert("Change password") }>
+                <TouchableOpacity style = {{ marginBottom: 25 }} onPress={ () => navigation.navigate('ChangePassword') }>
                     <Image source = { require('../images/changepw.png')} style = {styles.profileIcon}/>
                     <Text style = {{ color: '#181D27', marginLeft: 60, marginTop: -45, fontWeight: 'bold' }}>Change Password</Text>
                     <Text style = {{ color: 'gray', marginLeft: 60, marginTop: 3, }}>Manage your account password</Text>

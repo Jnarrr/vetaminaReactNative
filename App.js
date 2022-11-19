@@ -22,6 +22,8 @@ import PetDetailsScreen from './screens/PetDetails';
 import AppointmentDetailsScreen from './screens/AppointmentDetails';
 import ProfileDetailsScreen from './screens/ProfileDetails';
 import MedicalRecordScreen from './screens/MedicalRecord';
+import ChangePasswordScreen from './screens/ChangePassword';
+import ChangePasswordNewScreen from './screens/ChangePasswordNew';
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -77,6 +79,8 @@ const MyStack = () => {
         <Stack.Screen name="AppointmentDetails" component={ AppointmentDetailsScreen } options = {{ title: 'Appointment Details' }} />
         <Stack.Screen name="ProfileDetails" component={ ProfileDetailsScreen } options = {{ title: 'Profile Details' }} />
         <Stack.Screen name="MedicalRecord" component={ MedicalRecordScreen } options = {{ title: 'Medical Record', headerShown: false }} />
+        <Stack.Screen name="ChangePassword" component={ ChangePasswordScreen } options = {{ title: 'Change Password', headerShown: false }} />
+        <Stack.Screen name="ChangePasswordNew" component={ ChangePasswordNewScreen } options = {{ title: 'Change Password', headerShown: false }} />
       </Stack.Navigator>
     </NavigationContainer>
   );

@@ -1,46 +1,33 @@
 import React, { useState } from 'react';
 import {View, Button, Text, Alert, StyleSheet, TextInput, ScrollView, Image, TouchableOpacity} from 'react-native';
-import CheckBox from '@react-native-community/checkbox';
-import { NavigationContainer } from '@react-navigation/native';
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
-const LoginScreen = ( {navigation} ) => {
-    const [username, setUsername] = useState('');
-    const [checkValidUsername, setCheckValidUsername] = useState(false);
+const ChangePasswordNewScreen = ( {navigation} ) => {
     const [password, setPassword] = useState('');
     const [checkValidPassword, setCheckValidPassword] = useState(false);
     const [isSelected, setSelection] = useState(false);
 
-    const verifyLogin = async () => {
-        await fetch('http://localhost:8000/api/customerlogin', {
-          method:'POST',
-          headers:{
-            'Accept':'application/json',
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify({'username':username, 'password':password})
-        }).then(res => res.json())
-        .then(resData =>{
-          if ("error" in resData) {
-            Alert.alert('Error', 'Incorrect Username or Password')
-          } else {
-            //console.log(resData)
-            global.id = resData.id
-            global.username = resData.username
-            global.password = resData.password
-            global.birthdate = resData.birthdate
-            global.email = resData.email
-            global.mobile_number = resData.mobile_number
-            navigation.navigate('tabNavigator')
-          }
-        })
-    }
+    let x = global.id;
 
-    const handleCheckUsername = text => {
-        if (text.length < 1){
-            setCheckValidUsername(true);
-        }else{
-            setCheckValidUsername(false);
+    const updatePassword = async () => {
+        try{
+            const response = await fetch(`http://localhost:8000/api/update-customeruser/${x}`, {
+                method: 'PUT',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    password: password,
+                })
+            });
+            if ((response).status === 201) {
+                setPassword('');
+            }
+        } catch (error) {
+        console.error(error);
+        } finally {
+        Alert.alert('Password Updated!');
+        navigation.navigate('Profile');
         }
     }
 
@@ -56,36 +43,18 @@ const LoginScreen = ( {navigation} ) => {
         <View style = { styles.body }>
             <Image source = { require('../images/paw.png')} style = {styles.paw}/>
             <Image source = { require('../images/bone.png')} style = {styles.bone}/>
-            <TouchableOpacity activeOpacity={.5} onPress={ () => navigation.navigate('Welcome')} style = {{ marginBottom: -80 }}>
+            <TouchableOpacity activeOpacity={.5} onPress={ () => navigation.goBack(null)} style = {{ marginBottom: -80 }}>
                 <Image source = { require('../images/back.png')} style = {styles.back}/>
             </TouchableOpacity>
 
             <ScrollView style = {styles.whiteBox}>
-            <Text style = { styles.header }>Login</Text>
-
-            <TextInput 
-            style = { styles.input }
-            onChangeText = { (text) => [handleCheckUsername(text), setUsername(text)] }
-            placeholder='Enter Username'
-            placeholderTextColor= 'gray'
-            maxLength={15} 
-            />
-            <Image source = { require('../images/userIcon.png')} style = {styles.userIcon}/>
-            {
-            checkValidUsername ? (
-                <Text style = {styles.textFailed}>Username is Required</Text>
-                ) : (
-                <Text style = {styles.textFailed}> </Text>
-            )
-            }
-
+            <Text style = { styles.header }>Change Password</Text>
 
             <TextInput 
             style = { styles.input }
             onChangeText = { (text) => [handleCheckPassword(text), setPassword(text)] }
-            placeholder='Enter Password'
+            placeholder='New Password'
             placeholderTextColor= 'gray'
-            maxLength={15} 
             secureTextEntry = {true}
             />
             <Image source = { require('../images/password.png')} style = {styles.userIcon}/>
@@ -97,25 +66,9 @@ const LoginScreen = ( {navigation} ) => {
             )
             }
 
-            <CheckBox
-            value={isSelected}
-            onValueChange={setSelection}
-            style={styles.checkbox}
-            tintColors={{ true: 'green', false: 'gray' }}
-            />
-            <Text style={styles.label}>Remember me</Text>
-
-            {/*<Text>Is CheckBox selected: {isSelected ? "👍" : "👎"}</Text>*/}
-
-            <TouchableOpacity activeOpacity={.6} style = { styles.btn } onPress={ verifyLogin }>
-                <Text style = {styles.btnText}>Login</Text>
+            <TouchableOpacity activeOpacity={.6} style = { styles.btn } onPress={ updatePassword }>
+                <Text style = {styles.btnText}>Change Password</Text>
             </TouchableOpacity>
-
-            <TouchableOpacity>
-            <Text style = {styles.btnText2}>Forgot Password</Text>
-            </TouchableOpacity>
-
-            
 
             </ScrollView>
         </View>
@@ -228,4 +181,4 @@ const styles = StyleSheet.create({
     },
 });
 
-export default LoginScreen;
+export default ChangePasswordNewScreen;
