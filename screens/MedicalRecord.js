@@ -39,7 +39,7 @@ const MedicalRecordScreen = ( {navigation, route} ) => {
                 <Text style = { styles.header }>Medical Record</Text>
                 <Text style = { styles.petText }>ID: {pet_ID}</Text>
                 <Text style = { styles.petText }>name: {pet_NAME}</Text>
-                {isLoading ? <ActivityIndicator/> : (
+                {isLoading ? <ActivityIndicator size="large" color="green"></ActivityIndicator> : (
                 <FlatList
                     style = {{ height: 450 }}
                     data={data}
