@@ -7,7 +7,6 @@ const AppointmentDateAndTimeScreen = ( {navigation, route} ) => {
     const [procedure, setProcedure] = useState('');
     const [date, setDate] = useState('');
     const [time, setTime] = useState('');
-    const [pet, setPet] = useState('');
     const [status, setStatus] = useState('Waiting for Approval');
 
     //list
@@ -20,16 +19,9 @@ const AppointmentDateAndTimeScreen = ( {navigation, route} ) => {
     const [petsName, setpetsName] = useState(null);
     const [pets, setPets] = useState(null);
 
-    const drpdata = [
-        { label: 'Item 1', value: '1' },
-        { label: 'Item 2', value: '2' },
-        { label: 'Item 3', value: '3' },
-        { label: 'Item 4', value: '4' },
-        { label: 'Item 5', value: '5' },
-        { label: 'Item 6', value: '6' },
-        { label: 'Item 7', value: '7' },
-        { label: 'Item 8', value: '8' },
-    ];
+    //fix dropdown
+    const [petselection, setPetSelection] = useState([]);
+    const [petselectedID, setPetSelectedID] = useState([]);
 
     var userID = global.id;
     var clinic_ID = route.params.clinicID;
@@ -41,12 +33,19 @@ const AppointmentDateAndTimeScreen = ( {navigation, route} ) => {
         const response = await fetch(`http://localhost:8000/api/pets/${id}`);
         const json = await response.json();
         setPetsData(json.pets);
+        const petSelection = json.pets.map((pet) => ({
+            label: pet.pet_name,
+            value: pet.id,
+        }));
+        setPetSelection(petSelection);
+        //let tempArray = [];
+        //tempArray.push({label: petsdata.pet_name, value: petsdata.id});
         } catch (error) {
         console.error(error);
         } finally {
         setLoading(false);
         }
-      }
+    }
 
     const getAppointments = async () => {
         try {
@@ -65,7 +64,7 @@ const AppointmentDateAndTimeScreen = ( {navigation, route} ) => {
         getPets();
     }, []);
 
-    const dropDrown = () =>{
+    /*const dropDrown = () =>{
         var count = Object.keys(petsdata).length;
         let PetsArray = [];
         for (var i = 0; i < count; i++) {
@@ -75,7 +74,7 @@ const AppointmentDateAndTimeScreen = ( {navigation, route} ) => {
         });
         }
         setPetsData(PetsArray);
-    }
+    }*/
 
     const AddAppointmentBtn = async () => {
         try{
@@ -93,7 +92,7 @@ const AppointmentDateAndTimeScreen = ( {navigation, route} ) => {
                     procedure: procedure,
                     date: date,
                     time: time,
-                    pet: pet,
+                    pet: petselectedID,
                     status: status,
                 })
             });
@@ -143,32 +142,26 @@ const AppointmentDateAndTimeScreen = ( {navigation, route} ) => {
             onFocus={() => setIsFocus(true)}
             onBlur={() => setIsFocus(false)}
             />
-            <TextInput 
-            style = { styles.input }
-            onChangeText = { (text) => [setPet(text)] }
-            placeholder='Enter Pet'
-            placeholderTextColor= 'gray'
-            maxLength={15} 
-            />
             <Dropdown
             style={[styles.dropdown, isFocus && { borderColor: 'green' }]}
             placeholderStyle={styles.placeholderStyle}
             selectedTextStyle={styles.selectedTextStyle}
             inputSearchStyle={styles.inputSearchStyle}
             iconStyle={styles.iconStyle}
-            data={petsdata}
+            data={petselection}
             search
             maxHeight={300}
             labelField="label"
             valueField="value"
-            placeholder={!isFocus ? 'Select item' : '...'}
+            placeholder={!isFocus ? 'Select Pet' : '...'}
             searchPlaceholder="Search..."
             value={pets}
             onFocus={() => setIsFocus(true)}
             onBlur={() => setIsFocus(false)}
             onChange={item => {
-                setPetsData(item.value);
                 setpetsName(item.label);
+                //petsdata.find(pet => pet.id === item.value);
+                setPetSelectedID(item.value);
                 setIsFocus(false);
             }}
             />

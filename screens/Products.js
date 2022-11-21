@@ -30,7 +30,7 @@ const ProductsScreen = ( {navigation} ) => {
     }, []);    
 
     return(
-        <View style = {{ flex: 1, padding: 30}}>
+        <View style = {{ padding: 30 }}>
             {isLoading ? <ActivityIndicator/> : (
             <FlatList
                 style = {{ height: 450 }}
@@ -47,6 +47,10 @@ const ProductsScreen = ( {navigation} ) => {
                 numColumns = {colNum}
             />
             )}
+
+          <TouchableOpacity style = {styles.refresh} onPress={ refresh }>
+            <Text style = {{ fontSize: 16, color: 'white' }}>Refresh</Text>
+          </TouchableOpacity>
         </View>
     );
 };
@@ -87,6 +91,17 @@ const styles = StyleSheet.create({
     fontSize: 20,
     color: 'gray',
     marginTop: -20,
+    },
+    refresh: {
+    position: 'absolute',
+    width: 100,
+    height: 50,
+    alignItems: 'center',
+    justifyContent: 'center',
+    left: 30,
+    bottom: -86.5,
+    backgroundColor: 'brown',
+    borderRadius: 50,
     },
 });
 
