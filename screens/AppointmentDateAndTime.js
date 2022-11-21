@@ -1,12 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import {View, Button, Text, TextInput, StyleSheet, Alert} from 'react-native';
 import { Dropdown } from 'react-native-element-dropdown';
+import { DateTimePickerAndroid } from '@react-native-community/datetimepicker';
 
 const AppointmentDateAndTimeScreen = ( {navigation, route} ) => {
     //inputs
-    const [procedure, setProcedure] = useState('');
-    const [date, setDate] = useState('');
-    const [time, setTime] = useState('');
+    const [date, setDate] = useState(new Date());
     const [status, setStatus] = useState('Waiting for Approval');
 
     //list
@@ -19,14 +18,62 @@ const AppointmentDateAndTimeScreen = ( {navigation, route} ) => {
     const [petsName, setpetsName] = useState(null);
     const [pets, setPets] = useState(null);
 
+    //dropdown procedure
+    const [proceduredata, setProcedureData] = useState([]);
+    const [IsFocusProcedure, setIsFocusProcedure] = useState(false);
+    const [procedureselection, setProcedureSelection] = useState([]);
+    const [procedureValue, setProcedureValue] = useState([]);
+    const [procedure, setProcedure] = useState([]);
+
     //fix dropdown
     const [petselection, setPetSelection] = useState([]);
     const [petselectedID, setPetSelectedID] = useState([]);
+
+  
+    const onChange = (event, selectedDate) => {
+      const currentDate = selectedDate;
+      setDate(currentDate);
+    };
+  
+    const showMode = (currentMode) => {
+        DateTimePickerAndroid.open({
+            value: date,
+            onChange,
+            mode: currentMode,
+            is24Hour: true,
+        }, 
+        );
+    };
+
+    const showDatepicker = () => {
+        showMode('date');
+    };
+    
+    const showTimepicker = () => {
+        showMode('time');
+    };
 
     var userID = global.id;
     var clinic_ID = route.params.clinicID;
     var clinic_NAME = route.params.clinicNAME;
     var clinic_ADDRESS = route.params.clinicADDRESS;
+
+    const getProcedures = async () => {
+        try {
+        const response = await fetch(`http://localhost:8000/api/services/${clinic_ID}`);
+        const json = await response.json();
+        setProcedureData(json.services);
+        const procedureSelection = json.services.map((procedures) => ({
+            label: procedures.service_name,
+            value: procedures.service_name,
+        }));
+        setProcedureSelection(procedureSelection);
+        } catch (error) {
+        console.error(error);
+        } finally {
+        setLoading(false);
+        }
+    }
 
     const getPets = async () => {
         try {
@@ -62,19 +109,8 @@ const AppointmentDateAndTimeScreen = ( {navigation, route} ) => {
     useEffect(() => {
         getAppointments();
         getPets();
+        getProcedures();
     }, []);
-
-    /*const dropDrown = () =>{
-        var count = Object.keys(petsdata).length;
-        let PetsArray = [];
-        for (var i = 0; i < count; i++) {
-        PetsArray.push({
-            value: petsdata[i].id,
-            label: petsdata[i].pet_name,
-        });
-        }
-        setPetsData(PetsArray);
-    }*/
 
     const AddAppointmentBtn = async () => {
         try{
@@ -90,17 +126,13 @@ const AppointmentDateAndTimeScreen = ( {navigation, route} ) => {
                     clinic_name: clinic_NAME,
                     clinic_address: clinic_ADDRESS,
                     procedure: procedure,
-                    date: date,
-                    time: time,
+                    date: date.toLocaleDateString(),
+                    time: date.toLocaleTimeString(),
                     pet: petselectedID,
                     status: status,
                 })
             });
             if ((response).status === 201) {
-                setProcedure('');
-                setDate('');
-                setTime('');
-                setPet('');
                 setStatus('');
             }
             Alert.alert('Appointment Added!');
@@ -119,29 +151,32 @@ const AppointmentDateAndTimeScreen = ( {navigation, route} ) => {
             <Text style = { styles.petText }>ID: {clinic_ID}</Text>
             <Text style = { styles.petText }>Clinic Name: {clinic_NAME}</Text>
             <Text style = { styles.petText }>Clinic Address: {clinic_ADDRESS}</Text>
-            <TextInput 
-            style = { styles.input }
-            onChangeText = { (text) => [setProcedure(text)] }
-            placeholder='Enter Procedure'
-            placeholderTextColor= 'gray'
-            maxLength={15} 
+            <Dropdown
+            style={[styles.dropdown, isFocus && { borderColor: 'green' }]}
+            placeholderStyle={styles.placeholderStyle}
+            selectedTextStyle={styles.selectedTextStyle}
+            inputSearchStyle={styles.inputSearchStyle}
+            iconStyle={styles.iconStyle}
+            data={procedureselection}
+            search
+            maxHeight={300}
+            labelField="label"
+            valueField="value"
+            placeholder={!isFocus ? 'Select Procedure' : '...'}
+            searchPlaceholder="Search..."
+            value={procedure}
+            onFocus={() => setIsFocusProcedure(true)}
+            onBlur={() => setIsFocusProcedure(false)}
+            onChange={item => {
+                setProcedureValue(item.value);
+                setIsFocusProcedure(false);
+            }}
             />
-            <TextInput 
-            style = { styles.input }
-            onChangeText = { (text) => [setDate(text)] }
-            placeholder='Enter Date'
-            placeholderTextColor= 'gray'
-            maxLength={15} 
-            />
-            <TextInput 
-            style = { [styles.input, isFocus && { borderColor: 'green' }] }
-            onChangeText = { (text) => [setTime(text)] }
-            placeholder='Enter Time'
-            placeholderTextColor= 'gray'
-            maxLength={15} 
-            onFocus={() => setIsFocus(true)}
-            onBlur={() => setIsFocus(false)}
-            />
+            <Button onPress={showDatepicker} title="Show date picker!" />
+            <Button onPress={showTimepicker} title="Show time picker!" />
+            <Text>selected: {date.toLocaleString()}</Text>
+            <Text>{date.toLocaleDateString()}</Text>
+            <Text>{date.toLocaleTimeString()}</Text>
             <Dropdown
             style={[styles.dropdown, isFocus && { borderColor: 'green' }]}
             placeholderStyle={styles.placeholderStyle}
