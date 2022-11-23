@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import {
     StyleSheet,
     Text,
@@ -13,6 +13,8 @@ import {
     Image,
     TouchableOpacity,
     ScrollView,
+    KeyboardAvoidingView,
+    Keyboard,
 } from 'react-native';
 
 const RegisterScreen = ( {navigation} ) => {
@@ -179,8 +181,11 @@ const RegisterScreen = ( {navigation} ) => {
             <TouchableOpacity onPress={ () => navigation.goBack(null)} style = {{ marginBottom: -80 }}>
                 <Image source = { require('../images/back.png')} style = {styles.back}/>
             </TouchableOpacity>
+
             
-            <ScrollView style = {styles.whiteBox}>
+            <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : 'height'} style={styles.whiteBox}>
+            <ScrollView>
+
             <Text style = {styles.header}>Sign Up</Text>
 
         
@@ -283,9 +288,14 @@ const RegisterScreen = ( {navigation} ) => {
             <TouchableOpacity style = { styles.btn } onPress={ RegisterUser }>
             <Text style = {styles.btnText}>Sign Up</Text>
             </TouchableOpacity>
-
-                
             </ScrollView>
+            </KeyboardAvoidingView>
+            <View style = {{ backgroundColor: 'white', 
+            width: 360,
+            height: 200, }}>
+
+            </View>
+            
 
         </View>
     );
@@ -334,8 +344,8 @@ const styles = StyleSheet.create({
     },
     whiteBox: {
     width: 360,
-    height: 700,
-    marginTop: 110,
+    height: 550,
+    marginTop: 50,
     borderTopLeftRadius: 30,
     borderTopRightRadius: 30,
     shadowOffset: {width: 6, height: 6},

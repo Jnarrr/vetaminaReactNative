@@ -52,17 +52,6 @@ const LoginScreen = ( {navigation} ) => {
         }
     }
 
-    const scrollComponent = useRef(null);
-
-  // const [ styleKeyboard, setStyleKeyboard ] = useState(true)
-  useEffect(() => {
-
-    Keyboard.addListener("keyboardDidShow", () => {
-      scrollComponent.current.scrollToEnd();
-    })
-
-  })
-
     return(
         <View style = { styles.body }>
             <Image source = { require('../images/paw.png')} style = {styles.paw}/>
@@ -72,12 +61,8 @@ const LoginScreen = ( {navigation} ) => {
             </TouchableOpacity>
 
                 
-            <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : 'height'}style={styles.whiteBox}>
-            <ScrollView 
-            showsVerticalScrollIndicator={false}
-            ref={scrollComponent}
-            
-            >
+            <KeyboardAvoidingView style={styles.whiteBox}>
+            <ScrollView>
             <Text style = { styles.header }>Login</Text>
 
             <TextInput 
@@ -129,7 +114,7 @@ const LoginScreen = ( {navigation} ) => {
             </TouchableOpacity>
 
             <TouchableOpacity>
-            <Text style = {styles.btnText2}>Forgot Password</Text>
+            <Text style = {styles.btnText2}></Text>
             </TouchableOpacity>
             </ScrollView>
             </KeyboardAvoidingView>
@@ -176,7 +161,7 @@ const styles = StyleSheet.create({
     },
     whiteBox: {
     width: 360,
-    height: 300,
+    height: 305,
     marginTop: 200,
     borderTopLeftRadius: 30,
     borderTopRightRadius: 30,
