@@ -22,6 +22,7 @@ const AppointmentDateAndTimeScreen = ( {navigation, route} ) => {
     const [proceduredata, setProcedureData] = useState([]);
     const [IsFocusProcedure, setIsFocusProcedure] = useState(false);
     const [procedureselection, setProcedureSelection] = useState([]);
+    const [procedureName, setprocedureName] = useState(null);
     const [procedureValue, setProcedureValue] = useState([]);
     const [procedure, setProcedure] = useState([]);
 
@@ -125,7 +126,7 @@ const AppointmentDateAndTimeScreen = ( {navigation, route} ) => {
                     clinic_id: clinic_ID,
                     clinic_name: clinic_NAME,
                     clinic_address: clinic_ADDRESS,
-                    procedure: procedure,
+                    procedure: procedureValue,
                     date: date.toLocaleDateString(),
                     time: date.toLocaleTimeString(),
                     pet: petselectedID,
@@ -168,6 +169,7 @@ const AppointmentDateAndTimeScreen = ( {navigation, route} ) => {
             onFocus={() => setIsFocusProcedure(true)}
             onBlur={() => setIsFocusProcedure(false)}
             onChange={item => {
+                setprocedureName(item.label);
                 setProcedureValue(item.value);
                 setIsFocusProcedure(false);
             }}

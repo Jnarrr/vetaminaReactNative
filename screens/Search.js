@@ -34,7 +34,7 @@ const SearchScreen = ( {navigation} ) => {
                 {/*<RadioButton/>*/}
                 {isLoading ? <ActivityIndicator/> : (
                 <FlatList
-                    style = {{ height: 550 }}
+                    style = {{ height: 450 }}
                     data={data}
                     keyExtractor={({ id }, index) => id}
                     renderItem={({ item }) => (
