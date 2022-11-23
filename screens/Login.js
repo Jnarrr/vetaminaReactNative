@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import {View, Button, Text, Alert, StyleSheet, TextInput, ScrollView, Image, TouchableOpacity} from 'react-native';
+import React, { useState, useRef, useEffect } from 'react';
+import {View, Button, Text, Alert, StyleSheet, TextInput, ScrollView, Image, TouchableOpacity, KeyboardAvoidingView, Keyboard} from 'react-native';
 import CheckBox from '@react-native-community/checkbox';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
@@ -52,6 +52,17 @@ const LoginScreen = ( {navigation} ) => {
         }
     }
 
+    const scrollComponent = useRef(null);
+
+  // const [ styleKeyboard, setStyleKeyboard ] = useState(true)
+  useEffect(() => {
+
+    Keyboard.addListener("keyboardDidShow", () => {
+      scrollComponent.current.scrollToEnd();
+    })
+
+  })
+
     return(
         <View style = { styles.body }>
             <Image source = { require('../images/paw.png')} style = {styles.paw}/>
@@ -60,7 +71,13 @@ const LoginScreen = ( {navigation} ) => {
                 <Image source = { require('../images/back.png')} style = {styles.back}/>
             </TouchableOpacity>
 
-            <ScrollView style = {styles.whiteBox}>
+                
+            <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : 'height'}style={styles.whiteBox}>
+            <ScrollView 
+            showsVerticalScrollIndicator={false}
+            ref={scrollComponent}
+            
+            >
             <Text style = { styles.header }>Login</Text>
 
             <TextInput 
@@ -86,7 +103,7 @@ const LoginScreen = ( {navigation} ) => {
             placeholder='Enter Password'
             placeholderTextColor= 'gray'
             maxLength={15} 
-            secureTextEntry = {true}
+            secureTextEntry
             />
             <Image source = { require('../images/password.png')} style = {styles.userIcon}/>
             {
@@ -114,10 +131,15 @@ const LoginScreen = ( {navigation} ) => {
             <TouchableOpacity>
             <Text style = {styles.btnText2}>Forgot Password</Text>
             </TouchableOpacity>
+            </ScrollView>
+            </KeyboardAvoidingView>
+            <View style = {{ backgroundColor: 'white', 
+            width: 360,
+            height: 300, }}>
+
+            </View>
 
             
-
-            </ScrollView>
         </View>
     );
 };
