@@ -21,6 +21,17 @@ const PetDetailsScreen = ( {navigation, route} ) => {
                 <Text style = {styles.btnText}>View Medical Record</Text>
             </TouchableOpacity>
 
+            <TouchableOpacity style = { styles.btn } onPress={ () => navigation.navigate('EditPetDetails', {
+                petNAME:route.params.item.pet_name,
+                petTYPE:route.params.item.pet_type,
+                petSEX:route.params.item.pet_sex,
+                petBREED:route.params.item.pet_breed,
+                petBIRTHDATE:route.params.item.pet_birthdate,
+                petWEIGHT:route.params.item.pet_weight, 
+                petDESC:route.params.item.pet_description}) }>
+                <Text style = {styles.btnText}>EditPetDetails</Text>
+            </TouchableOpacity>
+
             
 
             </ScrollView>

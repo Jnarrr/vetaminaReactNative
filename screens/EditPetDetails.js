@@ -1,9 +1,16 @@
-import React, { useState, useEffect } from 'react';
+import React, {useState} from 'react';
 import {View, Button, Image, Text, StyleSheet, TextInput, ScrollView, Alert, TouchableOpacity} from 'react-native';
 import { Dropdown } from 'react-native-element-dropdown';
-import { DateTimePickerAndroid } from '@react-native-community/datetimepicker';
 
-const AddPetScreen = ( {navigation} ) => {
+const EditPetDetailsScreen = ( {navigation, route} ) => {
+    var pet_name = route.params.petNAME;
+    var pet_type = route.params.petTYPE;
+    var pet_sex = route.params.petSEX;
+    var pet_breed = route.params.petBREED;
+    var pet_birthdate = route.params.petBIRTHDATE;
+    var pet_weight = route.params.petWEIGHT;
+    var pet_description = route.params.petDESC;
+
     const [name, setName] = useState('');
     const [type, setType] = useState('');
     const [sex, setSex] = useState('');
@@ -91,49 +98,8 @@ const AddPetScreen = ( {navigation} ) => {
         showMode('date');
     };
 
-    var userID = global.id;
-
-    const AddPetBtn = async () => {
-        try{
-            const response = await fetch('http://localhost:8000/api/add-pets', {
-                method: 'POST',
-                headers: {
-                    Accept: 'application/json',
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({
-                    user_id: userID,
-                    pet_name: name,
-                    pet_type: type,
-                    pet_sex: sex,
-                    pet_breed: breed,
-                    pet_birthdate: date.toLocaleDateString(),
-                    pet_weight: weight,
-                    pet_description: description
-                })
-            });
-            if ((response).status === 201) {
-                setName('');
-                setType('');
-                setSex('');
-                setBreed('');
-                setWeight('');
-                setDescription('');
-                //getPets();
-            }
-            Alert.alert('Pet Added!')
-            navigation.navigate('Pets');
-        const json = await response.json();
-        setData(json.pets);
-        } catch (error) {
-        console.error(error);
-        } finally {
-        setLoading(false);
-        }
-    }
-
-    return (
-    <View style = {{ padding: 30, justifyContent: 'center', justifyContent: 'center', alignItems: 'center' }}>
+    return(
+        <View style = {{ padding: 30, justifyContent: 'center', justifyContent: 'center', alignItems: 'center' }}>
         <ScrollView>
         <Text style = { styles.header }>Pet Information</Text>
         
@@ -143,6 +109,7 @@ const AddPetScreen = ( {navigation} ) => {
         placeholder='Enter Name'
         placeholderTextColor= 'gray'
         maxLength={15} 
+        value = {pet_name}
         />
         <Dropdown
         style={[styles.input, isFocuspetType && { borderColor: 'green' }]}
@@ -154,7 +121,7 @@ const AddPetScreen = ( {navigation} ) => {
         labelField="label"
         valueField="value"
         placeholder={!isFocuspetType ? 'Select Pet Type' : '...'}
-        value={type}
+        value={pet_type}
         onFocus={() => setIsFocuspetType(true)}
         onBlur={() => setIsFocuspetType(false)}
         onChange={item => {
@@ -172,7 +139,7 @@ const AddPetScreen = ( {navigation} ) => {
         labelField="label"
         valueField="value"
         placeholder={!isFocuspetSex ? 'Select Sex' : '...'}
-        value={sex}
+        value={pet_sex}
         onFocus={() => setIsFocuspetSex(true)}
         onBlur={() => setIsFocuspetSex(false)}
         onChange={item => {
@@ -191,7 +158,7 @@ const AddPetScreen = ( {navigation} ) => {
         valueField="value"
         search
         placeholder={!isFocuspetBreed ? 'Select Breed' : '...'}
-        value={breed}
+        value={pet_breed}
         onFocus={() => setIsFocuspetBreed(true)}
         onBlur={() => setIsFocuspetBreed(false)}
         onChange={item => {
@@ -199,8 +166,6 @@ const AddPetScreen = ( {navigation} ) => {
             setIsFocuspetBreed(false);
         }}
         />
-        <Button onPress={showDatepicker} title="Show date picker!" />
-        <Text style = {{ color: 'black' }}>{date.toLocaleDateString()}</Text>
         <TextInput 
         style = { styles.input }
         onChangeText = { (text) => [setWeight(text)] }
@@ -208,6 +173,7 @@ const AddPetScreen = ( {navigation} ) => {
         placeholderTextColor= 'gray'
         maxLength={15} 
         keyboardType={'number-pad'}
+        value = {pet_weight}
         />
         <TextInput 
         style = { styles.input }
@@ -215,106 +181,28 @@ const AddPetScreen = ( {navigation} ) => {
         placeholder='Enter Description'
         placeholderTextColor= 'gray'
         maxLength={15} 
+        value = {pet_description}
         />
         </ScrollView>
         
-        <TouchableOpacity style = {styles.addButton} onPress = { AddPetBtn }>
+        <TouchableOpacity style = {styles.addButton}>
             <Text style = { styles.addButtonText }>Finish</Text>
         </TouchableOpacity>
         
     </View>
     );
-}
+};
 
 const styles = StyleSheet.create({
-    pic: {
-    width: 150,
-    height: 150,
-    borderRadius: 10,
-    },
     header: {
-    fontSize: 30,
-    color: 'rgb(73, 80, 74)',
-    fontWeight: 'bold'
+        fontSize: 30,
+        color: '#504949',
+        fontWeight: 'bold'
     },
-    input: {
-    padding: 2,
-    width: 300,
-    height: 40,
-    marginBottom: 5,
-    marginTop: 5,
-    borderColor: 'gray',
-    borderBottomWidth: 1.5,
-    shadowRadius: 10,
-    fontSize: 16,
-    color: 'black',
+    petText:{
+        fontSize: 20,
+        color: 'black'
     },
-    inputDate: {
-    padding: 2,
-    width: 90,
-    height: 40,
-    marginBottom: 5,
-    marginTop: 5,
-    borderColor: 'gray',
-    borderBottomWidth: 1.5,
-    shadowRadius: 10,
-    fontSize: 16,
-    color: 'black',
-    },
-    inputDateRow: {
-    padding: 2,
-    width: 90,
-    height: 40,
-    marginBottom: 5,
-    marginTop: -45,
-    marginLeft: 105,
-    borderColor: 'gray',
-    borderBottomWidth: 1.5,
-    shadowRadius: 10,
-    fontSize: 16,
-    color: 'black',
-    },
-    inputDateRow2: {
-    padding: 2,
-    width: 90,
-    height: 40,
-    marginBottom: 5,
-    marginTop: -45,
-    marginLeft: 210,
-    borderColor: 'gray',
-    borderBottomWidth: 1.5,
-    shadowRadius: 10,
-    fontSize: 16,
-    color: 'black',
-    },
-    addButton: {
-    width: 110,
-    height: 40,
-    alignItems: 'center',
-    justifyContent: 'center',
-    alignSelf: 'center',
-    backgroundColor: '#15D005',
-    borderRadius: 50,
-    },
-    addButtonText:{
-    fontSize: 16,
-    color: 'white',
-    },
-    dropdown: {
-    height: 50,
-    borderColor: 'gray',
-    borderWidth: 0.5,
-    borderRadius: 8,
-    paddingHorizontal: 8,
-    },
-    placeholderStyle: {
-    fontSize: 16,
-    color: 'gray',
-    },
-    selectedTextStyle: {
-    fontSize: 16,
-    color: 'black',
-    },
-})
+});
 
-export default AddPetScreen;
+export default EditPetDetailsScreen;

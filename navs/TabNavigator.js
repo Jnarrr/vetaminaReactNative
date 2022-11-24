@@ -86,8 +86,7 @@ const TabNavigator = ({navigation}) => {
             </TouchableOpacity>),
           headerLeft: () => (
             <TouchableOpacity onPress={ () => navigation.navigate('Profile')} style = {{ marginLeft: 10 }}>
-                <View style = { styles.profileIcon }>
-                </View>
+                <Image source = { require('../images/userProfile.png')} style = {styles.userIcon}/>
             </TouchableOpacity>),
           tabBarIcon: ({ focused, color, size }) => (
             <Image
@@ -178,6 +177,11 @@ const styles = StyleSheet.create({
   height:40,
   borderWidth: 1,
   borderRadius: 50
+  },
+  userIcon: {
+  width:25,
+  height:32,
+  marginLeft: 10
   }
 });
 
