@@ -22,6 +22,7 @@ const PetDetailsScreen = ( {navigation, route} ) => {
             </TouchableOpacity>
 
             <TouchableOpacity style = { styles.btn } onPress={ () => navigation.navigate('EditPetDetails', {
+                petID:route.params.item.id,
                 petNAME:route.params.item.pet_name,
                 petTYPE:route.params.item.pet_type,
                 petSEX:route.params.item.pet_sex,

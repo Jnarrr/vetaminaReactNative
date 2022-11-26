@@ -23,13 +23,11 @@ const TabNavigator = ({navigation}) => {
         component={HomeScreen} 
         options = {{ 
           headerRight: () => (
-            <TouchableOpacity onPress={ () => navigation.navigate('Notifications')}>
-                <Image source = { require('../images/notification.png')} style = {styles.icon}/>
-            </TouchableOpacity>),
+            <Image source = { require('../images/heartLogo.png')} style = {styles.icon}/>
+          ),
           headerLeft: () => (
             <TouchableOpacity onPress={ () => navigation.navigate('Profile')} style = {{ marginLeft: 10 }}>
-                <View style = { styles.profileIcon }>
-                </View>
+                <Image source = { require('../images/userProfile.png')} style = {styles.userIcon}/>
             </TouchableOpacity>),
           tabBarIcon: ({ focused, color, size }) => (
             <Image
@@ -52,13 +50,11 @@ const TabNavigator = ({navigation}) => {
         component={PetsScreen}
         options={{ 
           headerRight: () => (
-            <TouchableOpacity onPress={ () => navigation.navigate('Notifications')}>
-                <Image source = { require('../images/notification.png')} style = {styles.icon}/>
-            </TouchableOpacity>),
+            <Image source = { require('../images/heartLogo.png')} style = {styles.icon}/>
+          ),
           headerLeft: () => (
             <TouchableOpacity onPress={ () => navigation.navigate('Profile')} style = {{ marginLeft: 10 }}>
-                <View style = { styles.profileIcon }>
-                </View>
+                <Image source = { require('../images/userProfile.png')} style = {styles.userIcon}/>
             </TouchableOpacity>),
           tabBarIcon: ({ focused, color, size }) => (
             <Image
@@ -81,9 +77,8 @@ const TabNavigator = ({navigation}) => {
         component={AppointmentScreen} 
         options={{ 
           headerRight: () => (
-            <TouchableOpacity onPress={ () => navigation.navigate('Notifications')}>
-                <Image source = { require('../images/notification.png')} style = {styles.icon}/>
-            </TouchableOpacity>),
+            <Image source = { require('../images/heartLogo.png')} style = {styles.icon}/>
+          ),
           headerLeft: () => (
             <TouchableOpacity onPress={ () => navigation.navigate('Profile')} style = {{ marginLeft: 10 }}>
                 <Image source = { require('../images/userProfile.png')} style = {styles.userIcon}/>
@@ -109,13 +104,11 @@ const TabNavigator = ({navigation}) => {
         component={ProductsScreen} 
         options={{ 
           headerRight: () => (
-            <TouchableOpacity onPress={ () => navigation.navigate('Notifications')}>
-                <Image source = { require('../images/notification.png')} style = {styles.icon}/>
-            </TouchableOpacity>),
+            <Image source = { require('../images/heartLogo.png')} style = {styles.icon}/>
+          ),
           headerLeft: () => (
             <TouchableOpacity onPress={ () => navigation.navigate('Profile')} style = {{ marginLeft: 10 }}>
-                <View style = { styles.profileIcon }>
-                </View>
+                <Image source = { require('../images/userProfile.png')} style = {styles.userIcon}/>
             </TouchableOpacity>),
           tabBarIcon: ({ focused, color, size }) => (
             <Image
@@ -138,13 +131,11 @@ const TabNavigator = ({navigation}) => {
         component={SearchScreen} 
         options={{ 
           headerRight: () => (
-            <TouchableOpacity onPress={ () => navigation.navigate('Notifications')}>
-                <Image source = { require('../images/notification.png')} style = {styles.icon}/>
-            </TouchableOpacity>),
+            <Image source = { require('../images/heartLogo.png')} style = {styles.icon}/>
+          ),
           headerLeft: () => (
             <TouchableOpacity onPress={ () => navigation.navigate('Profile')} style = {{ marginLeft: 10 }}>
-                <View style = { styles.profileIcon }>
-                </View>
+                <Image source = { require('../images/userProfile.png')} style = {styles.userIcon}/>
             </TouchableOpacity>),
           tabBarIcon: ({ focused, color, size }) => (
             <Image
@@ -168,8 +159,8 @@ const TabNavigator = ({navigation}) => {
 
 const styles = StyleSheet.create({
   icon: {
-  width:25,
-  height:25,
+  width:30,
+  height:30,
   marginRight: 20,
   },
   profileIcon: {

@@ -5,7 +5,7 @@ const ProfileScreen = ( {navigation} ) => {
     return(
         <View style = {{ padding: 20 }}>
             <View style = {styles.box}>
-                <View style = { styles.profileIcon } />
+                <View style = {styles.profileIcon2}/>
                 <Image source = { require('../images/1paw.png')} style = {styles.paw}/>
                 <Text style = { styles.boxText }>{global.username}</Text>
                 <Text style = { styles.boxText2 }>{global.email}</Text>
@@ -53,7 +53,7 @@ const styles = StyleSheet.create({
     },
     boxText:{
         color: 'white',
-        marginLeft: 60,
+        marginLeft: 35,
         marginTop: -95,
         fontWeight: 'bold',
         fontSize: 16,
@@ -76,7 +76,7 @@ const styles = StyleSheet.create({
     },
     boxText2:{
         color: 'white',
-        marginLeft: 60,
+        marginLeft: 20,
         fontSize: 14,
     },
     paw:{
@@ -88,9 +88,10 @@ const styles = StyleSheet.create({
     profileIcon:{
         width:50,
         height:50,
-        borderWidth: 2,
-        borderRadius: 50,
-        borderColor: 'white'
+    },
+    profileIcon2:{
+        width:50,
+        height:50,
     }
 })
 

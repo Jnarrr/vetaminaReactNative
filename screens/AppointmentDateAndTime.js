@@ -149,7 +149,6 @@ const AppointmentDateAndTimeScreen = ( {navigation, route} ) => {
 
     return(
         <View style = {{ flex: 1 }}>
-            <Text style = { styles.petText }>ID: {clinic_ID}</Text>
             <Text style = { styles.petText }>Clinic Name: {clinic_NAME}</Text>
             <Text style = { styles.petText }>Clinic Address: {clinic_ADDRESS}</Text>
             <Dropdown

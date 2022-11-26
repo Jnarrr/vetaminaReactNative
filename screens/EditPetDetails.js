@@ -1,13 +1,13 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {View, Button, Image, Text, StyleSheet, TextInput, ScrollView, Alert, TouchableOpacity} from 'react-native';
 import { Dropdown } from 'react-native-element-dropdown';
 
 const EditPetDetailsScreen = ( {navigation, route} ) => {
+    var pet_id = route.params.petID;
     var pet_name = route.params.petNAME;
     var pet_type = route.params.petTYPE;
     var pet_sex = route.params.petSEX;
     var pet_breed = route.params.petBREED;
-    var pet_birthdate = route.params.petBIRTHDATE;
     var pet_weight = route.params.petWEIGHT;
     var pet_description = route.params.petDESC;
 
@@ -15,12 +15,27 @@ const EditPetDetailsScreen = ( {navigation, route} ) => {
     const [type, setType] = useState('');
     const [sex, setSex] = useState('');
     const [breed, setBreed] = useState('');
-    const [date, setBirthdate] = useState(new Date());
     const [weight, setWeight] = useState('');
     const [description, setDescription] = useState('');
 
     const [isLoading, setLoading] = useState(true);
-    const [data, setData] = useState([]);
+    const [petdata, setData] = useState([]);
+
+    const getPetInfo = async () => {
+        try {
+        const response = await fetch(`http://localhost:8000/api/edit-pets/${pet_id}`);
+        const json = await response.json();
+        setData(json.pet);
+        } catch (error) {
+        console.error(error);
+        } finally {
+        setLoading(false);
+        }
+    }
+
+    useEffect(() => {
+        getPetInfo();
+    }, []);
 
     //dropdown
     const petType = [
@@ -79,37 +94,51 @@ const EditPetDetailsScreen = ( {navigation, route} ) => {
     ];
     const [isFocuspetBreed, setIsFocuspetBreed] = useState(false);
 
-    const onChange = (event, selectedDate) => {
-        const currentDate = selectedDate;
-        setBirthdate(currentDate);
-    };
-
-    const showMode = (currentMode) => {
-        DateTimePickerAndroid.open({
-            value: date,
-            onChange,
-            mode: currentMode,
-            is24Hour: true,
-        }, 
-        );
-    };
-
-    const showDatepicker = () => {
-        showMode('date');
-    };
+    const updatePet = async () => {
+        try{
+            const response = await fetch(`http://localhost:8000/api/update-pets/${pet_id}`, {
+                method: 'PUT',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    pet_name: name,
+                    pet_type: type,
+                    pet_sex: sex,
+                    pet_breed: breed,
+                    pet_weight: weight,
+                    pet_description: description
+                })
+            });
+            if ((response).status === 201) {
+                setName('');
+                setWeight('');
+                setDescription('');
+            }
+        } catch (error) {
+        console.error(error);
+        } finally {
+        console.log(name,type,sex,breed,weight,description);
+        Alert.alert('Pet Information Updated!');
+        navigation.navigate('Pets');
+        }
+    }
 
     return(
         <View style = {{ padding: 30, justifyContent: 'center', justifyContent: 'center', alignItems: 'center' }}>
         <ScrollView>
         <Text style = { styles.header }>Pet Information</Text>
+
         
         <TextInput 
         style = { styles.input }
         onChangeText = { (text) => [setName(text)] }
         placeholder='Enter Name'
         placeholderTextColor= 'gray'
-        maxLength={15} 
-        value = {pet_name}
+        maxLength={15}
+        value = {name}
+        defaultValue = {pet_name}
         />
         <Dropdown
         style={[styles.input, isFocuspetType && { borderColor: 'green' }]}
@@ -121,7 +150,8 @@ const EditPetDetailsScreen = ( {navigation, route} ) => {
         labelField="label"
         valueField="value"
         placeholder={!isFocuspetType ? 'Select Pet Type' : '...'}
-        value={pet_type}
+        value={type}
+        defaultValue = {pet_type}
         onFocus={() => setIsFocuspetType(true)}
         onBlur={() => setIsFocuspetType(false)}
         onChange={item => {
@@ -138,8 +168,9 @@ const EditPetDetailsScreen = ( {navigation, route} ) => {
         maxHeight={300}
         labelField="label"
         valueField="value"
-        placeholder={!isFocuspetSex ? 'Select Sex' : '...'}
-        value={pet_sex}
+        placeholder={!isFocuspetSex ? 'Select Pet Sex' : '...'}
+        value={sex}
+        defaultValue = {pet_sex}
         onFocus={() => setIsFocuspetSex(true)}
         onBlur={() => setIsFocuspetSex(false)}
         onChange={item => {
@@ -157,8 +188,9 @@ const EditPetDetailsScreen = ( {navigation, route} ) => {
         labelField="label"
         valueField="value"
         search
-        placeholder={!isFocuspetBreed ? 'Select Breed' : '...'}
-        value={pet_breed}
+        placeholder={!isFocuspetBreed ? 'Select Pet Breed' : '...'}
+        value={breed}
+        defaultValue = {pet_breed}
         onFocus={() => setIsFocuspetBreed(true)}
         onBlur={() => setIsFocuspetBreed(false)}
         onChange={item => {
@@ -173,7 +205,8 @@ const EditPetDetailsScreen = ( {navigation, route} ) => {
         placeholderTextColor= 'gray'
         maxLength={15} 
         keyboardType={'number-pad'}
-        value = {pet_weight}
+        value = {weight}
+        defaultValue = {pet_weight}
         />
         <TextInput 
         style = { styles.input }
@@ -181,11 +214,12 @@ const EditPetDetailsScreen = ( {navigation, route} ) => {
         placeholder='Enter Description'
         placeholderTextColor= 'gray'
         maxLength={15} 
-        value = {pet_description}
+        value = {description}
+        defaultValue = {pet_description}
         />
         </ScrollView>
         
-        <TouchableOpacity style = {styles.addButton}>
+        <TouchableOpacity style = {styles.addButton} onPress = { updatePet }>
             <Text style = { styles.addButtonText }>Finish</Text>
         </TouchableOpacity>
         

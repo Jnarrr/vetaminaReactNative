@@ -25,6 +25,7 @@ import MedicalRecordScreen from './screens/MedicalRecord';
 import ChangePasswordScreen from './screens/ChangePassword';
 import ChangePasswordNewScreen from './screens/ChangePasswordNew';
 import EditPetDetailsScreen from './screens/EditPetDetails';
+import ProductDetailsScreen from './screens/ProductDetails';
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -70,7 +71,7 @@ const MyStack = () => {
               
         }} />
         <Stack.Screen name="AppointmentProcedure" component={ AppointmentProcedureScreen } options = {{ title: 'Select Procedure' }} />
-        <Stack.Screen name="AppointmentDateAndTime" component={ AppointmentDateAndTimeScreen } options = {{ title: 'Select Date and Time' }} />
+        <Stack.Screen name="AppointmentDateAndTime" component={ AppointmentDateAndTimeScreen } options = {{ title: 'Book Appointment' }} />
         <Stack.Screen name="AppointmentSelectPet" component={ AppointmentSelectPetScreen } options = {{ title: 'Select Pet' }} />
         <Stack.Screen name="Search" component={ SearchScreen } options = {{ title: 'Search' }} />
         <Stack.Screen name="Notifications" component={ NotificationScreen } options = {{ title: 'Notifications' }} />
@@ -81,6 +82,7 @@ const MyStack = () => {
         <Stack.Screen name="EditPetDetails" component={ EditPetDetailsScreen } options = {{ title: 'Edit Pet Details' }} />
         <Stack.Screen name="AppointmentDetails" component={ AppointmentDetailsScreen } options = {{ title: 'Appointment Details' }} />
         <Stack.Screen name="ProfileDetails" component={ ProfileDetailsScreen } options = {{ title: 'Profile Details' }} />
+        <Stack.Screen name="ProductDetails" component={ ProductDetailsScreen } options = {{ title: 'Product Details' }} />
         <Stack.Screen name="MedicalRecord" component={ MedicalRecordScreen } options = {{ title: 'Medical Record', headerShown: false }} />
         <Stack.Screen name="ChangePassword" component={ ChangePasswordScreen } options = {{ title: 'Change Password', headerShown: false }} />
         <Stack.Screen name="ChangePasswordNew" component={ ChangePasswordNewScreen } options = {{ title: 'Change Password', headerShown: false }} />

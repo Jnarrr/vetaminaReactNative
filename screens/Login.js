@@ -99,16 +99,6 @@ const LoginScreen = ( {navigation} ) => {
             )
             }
 
-            <CheckBox
-            value={isSelected}
-            onValueChange={setSelection}
-            style={styles.checkbox}
-            tintColors={{ true: 'green', false: 'gray' }}
-            />
-            <Text style={styles.label}>Remember me</Text>
-
-            {/*<Text>Is CheckBox selected: {isSelected ? "👍" : "👎"}</Text>*/}
-
             <TouchableOpacity activeOpacity={.6} style = { styles.btn } onPress={ verifyLogin }>
                 <Text style = {styles.btnText}>Login</Text>
             </TouchableOpacity>
@@ -161,7 +151,7 @@ const styles = StyleSheet.create({
     },
     whiteBox: {
     width: 360,
-    height: 305,
+    height: 280,
     marginTop: 200,
     borderTopLeftRadius: 30,
     borderTopRightRadius: 30,
