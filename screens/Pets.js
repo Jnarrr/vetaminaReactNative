@@ -84,7 +84,7 @@ const styles = StyleSheet.create({
     fontSize: 18,
     color: 'black',
     marginTop: -25,
-    marginLeft: 125
+    marginLeft: 150
     },
     divider: {
     fontSize: 20,
