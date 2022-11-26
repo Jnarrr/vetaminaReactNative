@@ -5,40 +5,26 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
 const ClinicDetailsScreen = ( {navigation, route} ) => {
-    const [username, setUsername] = useState('');
-    const [checkValidUsername, setCheckValidUsername] = useState(false);
-    const [password, setPassword] = useState('');
-    const [checkValidPassword, setCheckValidPassword] = useState(false);
-    const [isSelected, setSelection] = useState(false);
-
-    const handleCheckUsername = text => {
-        if (text.length < 1){
-            setCheckValidUsername(true);
-        }else{
-            setCheckValidUsername(false);
-        }
-    }
-
-    const handleCheckPassword = text => {
-        if (text.length < 8){
-            setCheckValidPassword(true);
-        }else{
-            setCheckValidPassword(false);
-        }
-    }
 
     return(
         <View style = { styles.body }>
-            <TouchableOpacity onPress={ () => navigation.goBack(null)}>
+            <Image source = { require('../images/paw.png')} style = {styles.paw}/>
+            <Image source = { require('../images/bone.png')} style = {styles.bone}/>
+            <TouchableOpacity activeOpacity={.5} onPress={ () => navigation.goBack()} style = {{ marginBottom: -80 }}>
                 <Image source = { require('../images/back.png')} style = {styles.back}/>
             </TouchableOpacity>
 
             <ScrollView style = {styles.whiteBox}>
             <Text style = { styles.header }>{route.params.item.clinic_name}</Text>
-            <Text style = { styles.petText }>ID: {route.params.item.id}</Text>
-            <Text style = { styles.petText }>{route.params.item.phone_number}</Text>
-            <Text style = { styles.petText }>{route.params.item.address}</Text>
-            <Text style = { styles.petText }>{route.params.item.email}</Text>
+            <Image source = { require('../images/pin.png')} style = {styles.pin}/>
+            <Text style = { styles.semiHeader }>Address</Text>
+            <Text style = { styles.description }>{route.params.item.address}</Text>
+            <Image source = { require('../images/email.png')} style = {styles.email}/>
+            <Text style = { styles.semiHeader }>Email</Text>
+            <Text style = { styles.description }>{route.params.item.email}</Text>
+            <Image source = { require('../images/phone.png')} style = {styles.email}/>
+            <Text style = { styles.semiHeader }>Phone Number</Text>
+            <Text style = { styles.description }>{route.params.item.phone_number}</Text>
 
             <TouchableOpacity style = { styles.btn } onPress={ () => navigation.navigate('AppointmentDateAndTime', {clinicID:route.params.item.id, clinicNAME:route.params.item.clinic_name, clinicADDRESS:route.params.item.address}) }>
                 <Text style = {styles.btnText}>Appoint now</Text>
@@ -58,11 +44,26 @@ const styles = StyleSheet.create({
     flex: 1,
     fontFamily: 'Roboto',
     },
-    userIcon: {
-    width:20,
-    height:20,
-    marginLeft: 300,
-    marginTop: -35
+    pin:{
+    width: 18,
+    height: 22,
+    },
+    email:{
+    width: 25,
+    height: 22,
+    },
+    semiHeader:{
+    color: 'rgb(73, 80, 74)',
+    marginTop: -26,
+    marginLeft: 30,
+    fontSize: 24,
+    fontWeight: 'bold',
+    marginBottom: 10,
+    },
+    description:{
+    fontSize: 20,
+    color: 'black',
+    marginBottom: 10,
     },
     paw: {
     width: 300,
@@ -80,12 +81,13 @@ const styles = StyleSheet.create({
     width: 30,
     height: 30,
     marginLeft: 15,
-    marginTop: 30
+    marginTop: -150
     },
     whiteBox: {
     width: 360,
     height: 300,
     marginTop: 200,
+    padding: 30,
     borderTopLeftRadius: 30,
     borderTopRightRadius: 30,
     shadowOffset: {width: 6, height: 6},
@@ -97,53 +99,13 @@ const styles = StyleSheet.create({
     header: {
     fontSize: 30,
     color: 'rgb(80, 140, 2)',
-    marginTop: 30,
     marginBottom: 30,
-    marginLeft: 30,
     fontWeight: 'bold'
-    },
-    input: {
-    padding: 2,
-    width: 300,
-    height: 40,
-    marginLeft: 30,
-    marginBottom: 10,
-    borderColor: 'gray',
-    borderBottomWidth: 1.5,
-    shadowRadius: 10,
-    fontSize: 20,
-    color: 'black',
-    },
-    textFailed: {
-    color: 'red',
-    marginLeft: 30,
-    marginTop: 10,
-    },
-    checkboxContainer: {
-    flexDirection: "row",
-    marginBottom: 20,
-    },
-    checkbox: {
-    marginLeft: 30,
-    },
-    label: {
-    marginLeft: 60,
-    marginTop: -25,
-    fontSize: 14,
-    color: 'gray',
     },
     btnText:{
     color: 'white',
     fontSize: 14,
     padding: 8,
-    textAlign: 'center',
-    fontWeight: 'bold',
-    },
-    btnText2:{
-    color: 'green',
-    fontSize: 14,
-    padding: 8,
-    marginTop: 10,
     textAlign: 'center',
     fontWeight: 'bold',
     },
