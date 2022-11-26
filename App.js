@@ -43,6 +43,7 @@ const MyStack = () => {
               onPress={() => alert('This is a button!')}
               title="Info"
               color="#000"></Button>),
+            headerShown: false
           }}
           
         />
