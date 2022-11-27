@@ -28,8 +28,10 @@ const SearchScreen = ( {navigation} ) => {
     return(
         <View>
             <View style = {{ padding: 30 }}>
-                <TextInput style = {styles.input} placeholder = 'Search name of a clinic' placeholderTextColor = 'gray'></TextInput>
-                <Image source = { require('../images/search.png')} style = {styles.icon}/>
+                {/*<TextInput style = {styles.input} placeholder = 'Search name of a clinic' placeholderTextColor = 'gray'>
+
+                </TextInput>
+                <Image source = { require('../images/search.png')} style = {styles.icon}/>*/}
                 <Text style = { styles.header }>Clinics</Text>
                 {/*<RadioButton/>*/}
                 {isLoading ? <ActivityIndicator/> : (
