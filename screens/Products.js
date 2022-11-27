@@ -39,7 +39,7 @@ const ProductsScreen = ( {navigation} ) => {
                 renderItem={({ item }) => (
                 <TouchableOpacity style = {styles.item} onPress={ () => navigation.navigate('ProductDetails', {item:item})}>
                     <Text style = {styles.header2}>{item.product_name}</Text>
-                    <View style={{borderBottomColor: 'black', borderBottomWidth: StyleSheet.hairlineWidth,}}/>
+                    <View style={{borderBottomColor: 'black', borderBottomWidth: StyleSheet.hairlineWidth, margin: 3}}/>
                     <Text style = {styles.description}>₱ {item.product_price}</Text>
                     <Text style = {styles.description}>{item.product_description}</Text>
                 </TouchableOpacity>

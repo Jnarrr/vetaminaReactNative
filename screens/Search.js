@@ -40,7 +40,7 @@ const SearchScreen = ( {navigation} ) => {
                     renderItem={({ item }) => (
                     <TouchableOpacity style = {styles.item} onPress={ () => navigation.navigate('ClinicDetails', {item:item})}>
                         <Text style = {styles.header2}>{item.clinic_name}</Text>
-                        <Text style = {styles.divider}>________________________________</Text>
+                        <View style={{borderBottomColor: 'black', borderBottomWidth: StyleSheet.hairlineWidth, margin: 3}}/>
                         <Image source = { require('../images/clock.png')} style = {styles.clock}/>
                         <Text style = {styles.description2}>{item.owner_name}</Text>
                         <Image source = { require('../images/pin.png')} style = {styles.pin}/>
