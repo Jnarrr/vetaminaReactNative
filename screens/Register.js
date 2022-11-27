@@ -16,9 +16,10 @@ import {
     KeyboardAvoidingView,
     Keyboard,
 } from 'react-native';
+import { DateTimePickerAndroid } from '@react-native-community/datetimepicker';
 
 const RegisterScreen = ( {navigation} ) => {
-    const [date, setDate] = useState('');
+    const [date, setDate] = useState(new Date());
     const [checkValidDate, setCheckValidDate] = useState(false);
     const [username, setUsername] = useState('');
     const [checkValidUsername, setCheckValidUsername] = useState(false);
@@ -34,6 +35,25 @@ const RegisterScreen = ( {navigation} ) => {
     const [isLoading, setLoading] = useState(true);
     const [data, setData] = useState([]);
 
+    const onChange = (event, selectedDate) => {
+        const currentDate = selectedDate;
+        setDate(currentDate);
+      };
+    
+      const showMode = (currentMode) => {
+          DateTimePickerAndroid.open({
+              value: date,
+              onChange,
+              mode: currentMode,
+              is24Hour: true,
+          }, 
+          );
+      };
+  
+      const showDatepicker = () => {
+          showMode('date');
+      };
+
     const RegisterUser = async () => {
         try{
             const response = await fetch('http://localhost:8000/api/customerregister', {
@@ -44,7 +64,7 @@ const RegisterScreen = ( {navigation} ) => {
                 },
                 body: JSON.stringify({
                     username: username,
-                    birthdate: date,
+                    birthdate: date.toLocaleDateString(),
                     password: password,
                     email: email,
                     mobile_number: mobileNum
@@ -52,18 +72,12 @@ const RegisterScreen = ( {navigation} ) => {
             });
             if ((response).status === 201) {
                 setUsername('');
-                setDate('');
                 setPassword('');
                 setEmail('');
                 setMobileNum('');
             }
             errors = [];
 
-            let regex = /^(0[1-9]|1[012])[- /.](0[1-9]|[12][0-9]|3[01])[-/.](19|20)\d\d$/;
-            setDate(date)
-            if (regex.test(date) == false){
-                errors.push("Invalid Date format")
-            }
             let regex2 = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
             if(regex2.test(email) == false){
                 errors.push("Invalid Email format")
@@ -147,11 +161,6 @@ const RegisterScreen = ( {navigation} ) => {
     const handleUserValidation = () => {
         errors = [];
 
-        let regex = /^(0[1-9]|1[012])[- /.](0[1-9]|[12][0-9]|3[01])[-/.](19|20)\d\d$/;
-        setDate(date)
-        if (regex.test(date) == false){
-            errors.push("Invalid Date format")
-        }
         let regex2 = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
         if(regex2.test(email) == false){
             errors.push("Invalid Email format")
@@ -205,7 +214,13 @@ const RegisterScreen = ( {navigation} ) => {
             )
             }
 
-            <TextInput 
+            <Text style = {styles.birthdateText}>{date.toLocaleDateString()}</Text>
+            <TouchableOpacity style = {styles.btnBirthdate} onPress={showDatepicker} title="Show date picker!">
+                <Text style = {styles.btnText}>Select Birthdate</Text>
+            </TouchableOpacity>
+            
+
+            {/*<TextInput 
             style = { styles.input }
             placeholder = 'Enter Birthdate'
             placeholderTextColor= 'gray'
@@ -218,7 +233,7 @@ const RegisterScreen = ( {navigation} ) => {
                 ) : (
                 <Text style = {styles.textFailed}> </Text>
             )
-            }
+            }*/}
                 
 
             <TextInput 
@@ -258,7 +273,7 @@ const RegisterScreen = ( {navigation} ) => {
             onChangeText = { (text) => [handleCheckEmail(text), setEmail(text)] }
             placeholder='Enter Email'
             placeholderTextColor= 'gray'
-            maxLength={15} 
+            maxLength={50} 
             />
             <Image source = { require('../images/email.png')} style = {styles.email}/>
             {
@@ -401,7 +416,25 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     alignSelf: 'center',
     marginTop: 20,
+    },
+    btnBirthdate:{
+    backgroundColor: 'rgb(80, 140, 2)',
+    color: 'white',
+    width: 150,
+    height: 35,
+    borderRadius: 5,
+    marginLeft: 180,
+    marginTop: 10,
+    marginBottom: 10,
+    },
+    birthdateText:{
+    color: 'gray',
+    fontSize: 20,
+    marginLeft: 50,
+    marginBottom: -40,
+    marginTop: 10,
     }
 });
+
 
 export default RegisterScreen;
