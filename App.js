@@ -80,7 +80,7 @@ const MyStack = () => {
         <Stack.Screen name="Profile" component={ ProfileScreen } options = {{ title: 'Profile' }} />
         <Stack.Screen name="PetDetails" component={ PetDetailsScreen } options = {{ title: 'Pet Details', headerShown: false }} />
         <Stack.Screen name="EditPetDetails" component={ EditPetDetailsScreen } options = {{ title: 'Edit Pet Details' }} />
-        <Stack.Screen name="AppointmentDetails" component={ AppointmentDetailsScreen } options = {{ title: 'Appointment Details' }} />
+        <Stack.Screen name="AppointmentDetails" component={ AppointmentDetailsScreen } options = {{ title: 'Appointment Details', headerShown: false }} />
         <Stack.Screen name="ProfileDetails" component={ ProfileDetailsScreen } options = {{ title: 'Profile Details' }} />
         <Stack.Screen name="ProductDetails" component={ ProductDetailsScreen } options = {{ title: 'Product Details' }} />
         <Stack.Screen name="MedicalRecord" component={ MedicalRecordScreen } options = {{ title: 'Medical Record', headerShown: false }} />

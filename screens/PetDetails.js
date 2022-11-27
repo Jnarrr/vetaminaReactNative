@@ -1,5 +1,5 @@
 import React from 'react';
-import {View, Text, StyleSheet, TouchableOpacity, Image, ScrollView} from 'react-native';
+import {View, Text, StyleSheet, TouchableOpacity, Image, ScrollView, Dimensions} from 'react-native';
 
 const PetDetailsScreen = ( {navigation, route} ) => {
     return(
@@ -67,7 +67,7 @@ const styles = StyleSheet.create({
         color: 'black'
     },
     whiteBox: {
-        width: 360,
+        width: Dimensions.get('window').width,
         height: 300,
         marginTop: 200,
         padding: 30,

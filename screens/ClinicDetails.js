@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import {View, Button, Text, StyleSheet, TextInput, ScrollView, Image, TouchableOpacity} from 'react-native';
+import {View, Button, Text, StyleSheet, TextInput, ScrollView, Image, TouchableOpacity, Dimensions} from 'react-native';
 import CheckBox from '@react-native-community/checkbox';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
@@ -84,7 +84,7 @@ const styles = StyleSheet.create({
     marginTop: -150
     },
     whiteBox: {
-    width: 360,
+    width: Dimensions.get('window').width,
     height: 300,
     marginTop: 200,
     padding: 30,
