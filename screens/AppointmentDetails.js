@@ -36,7 +36,13 @@ const AppointmentDetailsScreen = ( {navigation, route} ) => {
 
             <View style = {styles.whiteBox}>
             <Text style = { styles.header }>{route.params.item.clinic_name}</Text>
-            <Text style = { styles.status }>{route.params.item.status}</Text>
+            {
+            route.params.item.status == 'Declined' ? (
+                <Text style = { styles.statusRed }>{route.params.item.status}</Text>
+                ) : (
+                <Text style = { styles.status }>{route.params.item.status}</Text>
+            )
+            }
             <Image source = { require('../images/pin.png')} style = {styles.pin}/>
             <Text style = { styles.semiHeader }>{route.params.item.clinic_address}</Text>
             <Image source = { require('../images/calendar.png')} style = {styles.email}/>
@@ -98,6 +104,14 @@ const styles = StyleSheet.create({
     marginLeft: 220,
     fontSize: 14,
     marginBottom: 45
+    },
+    statusRed:{
+    color: 'red',
+    marginTop: -60,
+    marginLeft: 220,
+    fontSize: 14,
+    marginBottom: 45,
+    fontWeight: 'bold'
     },
     semiHeader:{
     color: 'rgb(73, 80, 74)',

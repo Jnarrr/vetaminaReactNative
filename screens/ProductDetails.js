@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import {View, Button, Text, StyleSheet, TouchableOpacity, FlatList, ActivityIndicator} from 'react-native';
+import {View, Button, Text, StyleSheet, TouchableOpacity, FlatList, ActivityIndicator, Image} from 'react-native';
 
 const ProductDetailsScreen = ( {navigation, route} ) => {
 
@@ -34,14 +34,22 @@ const ProductDetailsScreen = ( {navigation, route} ) => {
                         <Text style = { styles.header }>{route.params.item.product_name}</Text>
                         <Text style = { styles.price }>₱ {route.params.item.product_price}</Text>
                         <Text style = { styles.description }>{route.params.item.product_description}</Text>
+
+                        <View style={{borderBottomColor: 'green', borderBottomWidth: StyleSheet.hairlineWidth, margin: 10}}/>
+                        
+                        <Text style = {styles.header}>{item.clinic_name}</Text>
+                        <Image source = { require('../images/pin.png')} style = {styles.pin}/>
+                        <Text style = { styles.semiHeader }>{item.address}</Text>
+                        <Image source = { require('../images/email.png')} style = {styles.email}/>
+                        <Text style = { styles.semiHeader }>{item.email}</Text>
+                        <Image source = { require('../images/phone.png')} style = {styles.email}/>
+                        <Text style = { styles.semiHeader }>{item.phone_number}</Text>
+                        <TouchableOpacity style = { styles.btn } onPress={ () => navigation.navigate('AppointmentDateAndTime', {clinicID:item.id, clinicNAME:item.clinic_name, clinicADDRESS:item.address}) }>
+                            <Text style = {styles.btnText}>Appoint now</Text>
+                        </TouchableOpacity>
                     </View>
-                    <View style={{borderBottomColor: 'green', borderBottomWidth: StyleSheet.hairlineWidth, margin: 20}}/>
-                    <Text style = {styles.petText}>{item.clinic_name}</Text>
-                    <Text style = {styles.petText}>{item.address}</Text>
-                    <Text style = {styles.petText}>{item.email}</Text>
-                    <Text style = {styles.petText}>{item.phone_number}</Text>
-                    <TouchableOpacity style = {{ width: 100, height:40, backgroundColor: 'black'}} onPress={ () => navigation.navigate('AppointmentDateAndTime', {clinicID:item.id, clinicNAME:item.clinic_name, clinicADDRESS:item.address}) }>
-                    </TouchableOpacity>
+                    
+                    
                 </View>
                 )}
             />
@@ -55,7 +63,7 @@ const styles = StyleSheet.create({
     square:{
         backgroundColor: 'white',
         width: 300,
-        height: 125,
+        height: 330,
         borderRadius: 20,
         padding: 20,
         borderTopColor: 'green',
@@ -65,15 +73,16 @@ const styles = StyleSheet.create({
         marginLeft: 180,
         marginTop: -25,
         color: 'white',
-        fontSize: 18,
+        fontSize: 16,
         backgroundColor: 'green',
         borderRadius: 10,
         textAlign: 'center'
     },
     header: {
         color: 'rgb(73, 80, 74)',
-        fontSize: 30,
-        fontWeight: 'bold' 
+        fontSize: 24,
+        fontWeight: 'bold',
+        marginBottom: 5
     },
     description:{
         fontSize: 18,
@@ -84,6 +93,39 @@ const styles = StyleSheet.create({
         color: 'rgb(73, 80, 74)',
         fontSize: 24,
         fontWeight: 'bold' 
+    },
+    btn:{
+        backgroundColor: 'rgb(80, 140, 2)',
+        color: 'white',
+        width: 260,
+        height: 35,
+        borderRadius: 5,
+        alignSelf: 'center',
+        marginTop: 30,
+    },
+    btnText:{
+        color: 'white',
+        fontSize: 14,
+        padding: 8,
+        textAlign: 'center',
+        fontWeight: 'bold',
+    },
+    pin:{
+        width: 18,
+        height: 22,
+        marginTop: 5
+    },
+    email:{
+        width: 21,
+        height: 18,
+        marginTop: 5
+    },
+    semiHeader:{
+        color: 'rgb(73, 80, 74)',
+        marginTop: -24,
+        marginLeft: 40,
+        fontSize: 18,
+        marginBottom: 10,
     },
 })
 

@@ -40,7 +40,7 @@ const ProductsScreen = ( {navigation} ) => {
                 <TouchableOpacity style = {styles.item} onPress={ () => navigation.navigate('ProductDetails', {item:item})}>
                     <Text style = {styles.header2}>{item.product_name}</Text>
                     <View style={{borderBottomColor: 'black', borderBottomWidth: StyleSheet.hairlineWidth,}}/>
-                    <Text style = {styles.description}>{item.product_price}</Text>
+                    <Text style = {styles.description}>₱ {item.product_price}</Text>
                     <Text style = {styles.description}>{item.product_description}</Text>
                 </TouchableOpacity>
                 )}
@@ -61,13 +61,13 @@ const styles = StyleSheet.create({
     padding: 10,
     marginVertical: 8,
     borderRadius: 8,
-    height: 250,
-    height: Dimensions.get('window').width / 2,
+    height: 150,
+    width: Dimensions.get('window').width / 2,
     margin: 5,
     flex: 1,
     },
     header: {
-    fontSize: 30,
+    fontSize: 20,
     marginLeft: -15,
     color: 'rgb(73, 80, 74)',
     fontWeight: 'bold'
