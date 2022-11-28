@@ -64,6 +64,8 @@ const styles = StyleSheet.create({
     marginVertical: 8,
     borderRadius: 8,
     height: 120,
+    borderTopColor: 'green',
+    borderTopWidth: 3
     },
     header: {
     fontSize: 30,

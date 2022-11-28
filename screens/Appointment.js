@@ -40,7 +40,7 @@ const AppointmentScreen = ( {navigation} ) => {
                     <Text style = {styles.header2}>{item.clinic_name}</Text>
                     <View style={{borderBottomColor: 'gray', borderBottomWidth: StyleSheet.hairlineWidth, margin: 3}}/>
                     <Text style = {styles.description}>{item.date}{'          '}{item.time}</Text>
-                    <Text style = {styles.description}>Status: {item.status}</Text>
+                    <Text style = {styles.description}>{item.status}</Text>
                 </TouchableOpacity>
                 
                 )}
@@ -66,6 +66,8 @@ const styles = StyleSheet.create({
     marginVertical: 8,
     borderRadius: 8,
     height: 120,
+    borderTopColor: 'green',
+    borderTopWidth: 3
     },
     petText: {
     fontSize: 30,

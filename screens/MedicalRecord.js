@@ -25,7 +25,7 @@ const MedicalRecordScreen = ( {navigation, route} ) => {
         getRecords();
     }
 
-    const testFunc = () => {
+    const showMedicalRecord = () => {
         while(isLoading){
           return (<ActivityIndicator size="large" color="green"></ActivityIndicator>);
         }
@@ -64,7 +64,7 @@ const MedicalRecordScreen = ( {navigation, route} ) => {
 
             <View style = {styles.whiteBox}>
                 <Text style = { styles.header }>Medical Record</Text>
-                {testFunc()}
+                {showMedicalRecord()}
             </View>
             <TouchableOpacity style = {styles.refresh} onPress={ refresh }>
                 <Text style = {{ fontSize: 16, color: 'white' }}>Refresh</Text>

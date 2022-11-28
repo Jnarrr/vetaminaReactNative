@@ -33,6 +33,56 @@ const ClinicDetailsScreen = ( {navigation, route} ) => {
             setLoading(false);
         }
     }
+
+    const showServices = () => {
+        while(isLoading){
+            return (<ActivityIndicator size="large" color="green"></ActivityIndicator>);
+        }
+        if ( servicedata.length == 0 ) {
+            return (
+                <Text style = {{ fontSize: 20, color: 'gray', justifyContent: 'center', textAlign: 'center', marginTop: 25, marginBottom: 25 }}> No Available Services :{'('}</Text>
+            )
+        } else {
+            return (
+            <FlatList
+                style = {{ marginLeft: 30, height: 150 }}
+                data={servicedata}
+                keyExtractor={({ id }, index) => id}
+                renderItem={({ item }) => (
+                <View>
+                    <Text style = {styles.description}>{item.service_name}</Text>
+                    <Text style = {styles.description2}>₱ {item.service_price}</Text>
+                </View>
+                )}
+            />
+            )
+        }
+    }
+
+    const showProducts = () => {
+        while(isLoading){
+            return (<ActivityIndicator size="large" color="green"></ActivityIndicator>);
+        }
+        if ( productdata.length == 0 ) {
+            return (
+                <Text style = {{ fontSize: 20, color: 'gray', justifyContent: 'center', textAlign: 'center', marginTop: 25, marginBottom: 25 }}> No Available Services :{'('}</Text>
+            )
+        } else {
+            return (
+            <FlatList
+                style = {{ marginLeft: 30, height: 150 }}
+                data={productdata}
+                keyExtractor={({ id }, index) => id}
+                renderItem={({ item }) => (
+                <View>
+                    <Text style = {styles.description}>{item.product_name}</Text>
+                    <Text style = {styles.description2}>₱ {item.product_price}</Text>
+                </View>
+                )}
+            />
+            )
+        }
+    }
     
     useEffect(() => {
         getServices();
@@ -62,37 +112,12 @@ const ClinicDetailsScreen = ( {navigation, route} ) => {
             <View style={{borderBottomColor: 'gray', borderBottomWidth: StyleSheet.hairlineWidth, margin: 10}}>
                 <Text style = {{ color: 'gray' }}>Available Services</Text>
             </View>
-            {isLoading ? <ActivityIndicator size="large" color="green"/> : (
-            <FlatList
-                style = {{ marginLeft: 30, height: 150 }}
-                data={servicedata}
-                keyExtractor={({ id }, index) => id}
-                renderItem={({ item }) => (
-                <View>
-                    <Text style = {styles.description}>{item.service_name}</Text>
-                    <Text style = {styles.description2}>₱ {item.service_price}</Text>
-                </View>
-                )}
-            />
-            )}
+            {showServices()}
 
             <View style={{borderBottomColor: 'gray', borderBottomWidth: StyleSheet.hairlineWidth, margin: 10}}>
                 <Text style = {{ color: 'gray' }}>Available Products</Text>
             </View>
-
-            {isLoading ? <ActivityIndicator size="large" color="green"/> : (
-            <FlatList
-                style = {{ marginLeft: 30, height: 150 }}
-                data={productdata}
-                keyExtractor={({ id }, index) => id}
-                renderItem={({ item }) => (
-                <View>
-                    <Text style = {styles.description}>{item.product_name}</Text>
-                    <Text style = {styles.description2}>₱ {item.product_price}</Text>
-                </View>
-                )}
-            />
-            )}
+            {showProducts()}
 
             <TouchableOpacity style = { styles.btn } onPress={ () => navigation.navigate('AppointmentDateAndTime', {clinicID:route.params.item.id, clinicNAME:route.params.item.clinic_name, clinicADDRESS:route.params.item.address}) }>
                 <Text style = {styles.btnText}>Appoint now</Text>

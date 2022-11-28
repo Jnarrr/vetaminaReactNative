@@ -88,12 +88,29 @@ const styles = StyleSheet.create({
     marginVertical: 8,
     borderRadius: 8,
     height: 120,
+    borderTopColor: 'green',
+    borderTopWidth: 3
     },
     header: {
     fontSize: 30,
     marginLeft: -15,
     color: 'rgb(73, 80, 74)',
     fontWeight: 'bold'
+    },
+    header2: {
+    fontSize: 22,
+    color: 'rgb(80, 140, 2)',
+    fontWeight: 'bold'
+    },
+    description: {
+    fontSize: 18,
+    color: 'black',
+    },
+    description2: {
+    fontSize: 18,
+    color: 'black',
+    marginTop: -25,
+    marginLeft: 150
     },
 });
 

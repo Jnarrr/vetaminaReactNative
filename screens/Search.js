@@ -8,6 +8,7 @@ const SearchScreen = ( {navigation} ) => {
 
     const [isLoading, setLoading] = useState(true);
     const [data, setData] = useState([]);
+    const [search, setSearch] = useState('');
 
     const getClinics = async () => {
         try {
@@ -28,8 +29,12 @@ const SearchScreen = ( {navigation} ) => {
     return(
         <View>
             <View style = {{ padding: 30 }}>
-                <TextInput style = {styles.input} placeholder = 'Search name of a clinic' placeholderTextColor = 'gray'>
-
+                <TextInput 
+                style = {styles.input} 
+                placeholder = 'Search name of a clinic' 
+                placeholderTextColor = 'gray'
+                onChangeText = { (text) => setSearch(text) }
+                >
                 </TextInput>
                 <Image source = { require('../images/search.png')} style = {styles.icon}/>
                 <Text style = { styles.header }>Clinics</Text>
@@ -102,24 +107,14 @@ const styles = StyleSheet.create({
     elevation: 20,
     shadowColor: '#52006A',
     },
-    box: {
-    marginTop: 20,
-    width: 300,
-    height: 100,
-    backgroundColor: 'white',
-    borderRadius: 10,
-    },
-    divider: {
-    fontSize: 20,
-    color: 'gray',
-    marginTop: -20,
-    },
     item: {
     backgroundColor: 'white',
     padding: 20,
     marginVertical: 8,
     borderRadius: 8,
     height: 120,
+    borderTopColor: 'green',
+    borderTopWidth: 3
     },
     pic: {
     width: 100,
