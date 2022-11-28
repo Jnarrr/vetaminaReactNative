@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import {View, Button, Text, TextInput, StyleSheet, Alert} from 'react-native';
+import {View, Button, Text, StyleSheet, TextInput, ScrollView, Image, TouchableOpacity, Dimensions, Alert} from 'react-native';
 import { Dropdown } from 'react-native-element-dropdown';
 import { DateTimePickerAndroid } from '@react-native-community/datetimepicker';
 
@@ -41,7 +41,7 @@ const AppointmentDateAndTimeScreen = ( {navigation, route} ) => {
             value: date,
             onChange,
             mode: currentMode,
-            is24Hour: true,
+            is24Hour: false,
         }, 
         );
     };
@@ -133,11 +133,14 @@ const AppointmentDateAndTimeScreen = ( {navigation, route} ) => {
                     status: status,
                 })
             });
-            if ((response).status === 201) {
+            if ((response).status === 200) {
                 setStatus('');
+                Alert.alert('Appointment Added!');
+                navigation.navigate('Appointment');
             }
-            Alert.alert('Appointment Added!');
-            navigation.navigate('Appointment');
+            else {
+                Alert.alert('Please Complete the form');
+            }
         const json = await response.json();
         setData(json.appointments);
         } catch (error) {
@@ -148,11 +151,17 @@ const AppointmentDateAndTimeScreen = ( {navigation, route} ) => {
     }
 
     return(
-        <View style = {{ flex: 1 }}>
-            <Text style = { styles.petText }>Clinic Name: {clinic_NAME}</Text>
-            <Text style = { styles.petText }>Clinic Address: {clinic_ADDRESS}</Text>
+        <View style = { styles.body }>
+            <Image source = { require('../images/paw.png')} style = {styles.paw}/>
+            <Image source = { require('../images/bone.png')} style = {styles.bone}/>
+            <TouchableOpacity activeOpacity={.5} onPress={ () => navigation.goBack()} style = {{ marginBottom: -80 }}>
+                <Image source = { require('../images/back.png')} style = {styles.back}/>
+            </TouchableOpacity>
+
+            <ScrollView style = {styles.whiteBox}>
+            <Text style = { styles.header }>Book Appointment</Text>
             <Dropdown
-            style={[styles.dropdown, isFocus && { borderColor: 'green' }]}
+            style={[styles.input, isFocus && { borderColor: 'green' }]}
             placeholderStyle={styles.placeholderStyle}
             selectedTextStyle={styles.selectedTextStyle}
             inputSearchStyle={styles.inputSearchStyle}
@@ -173,13 +182,17 @@ const AppointmentDateAndTimeScreen = ( {navigation, route} ) => {
                 setIsFocusProcedure(false);
             }}
             />
-            <Button onPress={showDatepicker} title="Show date picker!" />
-            <Button onPress={showTimepicker} title="Show time picker!" />
-            <Text>selected: {date.toLocaleString()}</Text>
-            <Text>{date.toLocaleDateString()}</Text>
-            <Text>{date.toLocaleTimeString()}</Text>
+            <Text style = {styles.birthdateText}>{date.toLocaleDateString()}</Text>
+            <TouchableOpacity style = {styles.btnBirthdate} onPress={showDatepicker} title="Show date picker!">
+                <Text style = {styles.btnText}>Select Date</Text>
+            </TouchableOpacity>
+            <Text style = {styles.birthdateText}>{date.toLocaleTimeString()}</Text>
+            <TouchableOpacity style = {styles.btnBirthdate} onPress={showTimepicker} title="Show time picker!">
+                <Text style = {styles.btnText}>Select Time</Text>
+            </TouchableOpacity>
+            
             <Dropdown
-            style={[styles.dropdown, isFocus && { borderColor: 'green' }]}
+            style={[styles.input, isFocus && { borderColor: 'green' }]}
             placeholderStyle={styles.placeholderStyle}
             selectedTextStyle={styles.selectedTextStyle}
             inputSearchStyle={styles.inputSearchStyle}
@@ -201,39 +214,31 @@ const AppointmentDateAndTimeScreen = ( {navigation, route} ) => {
                 setIsFocus(false);
             }}
             />
-            <Button onPress={ AddAppointmentBtn } title='Create Appointment'></Button>
+            <TouchableOpacity style = {styles.btn} onPress={ AddAppointmentBtn }>
+                <Text style = {styles.btnText}>Book Appointment</Text>
+            </TouchableOpacity>
+
+            
+
+            </ScrollView>
         </View>
+
     );
 };
 
 const styles = StyleSheet.create({
     input: {
     padding: 2,
-    width: 300,
     height: 40,
-    marginLeft: 30,
     marginBottom: 10,
     borderBottomColor: 'gray',
     borderBottomWidth: 1.5,
     fontSize: 20,
     color: 'black',
     },
-    petText: {
-    fontSize: 16,
-    color: 'black',
-    fontWeight: 'bold'
-    },
-    dropdown: {
-    height: 50,
-    borderColor: 'gray',
-    borderWidth: 0.5,
-    borderRadius: 8,
-    paddingHorizontal: 8,
-    color: 'black',
-    },
     placeholderStyle: {
     fontSize: 16,
-    color: 'black',
+    color: 'gray',
     },
     selectedTextStyle: {
     fontSize: 16,
@@ -242,7 +247,113 @@ const styles = StyleSheet.create({
     inputSearchStyle: {
     height: 40,
     fontSize: 16,
+    color: 'gray',
+    },
+    body: {
+    backgroundColor: 'rgb(109, 169, 22)',
+    flex: 1,
+    fontFamily: 'Roboto',
+    },
+    pin:{
+    width: 18,
+    height: 22,
+    },
+    semiHeader:{
+    color: 'rgb(73, 80, 74)',
+    marginTop: -22,
+    marginLeft: 24,
+    fontSize: 18,
+    marginBottom: 10,
+    },
+    clinic: {
+    color: 'rgb(73, 80, 74)',
+    fontSize: 24,
+    marginBottom: 10,
+    fontWeight: 'bold',
+    borderTopColor: 'rgb(73, 80, 74)',
+    borderTopWidth: 2,
+    },
+    description:{
+    fontSize: 20,
     color: 'black',
+    marginBottom: 10,
+    },
+    paw: {
+    width: 300,
+    height: 300,
+    marginTop: -40,
+    marginLeft: 150,
+    },
+    bone: {
+    width: 120,
+    height: 120,
+    marginLeft: -40,
+    marginTop: -200
+    },
+    back: {
+    width: 30,
+    height: 30,
+    marginLeft: 15,
+    marginTop: -150
+    },
+    whiteBox: {
+    width: Dimensions.get('window').width,
+    height: 300,
+    marginTop: 160,
+    padding: 30,
+    borderTopLeftRadius: 30,
+    borderTopRightRadius: 30,
+    shadowOffset: {width: 6, height: 6},
+    shadowRadius: 10,
+    shadowColor: 'white',
+    shadowOpacity: 1,
+    backgroundColor: 'white',
+    },
+    header: {
+    fontSize: 30,
+    color: 'rgb(80, 140, 2)',
+    marginBottom: 20,
+    fontWeight: 'bold'
+    },
+    btnText:{
+    color: 'white',
+    fontSize: 14,
+    padding: 8,
+    textAlign: 'center',
+    fontWeight: 'bold',
+    },
+    btn:{
+    backgroundColor: 'rgb(80, 140, 2)',
+    color: 'white',
+    width: 300,
+    height: 35,
+    borderRadius: 5,
+    alignSelf: 'center',
+    marginTop: 20,
+    },
+    btnBirthdate:{
+    backgroundColor: 'rgb(80, 140, 2)',
+    color: 'white',
+    width: 150,
+    height: 35,
+    borderRadius: 5,
+    marginLeft: 150,
+    marginTop: 10,
+    marginBottom: 10,
+    },
+    birthdateText:{
+    color: 'gray',
+    fontSize: 20,
+    marginLeft: 20,
+    marginBottom: -40,
+    marginTop: 10,
+    },
+    btnText:{
+    color: 'white',
+    fontSize: 14,
+    padding: 8,
+    textAlign: 'center',
+    fontWeight: 'bold',
     },
 })
 

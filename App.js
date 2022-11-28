@@ -71,7 +71,7 @@ const MyStack = () => {
               
         }} />
         <Stack.Screen name="AppointmentProcedure" component={ AppointmentProcedureScreen } options = {{ title: 'Select Procedure' }} />
-        <Stack.Screen name="AppointmentDateAndTime" component={ AppointmentDateAndTimeScreen } options = {{ title: 'Book Appointment' }} />
+        <Stack.Screen name="AppointmentDateAndTime" component={ AppointmentDateAndTimeScreen } options = {{ title: 'Book Appointment', headerShown: false }} />
         <Stack.Screen name="AppointmentSelectPet" component={ AppointmentSelectPetScreen } options = {{ title: 'Select Pet' }} />
         <Stack.Screen name="Search" component={ SearchScreen } options = {{ title: 'Search' }} />
         <Stack.Screen name="Notifications" component={ NotificationScreen } options = {{ title: 'Notifications' }} />

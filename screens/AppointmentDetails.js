@@ -63,7 +63,7 @@ const AppointmentDetailsScreen = ( {navigation, route} ) => {
             <Text style = { styles.semiHeader }>{route.params.item.date}</Text>
             <Image source = { require('../images/date.png')} style = {styles.email}/>
             <Text style = { styles.semiHeader }>{route.params.item.time}</Text>
-            <View style={{borderBottomColor: 'black', borderBottomWidth: StyleSheet.hairlineWidth, margin: 10}}>
+            <View style={{borderBottomColor: 'gray', borderBottomWidth: StyleSheet.hairlineWidth, margin: 10}}>
                 <Text style = {{ color: 'gray' }}>Included Pet</Text>
             </View>
             {isLoading ? <ActivityIndicator size="large" color="green"/> : (
