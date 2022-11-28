@@ -25,6 +25,33 @@ const MedicalRecordScreen = ( {navigation, route} ) => {
         getRecords();
     }
 
+    const testFunc = () => {
+        while(isLoading){
+          return (<ActivityIndicator size="large" color="green"></ActivityIndicator>);
+        }
+        if ( data.length == 0 ) {
+          return (
+            <Text style = {{ fontSize: 20, color: 'gray', justifyContent: 'center', textAlign: 'center', marginTop: 150 }}> No Medical Record Yet :{'('}</Text>
+          )
+        } else {
+          return (
+            <FlatList
+            style = {{ height: 450 }}
+            data={data}
+            keyExtractor={({ id }, index) => id}
+            renderItem={({ item }) => (
+            <View style = {{ margin: 5 }}>
+                <Text style = {styles.date}>{item.Date}</Text>
+                <Text style = {styles.weight}>{item.Weight} kg</Text>
+                <Text style = {styles.lotNo}>{item.Against_Manufacturer_LotNo}</Text>
+                <Text style = {styles.vet}>{item.vet_name}</Text>
+            </View>
+            )}
+            />
+          )
+        }
+      }
+
     useEffect(() => {
         getRecords();
     }, []); 
@@ -37,24 +64,7 @@ const MedicalRecordScreen = ( {navigation, route} ) => {
 
             <View style = {styles.whiteBox}>
                 <Text style = { styles.header }>Medical Record</Text>
-                <Text style = { styles.petText }>ID: {pet_ID}</Text>
-                <Text style = { styles.petText }>name: {pet_NAME}</Text>
-                {isLoading ? <ActivityIndicator size="large" color="green"></ActivityIndicator> : (
-                <FlatList
-                    style = {{ height: 450 }}
-                    data={data}
-                    keyExtractor={({ id }, index) => id}
-                    renderItem={({ item }) => (
-                    <View>
-                        <Text style = {styles.petText}>{item.date}</Text>
-                        <Text style = {styles.petText}>{item.Weight}</Text>
-                        <Text style = {styles.petText}>{item.Against_Manufacturer_LotNo}</Text>
-                        <Text style = {styles.petText}>{item.vet_name}</Text>
-                        <Text style = {styles.petText}>{item.pet_sex}</Text>
-                    </View>
-                    )}
-                />
-                )}
+                {testFunc()}
             </View>
             <TouchableOpacity style = {styles.refresh} onPress={ refresh }>
                 <Text style = {{ fontSize: 16, color: 'white' }}>Refresh</Text>
@@ -82,14 +92,32 @@ const styles = StyleSheet.create({
         color: '#504949',
         fontWeight: 'bold'
     },
-    petText:{
-        fontSize: 20,
-        color: 'black'
+    weight:{
+        fontSize: 16,
+        color: 'black',
+    },
+    date:{
+        color:'gray',
+        fontSize: 14,
+        borderBottomColor: 'lightgray',
+        borderBottomWidth: 1,
+    },
+    lotNo:{
+        fontSize: 16,
+        color: 'black',
+        marginTop: -20,
+        marginLeft: 60
+    },
+    vet:{
+        fontSize: 16,
+        color: 'black',
+        marginTop: -20,
+        marginLeft: 220
     },
     whiteBox: {
         width: 360,
-        height: 500,
-        marginTop: 200,
+        flex: 1,
+        marginTop: 180,
         padding: 30,
         borderTopLeftRadius: 30,
         borderTopRightRadius: 30,
