@@ -26,6 +26,16 @@ const AppointmentDetailsScreen = ( {navigation, route} ) => {
       getPets();
     }, []);   
 
+    testFunc = ({text}) => {
+      if (text == "Declined"){
+        return (<Text style = { styles.statusRed }>{route.params.item.status}</Text>);
+      }else if (text == "Approved") {
+        return (<Text style = { styles.statusGreen }>{route.params.item.status}</Text>)
+      } else {
+        return (<Text style = { styles.status }>{route.params.item.status}</Text>)
+      }
+    }
+
     return(
         <View style = { styles.body }>
             <Image source = { require('../images/paw.png')} style = {styles.paw}/>
@@ -36,13 +46,7 @@ const AppointmentDetailsScreen = ( {navigation, route} ) => {
 
             <View style = {styles.whiteBox}>
             <Text style = { styles.header }>{route.params.item.clinic_name}</Text>
-            {
-            route.params.item.status == 'Declined' ? (
-                <Text style = { styles.statusRed }>{route.params.item.status}</Text>
-                ) : (
-                <Text style = { styles.status }>{route.params.item.status}</Text>
-            )
-            }
+            {testFunc({text: route.params.item.status})}
             <Image source = { require('../images/pin.png')} style = {styles.pin}/>
             <Text style = { styles.semiHeader }>{route.params.item.clinic_address}</Text>
             <Image source = { require('../images/calendar.png')} style = {styles.email}/>
@@ -107,6 +111,14 @@ const styles = StyleSheet.create({
     },
     statusRed:{
     color: 'red',
+    marginTop: -60,
+    marginLeft: 220,
+    fontSize: 14,
+    marginBottom: 45,
+    fontWeight: 'bold'
+    },
+    statusGreen:{
+    color: 'green',
     marginTop: -60,
     marginLeft: 220,
     fontSize: 14,
