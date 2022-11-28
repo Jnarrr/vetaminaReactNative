@@ -40,8 +40,8 @@ const ProductsScreen = ( {navigation} ) => {
                 <TouchableOpacity style = {styles.item} onPress={ () => navigation.navigate('ProductDetails', {item:item})}>
                     <Text style = {styles.header2}>{item.product_name}</Text>
                     <View style={{borderBottomColor: 'gray', borderBottomWidth: StyleSheet.hairlineWidth, margin: 3}}/>
-                    <Text style = {styles.description}>₱ {item.product_price}</Text>
                     <Text style = {styles.description}>{item.product_description}</Text>
+                    <Text style = {styles.description2}>₱ {item.product_price}</Text>
                 </TouchableOpacity>
                 )}
                 numColumns = {colNum}
@@ -65,6 +65,8 @@ const styles = StyleSheet.create({
     width: Dimensions.get('window').width / 2,
     margin: 5,
     flex: 1,
+    borderTopColor: 'green',
+    borderTopWidth: 3
     },
     header: {
     fontSize: 20,
@@ -73,24 +75,24 @@ const styles = StyleSheet.create({
     fontWeight: 'bold'
     },
     header2: {
-    fontSize: 22,
-    color: 'rgb(80, 140, 2)',
+    fontSize: 20,
+    color: 'rgb(73, 80, 74)',
     fontWeight: 'bold'
     },
     description: {
     fontSize: 18,
-    color: 'black',
+    color: 'gray',
     },
     description2: {
-    fontSize: 18,
-    color: 'black',
-    marginTop: -25,
-    marginLeft: 125
-    },
-    divider: {
-    fontSize: 20,
-    color: 'gray',
-    marginTop: -20,
+    position: 'absolute',
+    fontSize: 16,
+    color: 'white',
+    bottom: 10,
+    left: 10,
+    backgroundColor: 'rgb(80, 140, 2)',
+    borderRadius: 10,
+    width: 75,
+    textAlign: 'center'
     },
     refresh: {
     position: 'absolute',
