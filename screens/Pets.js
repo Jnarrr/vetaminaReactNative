@@ -38,7 +38,7 @@ const PetsScreen = ( {navigation} ) => {
             renderItem={({ item }) => (
               <TouchableOpacity style = {styles.item} onPress={ () => navigation.navigate('PetDetails', {item:item})}>
                 <Text style = {styles.header2}>{item.pet_name}</Text>
-                <View style={{borderBottomColor: 'black', borderBottomWidth: StyleSheet.hairlineWidth, margin: 3}}/>
+                <View style={{borderBottomColor: 'gray', borderBottomWidth: StyleSheet.hairlineWidth, margin: 3}}/>
                 <Text style = {styles.description}>{item.pet_type}</Text>
                 <Text style = {styles.description2}>{item.pet_birthdate}</Text>
                 <Text style = {styles.description}>{item.pet_breed}</Text>

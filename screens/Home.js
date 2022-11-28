@@ -44,7 +44,7 @@ const HomeScreen = ( {navigation} ) => {
     return(
         <View style = {{ flex: 1, padding: 30 }}>
             <Text style = {styles.header}>Hello {global.username}</Text>
-            <Text style = {{ fontSize: 20, color: 'black'}}>My recent Appointment</Text>
+            <Text style = {{ fontSize: 20, color: 'black'}}>Your Recent Appointment</Text>
             {isLoading ? <ActivityIndicator/> : (
             <FlatList
                 data={data}
@@ -52,7 +52,7 @@ const HomeScreen = ( {navigation} ) => {
                 renderItem={({ item }) => (
                 <TouchableOpacity style = {styles.item} onPress={ () => navigation.navigate('AppointmentDetails', {item:item})}>
                     <Text style = {styles.header2}>{item.clinic_name}</Text>
-                    <View style={{borderBottomColor: 'black', borderBottomWidth: StyleSheet.hairlineWidth, margin: 3}}/>
+                    <View style={{borderBottomColor: 'gray', borderBottomWidth: StyleSheet.hairlineWidth, margin: 3}}/>
                     <Text style = {styles.description}>{item.date}{'          '}{item.time}</Text>
                     <Text style = {styles.description}>Status: {item.status}</Text>
                 </TouchableOpacity>
@@ -60,7 +60,7 @@ const HomeScreen = ( {navigation} ) => {
                 )}
             />
             )}
-            <Text style = {{ fontSize: 20, color: 'black'}}>My Recent Added Pet</Text>
+            <Text style = {{ fontSize: 20, color: 'black'}}>Your Recent Added Pet</Text>
             {isLoading ? <ActivityIndicator size="large" color="green"/> : (
             <FlatList
                 data={petdata}
@@ -68,7 +68,7 @@ const HomeScreen = ( {navigation} ) => {
                 renderItem={({ item }) => (
                 <TouchableOpacity style = {styles.item} onPress={ () => navigation.navigate('PetDetails', {item:item})}>
                     <Text style = {styles.header2}>{item.pet_name}</Text>
-                    <View style={{borderBottomColor: 'black', borderBottomWidth: StyleSheet.hairlineWidth, margin: 3}}/>
+                    <View style={{borderBottomColor: 'gray', borderBottomWidth: StyleSheet.hairlineWidth, margin: 3}}/>
                     <Text style = {styles.description}>{item.pet_type}</Text>
                     <Text style = {styles.description2}>{item.pet_birthdate}</Text>
                     <Text style = {styles.description}>{item.pet_breed}</Text>

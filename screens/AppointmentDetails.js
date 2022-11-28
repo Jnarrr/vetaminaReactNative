@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import {View, Button, Text, StyleSheet, TextInput, ScrollView, Image, TouchableOpacity, ActivityIndicator, FlatList, Dimensions} from 'react-native';
+import {View, Button, Text, StyleSheet, TextInput, ScrollView, Image, TouchableOpacity, ActivityIndicator, FlatList, Dimensions, Alert} from 'react-native';
 
 const AppointmentDetailsScreen = ( {navigation, route} ) => {
     const [isLoading, setLoading] = useState(true);
@@ -26,13 +26,23 @@ const AppointmentDetailsScreen = ( {navigation, route} ) => {
       getPets();
     }, []);   
 
-    testFunc = ({text}) => {
+    const testFunc = ({text}) => {
       if (text == "Declined"){
         return (<Text style = { styles.statusRed }>{route.params.item.status}</Text>);
       }else if (text == "Approved") {
         return (<Text style = { styles.statusGreen }>{route.params.item.status}</Text>)
       } else {
         return (<Text style = { styles.status }>{route.params.item.status}</Text>)
+      }
+    }
+
+    const deleteAppointment = async () =>{
+      const response = await fetch(`http://localhost:8000/api/delete-appointment/${route.params.item.id}`, {
+        method: 'DELETE'
+      });
+      if ((response).status === 200) {
+        Alert.alert('Success!', 'Appointment has been deleted');
+        navigation.goBack();
       }
     }
 
@@ -74,7 +84,13 @@ const AppointmentDetailsScreen = ( {navigation, route} ) => {
                 )}
             />
             )}
-            
+
+            {route.params.item.status == 'Declined' ? (
+            <TouchableOpacity style = {styles.delete} onPress={ deleteAppointment }>
+              <Text style = {{ fontSize: 16, color: 'white' }}>Delete</Text>
+            </TouchableOpacity>
+            ) : (null)
+            }
 
             </View>
         </View>
@@ -110,20 +126,26 @@ const styles = StyleSheet.create({
     marginBottom: 45
     },
     statusRed:{
-    color: 'red',
+    color: 'white',
     marginTop: -60,
     marginLeft: 220,
     fontSize: 14,
     marginBottom: 45,
-    fontWeight: 'bold'
+    fontWeight: 'bold',
+    backgroundColor: 'red',
+    borderRadius: 10,
+    textAlign: 'center'
     },
     statusGreen:{
-    color: 'green',
+    color: 'white',
     marginTop: -60,
     marginLeft: 220,
     fontSize: 14,
     marginBottom: 45,
-    fontWeight: 'bold'
+    fontWeight: 'bold',
+    backgroundColor: 'green',
+    borderRadius: 10,
+    textAlign: 'center'
     },
     semiHeader:{
     color: 'rgb(73, 80, 74)',
@@ -157,7 +179,7 @@ const styles = StyleSheet.create({
     whiteBox: {
     width: Dimensions.get('window').width,
     height: 500,
-    marginTop: 200,
+    marginTop: 160,
     padding: 30,
     borderTopLeftRadius: 30,
     borderTopRightRadius: 30,
@@ -193,6 +215,17 @@ const styles = StyleSheet.create({
     fontSize: 30,
     color: 'black',
     fontWeight: 'bold'
+    },
+    delete: {
+    position: 'absolute',
+    width: 75,
+    height: 35,
+    alignItems: 'center',
+    justifyContent: 'center',
+    right: 50,
+    bottom: 50,
+    backgroundColor: 'red',
+    borderRadius: 50,
     },
 });
 

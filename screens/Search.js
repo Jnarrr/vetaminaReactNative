@@ -28,10 +28,10 @@ const SearchScreen = ( {navigation} ) => {
     return(
         <View>
             <View style = {{ padding: 30 }}>
-                {/*<TextInput style = {styles.input} placeholder = 'Search name of a clinic' placeholderTextColor = 'gray'>
+                <TextInput style = {styles.input} placeholder = 'Search name of a clinic' placeholderTextColor = 'gray'>
 
                 </TextInput>
-                <Image source = { require('../images/search.png')} style = {styles.icon}/>*/}
+                <Image source = { require('../images/search.png')} style = {styles.icon}/>
                 <Text style = { styles.header }>Clinics</Text>
                 {/*<RadioButton/>*/}
                 {isLoading ? <ActivityIndicator/> : (
@@ -42,7 +42,7 @@ const SearchScreen = ( {navigation} ) => {
                     renderItem={({ item }) => (
                     <TouchableOpacity style = {styles.item} onPress={ () => navigation.navigate('ClinicDetails', {item:item})}>
                         <Text style = {styles.header2}>{item.clinic_name}</Text>
-                        <View style={{borderBottomColor: 'black', borderBottomWidth: StyleSheet.hairlineWidth, margin: 3}}/>
+                        <View style={{borderBottomColor: 'gray', borderBottomWidth: StyleSheet.hairlineWidth, margin: 3}}/>
                         <Image source = { require('../images/clock.png')} style = {styles.clock}/>
                         <Text style = {styles.description2}>{item.owner_name}</Text>
                         <Image source = { require('../images/pin.png')} style = {styles.pin}/>
