@@ -48,7 +48,7 @@ const SearchScreen = ( {navigation} ) => {
                     <TouchableOpacity style = {styles.item} onPress={ () => navigation.navigate('ClinicDetails', {item:item})}>
                         <Text style = {styles.header2}>{item.clinic_name}</Text>
                         <View style={{borderBottomColor: 'gray', borderBottomWidth: StyleSheet.hairlineWidth, margin: 3}}/>
-                        <Image source = { require('../images/clock.png')} style = {styles.clock}/>
+                        <Image source = { require('../images/userProfile.png')} style = {styles.clock}/>
                         <Text style = {styles.description2}>{item.owner_name}</Text>
                         <Image source = { require('../images/pin.png')} style = {styles.pin}/>
                         <Text style = {styles.description2}>{item.address}</Text>
@@ -87,7 +87,7 @@ const styles = StyleSheet.create({
     marginTop: -30
     },
     clock: {
-    width:18,
+    width:15,
     height:18,
     marginTop:5
     },

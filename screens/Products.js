@@ -31,7 +31,7 @@ const ProductsScreen = ( {navigation} ) => {
 
     return(
         <View style = {{ padding: 30 }}>
-            {isLoading ? <ActivityIndicator/> : (
+            {isLoading ? <ActivityIndicator size="large" color="green" style = {{ marginTop: 207, marginBottom: 207 }}/> : (
             <FlatList
                 style = {{ height: 450 }}
                 data={data}

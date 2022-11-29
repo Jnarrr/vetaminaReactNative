@@ -30,7 +30,7 @@ const PetsScreen = ( {navigation} ) => {
   return (
     <View style = {{ padding: 30 }}>
       <Text style = { styles.header }>Your Pets</Text>
-        {isLoading ? <ActivityIndicator size="large" color="green"/> : (
+        {isLoading ? <ActivityIndicator size="large" color="green" style = {{ marginTop: 207, marginBottom: 207 }}/> : (
           <FlatList
             style = {{ height: 450 }}
             data={data}
