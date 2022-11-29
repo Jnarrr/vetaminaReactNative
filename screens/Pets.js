@@ -18,6 +18,39 @@ const PetsScreen = ( {navigation} ) => {
     }
   }
 
+  const showPets = () => {
+    while(isLoading){
+        return (<ActivityIndicator size="large" color="green" style = {{ marginTop: 207, marginBottom: 207 }}></ActivityIndicator>);
+    }
+    if ( data.length == 0 ) {
+        return (
+            <View>
+                <Text style = {{ fontSize: 20, color: 'gray', justifyContent: 'center', textAlign: 'center', marginTop: 202.5, marginBottom: 202 }}> 
+                    Add Pet by clicking the {'(+)'} button in the bottom-right side
+                </Text>
+            </View>
+        )
+    } else {
+      return (
+      <FlatList
+        style = {{ height: 450 }}
+        data={data}
+        keyExtractor={({ id }, index) => id}
+        renderItem={({ item }) => (
+          <TouchableOpacity style = {styles.item} onPress={ () => navigation.navigate('PetDetails', {item:item})}>
+            <Text style = {styles.header2}>{item.pet_name}</Text>
+            <View style={{borderBottomColor: 'gray', borderBottomWidth: StyleSheet.hairlineWidth, margin: 3}}/>
+            <Text style = {styles.description}>{item.pet_type}</Text>
+            <Text style = {styles.description2}>{item.pet_birthdate}</Text>
+            <Text style = {styles.description}>{item.pet_breed}</Text>
+            <Text style = {styles.description2}>{item.pet_sex}</Text>
+          </TouchableOpacity>
+        )}
+      />
+      )
+    }
+  }
+
   const refresh =  () => {
     setLoading(true);
     getPets();
@@ -30,23 +63,7 @@ const PetsScreen = ( {navigation} ) => {
   return (
     <View style = {{ padding: 30 }}>
       <Text style = { styles.header }>Your Pets</Text>
-        {isLoading ? <ActivityIndicator size="large" color="green" style = {{ marginTop: 207, marginBottom: 207 }}/> : (
-          <FlatList
-            style = {{ height: 450 }}
-            data={data}
-            keyExtractor={({ id }, index) => id}
-            renderItem={({ item }) => (
-              <TouchableOpacity style = {styles.item} onPress={ () => navigation.navigate('PetDetails', {item:item})}>
-                <Text style = {styles.header2}>{item.pet_name}</Text>
-                <View style={{borderBottomColor: 'gray', borderBottomWidth: StyleSheet.hairlineWidth, margin: 3}}/>
-                <Text style = {styles.description}>{item.pet_type}</Text>
-                <Text style = {styles.description2}>{item.pet_birthdate}</Text>
-                <Text style = {styles.description}>{item.pet_breed}</Text>
-                <Text style = {styles.description2}>{item.pet_sex}</Text>
-              </TouchableOpacity>
-            )}
-          />
-        )}
+        {showPets()}
       <TouchableOpacity style = {styles.refresh} onPress={ refresh }>
         <Text style = {{ fontSize: 16, color: 'white' }}>Refresh</Text>
       </TouchableOpacity>

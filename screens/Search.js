@@ -10,20 +10,42 @@ const SearchScreen = ( {navigation} ) => {
     const [data, setData] = useState([]);
     const [search, setSearch] = useState('');
 
-    const getClinics = async () => {
-        try {
-        const response = await fetch(`http://localhost:8000/api/clinics2`);
-        const json = await response.json();
-        setData(json.clinics2);
-        } catch (error) {
-        console.error(error);
-        } finally {
-        setLoading(false);
+    const [filtereddata, setFilteredData] = useState([]);
+    const [masterdata, setMasterData] = useState([]);
+
+    const searchFilter = (text) => {
+        if (text) {
+            const newData = masterdata.filter((item) => {
+                const itemData = item.clinic_name ?
+                                item.clinic_name.toUpperCase()
+                                : ''.toUpperCase();
+                const textData = text.toUpperCase();
+                return itemData.indexOf(textData) > -1;
+            });
+            setFilteredData(newData);
+            setSearch(text);
+        } else {
+            setFilteredData(masterdata);
+            setSearch(text);
         }
     }
 
+    const fetchClinics = () => {
+        const apiURL = `http://localhost:8000/api/clinics2`;
+        fetch(apiURL)
+        .then((response) => response.json())
+        .then((responseJson) => {
+            setFilteredData(responseJson.clinics2);
+            setMasterData(responseJson.clinics2);
+        }).catch((error) => {
+            console.error(error);
+        }).finally(() => {
+            setLoading(false);
+        })
+    }
+
     useEffect(() => {
-        getClinics();
+        fetchClinics();
     }, []);
 
     return(
@@ -33,7 +55,8 @@ const SearchScreen = ( {navigation} ) => {
                 style = {styles.input} 
                 placeholder = 'Search name of a clinic' 
                 placeholderTextColor = 'gray'
-                onChangeText = { (text) => setSearch(text) }
+                value = {search}
+                onChangeText = { (text) => searchFilter(text) }
                 >
                 </TextInput>
                 <Image source = { require('../images/search.png')} style = {styles.icon}/>
@@ -42,8 +65,8 @@ const SearchScreen = ( {navigation} ) => {
                 {isLoading ? <ActivityIndicator/> : (
                 <FlatList
                     style = {{ height: 450 }}
-                    data={data}
-                    keyExtractor={({ id }, index) => id}
+                    data={filtereddata}
+                    keyExtractor={(item, index) => index.toString()}
                     renderItem={({ item }) => (
                     <TouchableOpacity style = {styles.item} onPress={ () => navigation.navigate('ClinicDetails', {item:item})}>
                         <Text style = {styles.header2}>{item.clinic_name}</Text>

@@ -7,6 +7,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 const ClinicDetailsScreen = ( {navigation, route} ) => {
 
     const [isLoading, setLoading] = useState(true);
+    const [isLoading2, setLoading2] = useState(true);
     const [servicedata, setServiceData] = useState([]);
     const [productdata, setProductData] = useState([]);
 
@@ -30,7 +31,7 @@ const ClinicDetailsScreen = ( {navigation, route} ) => {
         } catch (error) {
             console.error(error);
         } finally {
-            setLoading(false);
+            setLoading2(false);
         }
     }
 
@@ -60,7 +61,7 @@ const ClinicDetailsScreen = ( {navigation, route} ) => {
     }
 
     const showProducts = () => {
-        while(isLoading){
+        while(isLoading2){
             return (<ActivityIndicator size="large" color="green"></ActivityIndicator>);
         }
         if ( productdata.length == 0 ) {

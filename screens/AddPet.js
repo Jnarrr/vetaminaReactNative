@@ -29,7 +29,7 @@ const AddPetScreen = ( {navigation} ) => {
     const [isFocuspetSex, setIsFocuspetSex] = useState(false);
 
     const petDogBreed = [
-        { label: 'Askal', value: 'Askal' },
+        { label: 'Aspin', value: 'Aspin' },
         { label: 'Australian Shepherd', value: 'Australian Shepherd' },
         { label: 'Beagle', value: 'Beagle' },
         { label: 'Boxer', value: 'Boxer' },
@@ -119,10 +119,11 @@ const AddPetScreen = ( {navigation} ) => {
                 setBreed('');
                 setWeight('');
                 setDescription('');
-                //getPets();
+                Alert.alert('Pet Added!')
+                navigation.navigate('Pets');
+            } else {
+                Alert.alert('Please Complete The Form')
             }
-            Alert.alert('Pet Added!')
-            navigation.navigate('Pets');
         const json = await response.json();
         setData(json.pets);
         } catch (error) {
@@ -133,9 +134,11 @@ const AddPetScreen = ( {navigation} ) => {
     }
 
     return (
-    <View style = {{ padding: 30, justifyContent: 'center', justifyContent: 'center', alignItems: 'center' }}>
-        <ScrollView>
+    <View style = {{ flex: 1, padding: 30 }}>
+        <ScrollView style = { styles.square }>
         <Text style = { styles.header }>Pet Information</Text>
+
+        <View style={{borderBottomColor: 'gray', borderBottomWidth: StyleSheet.hairlineWidth, marginTop: 10}}></View>
         
         <TextInput 
         style = { styles.input }
@@ -199,8 +202,12 @@ const AddPetScreen = ( {navigation} ) => {
             setIsFocuspetBreed(false);
         }}
         />
-        <Button onPress={showDatepicker} title="Show date picker!" />
-        <Text style = {{ color: 'black' }}>{date.toLocaleDateString()}</Text>
+
+        <Text style = {styles.birthdateText}>{date.toLocaleDateString()}</Text>
+        <TouchableOpacity style = {styles.btnBirthdate} onPress={showDatepicker} title="Show date picker!">
+            <Text style = {styles.btnText}>Select Birthdate</Text>
+        </TouchableOpacity>
+        
         <TextInput 
         style = { styles.input }
         onChangeText = { (text) => [setWeight(text)] }
@@ -216,12 +223,12 @@ const AddPetScreen = ( {navigation} ) => {
         placeholderTextColor= 'gray'
         maxLength={15} 
         />
-        </ScrollView>
-        
-        <TouchableOpacity style = {styles.addButton} onPress = { AddPetBtn }>
-            <Text style = { styles.addButtonText }>Finish</Text>
+        <TouchableOpacity style = {styles.btn} onPress = { AddPetBtn }>
+            <Text style = { styles.btnText }>Finish</Text>
         </TouchableOpacity>
-        
+
+        </ScrollView>
+
     </View>
     );
 }
@@ -239,7 +246,6 @@ const styles = StyleSheet.create({
     },
     input: {
     padding: 2,
-    width: 300,
     height: 40,
     marginBottom: 5,
     marginTop: 5,
@@ -287,18 +293,21 @@ const styles = StyleSheet.create({
     fontSize: 16,
     color: 'black',
     },
-    addButton: {
-    width: 110,
-    height: 40,
-    alignItems: 'center',
-    justifyContent: 'center',
-    alignSelf: 'center',
-    backgroundColor: '#15D005',
-    borderRadius: 50,
-    },
-    addButtonText:{
-    fontSize: 16,
+    btnText:{
     color: 'white',
+    fontSize: 14,
+    padding: 8,
+    textAlign: 'center',
+    fontWeight: 'bold',
+    },
+    btn:{
+    backgroundColor: 'rgb(80, 140, 2)',
+    color: 'white',
+    width: 250,
+    height: 35,
+    borderRadius: 5,
+    alignSelf: 'center',
+    marginTop: 20,
     },
     dropdown: {
     height: 50,
@@ -314,6 +323,37 @@ const styles = StyleSheet.create({
     selectedTextStyle: {
     fontSize: 16,
     color: 'black',
+    },
+    square:{
+    backgroundColor: 'white',
+    borderRadius: 20,
+    padding: 20,
+    borderTopColor: 'green',
+    borderTopWidth: 5
+    },
+    btnBirthdate:{
+    backgroundColor: 'rgb(80, 140, 2)',
+    color: 'white',
+    width: 150,
+    height: 35,
+    borderRadius: 5,
+    marginLeft: 110,
+    marginTop: 20,
+    marginBottom: 10,
+    },
+    birthdateText:{
+    color: 'gray',
+    fontSize: 16,
+    marginLeft: 10,
+    marginBottom: -45,
+    marginTop: 20,
+    },
+    btnText:{
+    color: 'white',
+    fontSize: 14,
+    padding: 8,
+    textAlign: 'center',
+    fontWeight: 'bold',
     },
 })
 

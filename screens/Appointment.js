@@ -17,6 +17,40 @@ const AppointmentScreen = ( {navigation} ) => {
         setLoading(false);
         }
     }
+
+    const showAppointments = () => {
+        while(isLoading){
+            return (<ActivityIndicator size="large" color="green" style = {{ marginTop: 207, marginBottom: 207 }}></ActivityIndicator>);
+        }
+        if ( data.length == 0 ) {
+            return (
+                <View style = {{ marginTop: 190, marginBottom: 190 }}>
+                    <Text style = {{ fontSize: 20, color: 'gray', justifyContent: 'center', textAlign: 'center' }}> 
+                        Book your first appointment! 
+                    </Text>
+                    <TouchableOpacity style = { styles.btn } onPress={ () => navigation.navigate('Search') }>
+                        <Text style = {styles.btnText}>Find Clinic</Text>
+                    </TouchableOpacity>
+                </View>
+            )
+        } else {
+            return (
+            <FlatList
+            style = {{ height: 450 }}
+            data={data}
+            keyExtractor={({ id }, index) => id}
+            renderItem={({ item }) => (
+            <TouchableOpacity style = {styles.item} onPress={ () => navigation.navigate('AppointmentDetails', {item:item})}>
+                <Text style = {styles.header2}>{item.clinic_name}</Text>
+                <View style={{borderBottomColor: 'gray', borderBottomWidth: StyleSheet.hairlineWidth, margin: 3}}/>
+                <Text style = {styles.description}>{item.date}{'          '}{item.time}</Text>
+                <Text style = {styles.description}>{item.status}</Text>
+            </TouchableOpacity>
+            )}
+            />
+            )
+        }
+      }
     
     const refresh = () => {
         setLoading(true);
@@ -30,22 +64,7 @@ const AppointmentScreen = ( {navigation} ) => {
     return(
         <View style = {{ padding: 30 }}>
             <Text style = { styles.header }>Your Appointments</Text>
-            {isLoading ? <ActivityIndicator size="large" color="green" style = {{ marginTop: 207, marginBottom: 207 }}/> : (
-            <FlatList
-                style = {{ height: 450 }}
-                data={data}
-                keyExtractor={({ id }, index) => id}
-                renderItem={({ item }) => (
-                <TouchableOpacity style = {styles.item} onPress={ () => navigation.navigate('AppointmentDetails', {item:item})}>
-                    <Text style = {styles.header2}>{item.clinic_name}</Text>
-                    <View style={{borderBottomColor: 'gray', borderBottomWidth: StyleSheet.hairlineWidth, margin: 3}}/>
-                    <Text style = {styles.description}>{item.date}{'          '}{item.time}</Text>
-                    <Text style = {styles.description}>{item.status}</Text>
-                </TouchableOpacity>
-                
-                )}
-            />
-            )}
+            {showAppointments()}
             <TouchableOpacity style = {styles.refresh} onPress={ refresh }>
                 <Text style = {{ fontSize: 16, color: 'white' }}>Refresh</Text>
             </TouchableOpacity>
@@ -104,6 +123,22 @@ const styles = StyleSheet.create({
     bottom: -50,
     backgroundColor: 'brown',
     borderRadius: 50,
+    },
+    btnText:{
+    color: 'white',
+    fontSize: 14,
+    padding: 8,
+    textAlign: 'center',
+    fontWeight: 'bold',
+    },
+    btn:{
+    backgroundColor: 'rgb(80, 140, 2)',
+    color: 'white',
+    width: 150,
+    height: 35,
+    borderRadius: 5,
+    alignSelf: 'center',
+    marginTop: 10,
     },
 })
 

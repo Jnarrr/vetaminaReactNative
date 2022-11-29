@@ -4,7 +4,7 @@ import {View, Button, Text, StyleSheet, Image, TouchableOpacity, Alert} from 're
 const ProfileScreen = ( {navigation} ) => {
     return(
         <View style = {{ padding: 20 }}>
-            <View style = {styles.box}>
+            <View style = {[styles.box, styles.elevation]}>
                 <View style = {styles.profileIcon2}/>
                 <Image source = { require('../images/1paw.png')} style = {styles.paw}/>
                 <Text style = { styles.boxText }>{global.username}</Text>
@@ -21,21 +21,13 @@ const ProfileScreen = ( {navigation} ) => {
                     <Text style = {{ color: '#181D27', marginLeft: 60, marginTop: -45, fontWeight: 'bold' }}>Change Password</Text>
                     <Text style = {{ color: 'gray', marginLeft: 60, marginTop: 3, }}>Manage your account password</Text>
                 </TouchableOpacity>
+            </View>
+
+            <View style = {styles.whiteBox2}>
                 <TouchableOpacity style = {{ marginBottom: 25 }} onPress={ () => [Alert.alert("You Have been successfully logged out"), navigation.popToTop()] }>
                     <Image source = { require('../images/logout.png')} style = {styles.profileIcon}/>
                     <Text style = {{ color: '#181D27', marginLeft: 60, marginTop: -45, fontWeight: 'bold' }}>Logout</Text>
                     <Text style = {{ color: 'gray', marginLeft: 60, marginTop: 3, }}>Sign out the account</Text>
-                </TouchableOpacity>
-            </View>
-
-            <View style = {styles.whiteBox2}>
-                <TouchableOpacity style = {{ marginBottom: 35 }} onPress={ () => Alert.alert("Add Feedback") }>
-                    <Image source = { require('../images/feedback.png')} style = {styles.profileIcon}/>
-                    <Text style = {{ color: '#181D27', marginLeft: 60, marginTop: -35, fontWeight: 'bold' }}>Give App Feedback</Text>
-                </TouchableOpacity>
-                <TouchableOpacity style = {{ marginBottom: 35 }} onPress={ () => Alert.alert("About App") }>
-                    <Image source = { require('../images/aboutus.png')} style = {styles.profileIcon}/>
-                    <Text style = {{ color: '#181D27', marginLeft: 60, marginTop: -35, fontWeight: 'bold' }}>About App</Text>
                 </TouchableOpacity>
             </View>
             
@@ -45,7 +37,6 @@ const ProfileScreen = ( {navigation} ) => {
 
 const styles = StyleSheet.create({
     box:{
-        width: 320,
         height: 100,
         backgroundColor: '#15D005',
         borderRadius: 5,
@@ -59,16 +50,14 @@ const styles = StyleSheet.create({
         fontSize: 16,
     },
     whiteBox:{
-        width: 320,
-        height: 240,
+        height: 170,
         marginTop: 20,
         backgroundColor: 'white',
         borderRadius: 5,
         padding: 20,
     },
     whiteBox2:{
-        width: 320,
-        height: 160,
+        height: 90,
         marginTop: 20,
         backgroundColor: 'white',
         borderRadius: 5,
@@ -92,7 +81,11 @@ const styles = StyleSheet.create({
     profileIcon2:{
         width:50,
         height:50,
-    }
+    },
+    elevation:{
+        elevation: 10,
+        shadowColor: '#52006A',
+    },
 })
 
 export default ProfileScreen;
