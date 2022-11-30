@@ -120,10 +120,11 @@ const EditPetDetailsScreen = ( {navigation, route} ) => {
     }
 
     return(
-        <View style = {{ padding: 30, justifyContent: 'center', justifyContent: 'center', alignItems: 'center' }}>
-        <ScrollView>
+    <View style = {{ flex: 1, padding: 30 }}>
+        <ScrollView style = { styles.square }>
         <Text style = { styles.header }>Pet Information</Text>
 
+        <View style={{borderBottomColor: 'gray', borderBottomWidth: StyleSheet.hairlineWidth, marginTop: 10}}></View>
         
         <TextInput 
         style = { styles.input }
@@ -205,25 +206,100 @@ const EditPetDetailsScreen = ( {navigation, route} ) => {
         maxLength={15} 
         value = {description}
         />
-        </ScrollView>
         
-        <TouchableOpacity style = {styles.addButton} onPress = { updatePet }>
-            <Text style = { styles.addButtonText }>Finish</Text>
+        <TouchableOpacity style = {styles.btn} onPress = { updatePet }>
+            <Text style = { styles.btnText }>Finish</Text>
         </TouchableOpacity>
-        
+
+        </ScrollView>
+
     </View>
     );
 };
 
 const styles = StyleSheet.create({
-    header: {
-        fontSize: 30,
-        color: '#504949',
-        fontWeight: 'bold'
+    pic: {
+    width: 150,
+    height: 150,
+    borderRadius: 10,
     },
-    petText:{
-        fontSize: 20,
-        color: 'black'
+    header: {
+    fontSize: 30,
+    color: 'rgb(73, 80, 74)',
+    fontWeight: 'bold'
+    },
+    input: {
+    padding: 2,
+    height: 40,
+    marginBottom: 5,
+    marginTop: 5,
+    borderColor: 'gray',
+    borderBottomWidth: 1.5,
+    shadowRadius: 10,
+    fontSize: 16,
+    color: 'black',
+    },
+    btnText:{
+    color: 'white',
+    fontSize: 14,
+    padding: 8,
+    textAlign: 'center',
+    fontWeight: 'bold',
+    },
+    btn:{
+    backgroundColor: 'rgb(80, 140, 2)',
+    color: 'white',
+    width: 250,
+    height: 35,
+    borderRadius: 5,
+    alignSelf: 'center',
+    marginTop: 20,
+    },
+    dropdown: {
+    height: 50,
+    borderColor: 'gray',
+    borderWidth: 0.5,
+    borderRadius: 8,
+    paddingHorizontal: 8,
+    },
+    placeholderStyle: {
+    fontSize: 16,
+    color: 'gray',
+    },
+    selectedTextStyle: {
+    fontSize: 16,
+    color: 'black',
+    },
+    square:{
+    backgroundColor: 'white',
+    borderRadius: 20,
+    padding: 20,
+    borderTopColor: 'green',
+    borderTopWidth: 5
+    },
+    btnBirthdate:{
+    backgroundColor: 'rgb(80, 140, 2)',
+    color: 'white',
+    width: 150,
+    height: 35,
+    borderRadius: 5,
+    marginLeft: 110,
+    marginTop: 20,
+    marginBottom: 10,
+    },
+    birthdateText:{
+    color: 'gray',
+    fontSize: 16,
+    marginLeft: 10,
+    marginBottom: -45,
+    marginTop: 20,
+    },
+    btnText:{
+    color: 'white',
+    fontSize: 14,
+    padding: 8,
+    textAlign: 'center',
+    fontWeight: 'bold',
     },
 });
 
