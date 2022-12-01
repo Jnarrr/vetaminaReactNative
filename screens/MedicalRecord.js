@@ -58,7 +58,9 @@ const MedicalRecordScreen = ( {navigation, route} ) => {
 
     return(
         <View style = { styles.body }>
-            <TouchableOpacity onPress={ () => navigation.goBack(null)}>
+            <Image source = { require('../images/paw.png')} style = {styles.paw}/>
+            <Image source = { require('../images/bone.png')} style = {styles.bone}/>
+            <TouchableOpacity activeOpacity={.5} onPress={ () => navigation.goBack()} style = {{ marginBottom: -80 }}>
                 <Image source = { require('../images/back.png')} style = {styles.back}/>
             </TouchableOpacity>
 
@@ -81,12 +83,6 @@ const styles = StyleSheet.create({
         flex: 1,
         fontFamily: 'Roboto',
     },
-    back: {
-        width: 30,
-        height: 30,
-        marginLeft: 15,
-        marginTop: 30
-    },
     header: {
         fontSize: 30,
         color: '#504949',
@@ -95,6 +91,24 @@ const styles = StyleSheet.create({
     weight:{
         fontSize: 16,
         color: 'black',
+    },
+    paw: {
+        width: 300,
+        height: 300,
+        marginTop: -40,
+        marginLeft: 150,
+    },
+    bone: {
+        width: 120,
+        height: 120,
+        marginLeft: -40,
+        marginTop: -200
+    },
+    back: {
+        width: 30,
+        height: 30,
+        marginLeft: 15,
+        marginTop: -150
     },
     date:{
         color:'gray',

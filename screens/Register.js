@@ -76,27 +76,6 @@ const RegisterScreen = ( {navigation} ) => {
                 setEmail('');
                 setMobileNum('');
             }
-            errors = [];
-
-            let regex2 = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-            if(regex2.test(email) == false){
-                errors.push("Invalid Email format")
-            }
-            if (username.length < 8){
-                errors.push("Username should have at least 8 characters")
-            }
-            if (password.length < 8){
-                errors.push("Password should have at least 8 characters")
-            }
-            if (mobileNum.length != 11){
-                errors.push("Mobile number should be valid 11 digit number")
-            }
-            if (errors.length == 0){
-                Alert.alert('User Created!');
-                navigation.navigate('Login')
-            }else{
-                Alert.alert("Error!", errors.join('\n'))
-            }
         const json = await response.json();
         setData(json.customeruser);
         } catch (error) {
@@ -171,12 +150,16 @@ const RegisterScreen = ( {navigation} ) => {
         if (password.length < 8){
             errors.push("Password should have at least 8 characters")
         }
+        if (password != confirmPassword){
+            errors.push("Password is not the same as Confirm Password")
+        }
         if (mobileNum.length != 11){
             errors.push("Mobile number should be valid 11 digit number")
         }
         if (errors.length == 0){
-            Alert.alert("Success!", "username: " + username + "\nBirthDate: " + date + "\nEmail: " + email + "\nMobile Number: " + mobileNum)
-            navigation.navigate('Welcome')
+            RegisterUser();
+            Alert.alert('User Created!');
+            navigation.navigate('Login')
         }else{
             Alert.alert("Error!", errors.join('\n'))
         }
@@ -300,7 +283,7 @@ const RegisterScreen = ( {navigation} ) => {
             )
             }
                 
-            <TouchableOpacity style = { styles.btn } onPress={ RegisterUser }>
+            <TouchableOpacity style = { styles.btn } onPress={ handleUserValidation }>
             <Text style = {styles.btnText}>Sign Up</Text>
             </TouchableOpacity>
             </ScrollView>

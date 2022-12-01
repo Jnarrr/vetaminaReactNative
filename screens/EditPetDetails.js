@@ -45,7 +45,7 @@ const EditPetDetailsScreen = ( {navigation, route} ) => {
     const [isFocuspetSex, setIsFocuspetSex] = useState(false);
 
     const petDogBreed = [
-        { label: 'Askal', value: 'Askal' },
+        { label: 'Aspin', value: 'Aspin' },
         { label: 'Australian Shepherd', value: 'Australian Shepherd' },
         { label: 'Beagle', value: 'Beagle' },
         { label: 'Boxer', value: 'Boxer' },
