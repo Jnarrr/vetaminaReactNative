@@ -158,7 +158,7 @@ const RegisterScreen = ( {navigation} ) => {
         }
         if (errors.length == 0){
             RegisterUser();
-            Alert.alert('User Created!');
+            Alert.alert('User Created Successfully!');
             navigation.navigate('Login')
         }else{
             Alert.alert("Error!", errors.join('\n'))
