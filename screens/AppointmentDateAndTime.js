@@ -30,6 +30,13 @@ const AppointmentDateAndTimeScreen = ( {navigation, route} ) => {
     const [petselection, setPetSelection] = useState([]);
     const [petselectedID, setPetSelectedID] = useState([]);
 
+    //Time Selection Dropdown
+    const [isTimeFocus, setIsTimeFocus] = useState(false);
+    const [timedata, setTimeData] = useState([]);
+    const [value, setValue] = useState(null);
+    const [timeSelection, setTimeSelection] = useState([]);
+    const [newtime, setNewTime] = useState([]);
+
   
     const onChange = (event, selectedDate) => {
       const currentDate = selectedDate;
@@ -44,7 +51,7 @@ const AppointmentDateAndTimeScreen = ( {navigation, route} ) => {
             mode: currentMode,
             is24Hour: false,
             minimumDate: (today),
-            maximumDate: (new Date(today.getFullYear(), today.getMonth(), today.getDate()+7)),
+            maximumDate: (new Date(today.getFullYear(), today.getMonth()+3, today.getDate())),
             minuteInterval: (10),
         }, 
         );
@@ -54,9 +61,6 @@ const AppointmentDateAndTimeScreen = ( {navigation, route} ) => {
         showMode('date');
     };
     
-    const showTimepicker = () => {
-        showMode('time');
-    };
 
     var userID = global.id;
     var clinic_ID = route.params.clinicID;
@@ -99,6 +103,46 @@ const AppointmentDateAndTimeScreen = ( {navigation, route} ) => {
         }
     }
 
+    const getTimes = async () => {
+        try {
+        const response = await fetch(`http://localhost:8000/api/ClinicAppointments/${clinic_ID}`);
+        const json = await response.json();
+        setTimeData(json.appointments);
+        const timeSelection = json.appointments.map((appointment) => ({
+            label: appointment.time,
+            value: appointment.time,
+        }));
+        setTimeSelection(timeSelection);
+        const data = [
+            {label: '9:00', value: '9:00'},
+            {label: '9:30', value: '9:30'},
+            {label: '10:00', value: '10:00'},
+            {label: '10:30', value: '10:30'},
+            {label: '11:00', value: '11:00'},
+            {label: '11:30', value: '11:30'},
+            {label: '13:00', value: '13:00'},
+            {label: '13:30', value: '13:30'}, 
+            {label: '14:00', value: '14:00'}, 
+            {label: '14:30', value: '14:30'},
+            {label: '15:00', value: '15:00'}, 
+            {label: '15:30', value: '15:30'}, 
+            {label: '16:00', value: '16:00'}, 
+            {label: '16:30', value: '16:30'}, 
+            {label: '17:00', value: '17:00'}, 
+            {label: '17:30', value: '17:30'}, 
+            {label: '18:00', value: '18:00'}, 
+        ];
+        myArray = data.filter(ar => !timeSelection.find(rm => (rm.label === ar.label && ar.value === rm.value) ))
+        console.log(myArray);
+
+        setNewTime(myArray);
+        } catch (error) {
+        console.error(error);
+        } finally {
+        setLoading(false);
+        }
+    }
+
     const getAppointments = async () => {
         try {
         const response = await fetch('http://localhost:8000/api/appointments/{id}');
@@ -115,6 +159,7 @@ const AppointmentDateAndTimeScreen = ( {navigation, route} ) => {
         getAppointments();
         getPets();
         getProcedures();
+        getTimes();
     }, []);
 
     const AddAppointmentBtn = async () => {
@@ -132,7 +177,7 @@ const AppointmentDateAndTimeScreen = ( {navigation, route} ) => {
                     clinic_address: clinic_ADDRESS,
                     procedure: procedureValue,
                     date: date.toLocaleDateString(),
-                    time: date.toLocaleTimeString(),
+                    time: value,
                     pet: petselectedID,
                     status: status,
                 })
@@ -190,10 +235,28 @@ const AppointmentDateAndTimeScreen = ( {navigation, route} ) => {
             <TouchableOpacity style = {styles.btnBirthdate} onPress={showDatepicker} title="Show date picker!">
                 <Text style = {styles.btnText}>Select Date</Text>
             </TouchableOpacity>
-            <Text style = {styles.birthdateText}>{date.toLocaleTimeString()}</Text>
-            <TouchableOpacity style = {styles.btnBirthdate} onPress={showTimepicker} title="Show time picker!">
-                <Text style = {styles.btnText}>Select Time</Text>
-            </TouchableOpacity>
+            
+            <Dropdown
+            style={[styles.input, isTimeFocus && { borderColor: 'green' }]}
+            placeholderStyle={styles.placeholderStyle}
+            selectedTextStyle={styles.selectedTextStyle}
+            inputSearchStyle={styles.inputSearchStyle}
+            iconStyle={styles.iconStyle}
+            data={newtime}
+            search
+            maxHeight={300}
+            labelField="label"
+            valueField="value"
+            placeholder={!isFocus ? 'Select Time' : '...'}
+            searchPlaceholder="Search..."
+            value={value}
+            onFocus={() => setIsTimeFocus(true)}
+            onBlur={() => setIsTimeFocus(false)}
+            onChange={item => {
+            setValue(item.value);
+            setIsTimeFocus(false);
+            }}
+            />
             
             <Dropdown
             style={[styles.input, isFocus && { borderColor: 'green' }]}

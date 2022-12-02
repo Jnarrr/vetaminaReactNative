@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import {View, Button, Text, Alert, StyleSheet, TextInput, ScrollView, Image, TouchableOpacity, KeyboardAvoidingView, Keyboard} from 'react-native';
+import {View, Dimensions, Text, Alert, StyleSheet, TextInput, ScrollView, Image, TouchableOpacity, KeyboardAvoidingView, Keyboard} from 'react-native';
 import CheckBox from '@react-native-community/checkbox';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
@@ -150,7 +150,7 @@ const styles = StyleSheet.create({
     marginTop: -150
     },
     whiteBox: {
-    width: 360,
+    width: Dimensions.get('window').width,
     height: 280,
     marginTop: 200,
     borderTopLeftRadius: 30,
@@ -173,13 +173,13 @@ const styles = StyleSheet.create({
     padding: 2,
     width: 300,
     height: 40,
-    marginLeft: 30,
     marginBottom: 10,
     borderColor: 'gray',
     borderBottomWidth: 1.5,
     shadowRadius: 10,
     fontSize: 20,
     color: 'black',
+    alignSelf: 'center'
     },
     textFailed: {
     color: 'red',
