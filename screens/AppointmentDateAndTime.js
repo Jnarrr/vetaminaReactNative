@@ -107,24 +107,55 @@ const AppointmentDateAndTimeScreen = ( {navigation, route} ) => {
     const trim = () => {
         const data = [
             {label: '9:00', value: '9:00'},
+            {label: '9:10', value: '9:10'},
+            {label: '9:20', value: '9:20'},
             {label: '9:30', value: '9:30'},
+            {label: '9:40', value: '9:40'},
+            {label: '9:50', value: '9:50'},
             {label: '10:00', value: '10:00'},
+            {label: '10:10', value: '10:10'},
+            {label: '10:20', value: '10:20'},
             {label: '10:30', value: '10:30'},
+            {label: '10:40', value: '10:40'},
+            {label: '10:50', value: '10:50'},
             {label: '11:00', value: '11:00'},
+            {label: '11:10', value: '11:10'},
+            {label: '11:20', value: '11:20'},
             {label: '11:30', value: '11:30'},
+            {label: '11:40', value: '11:40'},
+            {label: '11:50', value: '11:50'},
             {label: '13:00', value: '13:00'},
+            {label: '13:10', value: '13:10'},
+            {label: '13:20', value: '13:20'},
             {label: '13:30', value: '13:30'}, 
+            {label: '13:40', value: '13:40'},
+            {label: '13:50', value: '13:50'},
             {label: '14:00', value: '14:00'}, 
+            {label: '14:10', value: '14:10'}, 
+            {label: '14:20', value: '14:20'}, 
             {label: '14:30', value: '14:30'},
+            {label: '14:40', value: '14:40'},
+            {label: '14:50', value: '14:50'},  
             {label: '15:00', value: '15:00'}, 
+            {label: '15:10', value: '15:10'}, 
+            {label: '15:20', value: '15:20'}, 
             {label: '15:30', value: '15:30'}, 
+            {label: '15:40', value: '15:40'}, 
+            {label: '15:50', value: '15:50'}, 
             {label: '16:00', value: '16:00'}, 
+            {label: '16:10', value: '16:10'}, 
+            {label: '16:20', value: '16:20'}, 
             {label: '16:30', value: '16:30'}, 
+            {label: '16:40', value: '16:40'},
+            {label: '16:50', value: '16:50'},  
             {label: '17:00', value: '17:00'}, 
+            {label: '17:10', value: '17:10'}, 
+            {label: '17:20', value: '17:20'}, 
             {label: '17:30', value: '17:30'}, 
+            {label: '17:40', value: '17:40'}, 
+            {label: '17:50', value: '17:50'}, 
             {label: '18:00', value: '18:00'}, 
         ];
-        console.log(dateSelection);
         if (dateSelection.includes(date.toLocaleDateString()) == true){
             myArray = data.filter(ar => !timeSelection.find(rm => (rm.label === ar.label && ar.value === rm.value)) )
             setNewTime(myArray);
@@ -132,7 +163,6 @@ const AppointmentDateAndTimeScreen = ( {navigation, route} ) => {
         if (dateSelection.includes(date.toLocaleDateString()) == false){
             setNewTime(data);
         } 
-        console.log(newtime);
     }
 
     const getTimes = async () => {
@@ -149,7 +179,6 @@ const AppointmentDateAndTimeScreen = ( {navigation, route} ) => {
         ));
         setTimeSelection(timeSelection);
         setDateSelection(dateSelection);
-        trim();
         
         } catch (error) {
         console.error(error);
