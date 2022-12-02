@@ -35,6 +35,7 @@ const AppointmentDateAndTimeScreen = ( {navigation, route} ) => {
     const [timedata, setTimeData] = useState([]);
     const [value, setValue] = useState(null);
     const [timeSelection, setTimeSelection] = useState([]);
+    const [dateSelection, setDateSelection] = useState([]);
     const [newtime, setNewTime] = useState([]);
 
   
@@ -103,16 +104,7 @@ const AppointmentDateAndTimeScreen = ( {navigation, route} ) => {
         }
     }
 
-    const getTimes = async () => {
-        try {
-        const response = await fetch(`http://localhost:8000/api/ClinicAppointments/${clinic_ID}`);
-        const json = await response.json();
-        setTimeData(json.appointments);
-        const timeSelection = json.appointments.map((appointment) => ({
-            label: appointment.time,
-            value: appointment.time,
-        }));
-        setTimeSelection(timeSelection);
+    const trim = () => {
         const data = [
             {label: '9:00', value: '9:00'},
             {label: '9:30', value: '9:30'},
@@ -132,10 +124,33 @@ const AppointmentDateAndTimeScreen = ( {navigation, route} ) => {
             {label: '17:30', value: '17:30'}, 
             {label: '18:00', value: '18:00'}, 
         ];
-        myArray = data.filter(ar => !timeSelection.find(rm => (rm.label === ar.label && ar.value === rm.value) ))
-        console.log(myArray);
+        console.log(dateSelection);
+        if (dateSelection.includes(date.toLocaleDateString()) == true){
+            myArray = data.filter(ar => !timeSelection.find(rm => (rm.label === ar.label && ar.value === rm.value)) )
+            setNewTime(myArray);
+        } 
+        if (dateSelection.includes(date.toLocaleDateString()) == false){
+            setNewTime(data);
+        } 
+        console.log(newtime);
+    }
 
-        setNewTime(myArray);
+    const getTimes = async () => {
+        try {
+        const response = await fetch(`http://localhost:8000/api/ClinicAppointments/${clinic_ID}`);
+        const json = await response.json();
+        setTimeData(json.appointments);
+        const timeSelection = json.appointments.map((appointment) => ({
+            label: appointment.time,
+            value: appointment.time,
+        }));
+        const dateSelection = json.appointments.map((appointment) => (
+            appointment.date
+        ));
+        setTimeSelection(timeSelection);
+        setDateSelection(dateSelection);
+        trim();
+        
         } catch (error) {
         console.error(error);
         } finally {
@@ -250,7 +265,7 @@ const AppointmentDateAndTimeScreen = ( {navigation, route} ) => {
             placeholder={!isFocus ? 'Select Time' : '...'}
             searchPlaceholder="Search..."
             value={value}
-            onFocus={() => setIsTimeFocus(true)}
+            onFocus={() => [setIsTimeFocus(true), trim()]}
             onBlur={() => setIsTimeFocus(false)}
             onChange={item => {
             setValue(item.value);

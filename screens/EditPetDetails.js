@@ -105,17 +105,19 @@ const EditPetDetailsScreen = ( {navigation, route} ) => {
                     pet_description: description
                 })
             });
-            if ((response).status === 201) {
+            if ((response).status === 200) {
                 setName('');
                 setWeight('');
                 setDescription('');
+                console.log(name,type,sex,breed,weight,description);
+                Alert.alert('Pet Information Updated!');
+                navigation.navigate('Pets');
+            }
+            else {
+                Alert.alert('Please Complete The Form')
             }
         } catch (error) {
         console.error(error);
-        } finally {
-        console.log(name,type,sex,breed,weight,description);
-        Alert.alert('Pet Information Updated!');
-        navigation.navigate('Pets');
         }
     }
 
