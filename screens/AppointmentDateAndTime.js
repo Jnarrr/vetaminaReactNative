@@ -162,7 +162,7 @@ const AppointmentDateAndTimeScreen = ( {navigation, route} ) => {
             //console.log(removed) // output: list of time that is ahead of the current time
             if (removed.length == 0 || currentTime == -1){ // if empty OR not in the list
                 removed = [
-                    {label: 'The Clinic is closed in the current date', value: 'The Clinic is closed in the current date'}
+                    {label: 'The Clinic is currently closed', value: 'The Clinic is currently closed'}
                 ];
             }
             //setNewTime(removed); output: list without the trimming if the time already exists in the API
@@ -249,14 +249,17 @@ const AppointmentDateAndTimeScreen = ( {navigation, route} ) => {
         }
     }
 
+    const errorMessage = () => {
+        Alert.alert('The Clinic is currently either Not Opened yet or Closed')
+    }
+
     const showAppointmentBtn = () => {
-        currentTime = newtime.findIndex(obj => obj.value=='The Clinic is closed in the current date');
+        currentTime = newtime.findIndex(obj => obj.value=='The Clinic is currently closed');
         if (currentTime == 0){
             return(
-                <TouchableOpacity style = {styles.btn2}>
+                <TouchableOpacity style = {styles.btn2} onPress={ errorMessage }>
                     <Text style = {styles.btnText}>Please Select Another Date</Text>
                 </TouchableOpacity>
-                
             )
         } else {
             return(
