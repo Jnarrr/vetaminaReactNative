@@ -149,7 +149,9 @@ const AppointmentDateAndTimeScreen = ( {navigation, route} ) => {
             {label: '20:30', value: '20:30'},
             {label: '21:00', value: '21:00'},
             {label: '21:30', value: '21:30'},
-            {label: '22:00', value: '22:00'},*/
+            {label: '22:00', value: '22:00'},
+            {label: '22:30', value: '22:30'},
+            {label: '23:00', value: '23:00'},*/
         ];
 
         var today = new Date()
@@ -210,6 +212,7 @@ const AppointmentDateAndTimeScreen = ( {navigation, route} ) => {
         getPets();
         getProcedures();
         getTimes();
+        trim();
     }, []);
 
     const AddAppointmentBtn = async () => {
@@ -250,7 +253,7 @@ const AppointmentDateAndTimeScreen = ( {navigation, route} ) => {
     }
 
     const errorMessage = () => {
-        Alert.alert('The Clinic is currently either Not Opened yet or Closed')
+        Alert.alert('The Clinic is currently Not Opened yet or Closed')
     }
 
     const showAppointmentBtn = () => {
