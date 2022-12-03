@@ -102,8 +102,8 @@ const styles = StyleSheet.create({
     description2: {
     fontSize: 18,
     color: 'black',
-    marginTop: -25,
-    marginLeft: 150
+    marginTop: -22,
+    marginLeft: 170
     },
     divider: {
     fontSize: 20,
