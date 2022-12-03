@@ -105,64 +105,83 @@ const AppointmentDateAndTimeScreen = ( {navigation, route} ) => {
     }
 
     const trim = () => {
+        var hours = new Date().getHours(); //To get the Current Hours
+        var min = new Date().getMinutes(); //To get the Current Minutes
+
+        // console.log(hours+':'+min) output: '18:49' (current time)
+        if(min <= 30){min = 30};
+        if(min > 30){hours += 1, min = '00'};
+        //console.log(hours+':'+min) // output: '19:00' (round off in 30mins)
+
+        let roundTime = hours+':'+min;
+        //console.log(roundTime); // output '19:00' (current time with the format of HH:MM)
+
+        /*let tempTime = [                    for experiment time test
+            {label: '19:00', value: '19:00'},
+            {label: '19:30', value: '19:30'},
+            {label: '20:00', value: '20:00'},
+            {label: '20:30', value: '20:30'},
+        ];*/
+
         const data = [
             {label: '9:00', value: '9:00'},
-            {label: '9:10', value: '9:10'},
-            {label: '9:20', value: '9:20'},
             {label: '9:30', value: '9:30'},
-            {label: '9:40', value: '9:40'},
-            {label: '9:50', value: '9:50'},
             {label: '10:00', value: '10:00'},
-            {label: '10:10', value: '10:10'},
-            {label: '10:20', value: '10:20'},
             {label: '10:30', value: '10:30'},
-            {label: '10:40', value: '10:40'},
-            {label: '10:50', value: '10:50'},
             {label: '11:00', value: '11:00'},
-            {label: '11:10', value: '11:10'},
-            {label: '11:20', value: '11:20'},
             {label: '11:30', value: '11:30'},
-            {label: '11:40', value: '11:40'},
-            {label: '11:50', value: '11:50'},
             {label: '13:00', value: '13:00'},
-            {label: '13:10', value: '13:10'},
-            {label: '13:20', value: '13:20'},
             {label: '13:30', value: '13:30'}, 
-            {label: '13:40', value: '13:40'},
-            {label: '13:50', value: '13:50'},
             {label: '14:00', value: '14:00'}, 
-            {label: '14:10', value: '14:10'}, 
-            {label: '14:20', value: '14:20'}, 
             {label: '14:30', value: '14:30'},
-            {label: '14:40', value: '14:40'},
-            {label: '14:50', value: '14:50'},  
             {label: '15:00', value: '15:00'}, 
-            {label: '15:10', value: '15:10'}, 
-            {label: '15:20', value: '15:20'}, 
             {label: '15:30', value: '15:30'}, 
-            {label: '15:40', value: '15:40'}, 
-            {label: '15:50', value: '15:50'}, 
             {label: '16:00', value: '16:00'}, 
-            {label: '16:10', value: '16:10'}, 
-            {label: '16:20', value: '16:20'}, 
-            {label: '16:30', value: '16:30'}, 
-            {label: '16:40', value: '16:40'},
-            {label: '16:50', value: '16:50'},  
-            {label: '17:00', value: '17:00'}, 
-            {label: '17:10', value: '17:10'}, 
-            {label: '17:20', value: '17:20'}, 
+            {label: '16:30', value: '16:30'},   
+            {label: '17:00', value: '17:00'},  
             {label: '17:30', value: '17:30'}, 
-            {label: '17:40', value: '17:40'}, 
-            {label: '17:50', value: '17:50'}, 
             {label: '18:00', value: '18:00'}, 
+            /* //Extra time (Remove the comment for Testing)
+            {label: '18:30', value: '18:30'}, 
+            {label: '19:00', value: '19:00'},
+            {label: '19:30', value: '19:30'},
+            {label: '20:00', value: '20:00'},
+            {label: '20:30', value: '20:30'},
+            {label: '21:00', value: '21:00'},
+            {label: '21:30', value: '21:30'},
+            {label: '22:00', value: '22:00'},*/
         ];
-        if (dateSelection.includes(date.toLocaleDateString()) == true){
-            myArray = data.filter(ar => !timeSelection.find(rm => (rm.label === ar.label && ar.value === rm.value)) )
-            setNewTime(myArray);
-        } 
-        if (dateSelection.includes(date.toLocaleDateString()) == false){
-            setNewTime(data);
-        } 
+
+        var today = new Date()
+        //console.log(today.toLocaleDateString()); output: MM/DD/YYYY example: 12/3/2022
+        if (today.toLocaleDateString() == date.toLocaleDateString()){ // if the selected date is equal to current date
+            currentTime = data.findIndex(obj => obj.value==roundTime); // get index
+            // console.log(currentTime); output: index of the current time in the list
+
+            let removed = data.splice(currentTime); // remove the before time using splice with current time
+            //console.log(removed) // output: list of time that is ahead of the current time
+            if (removed.length == 0 || currentTime == -1){ // if empty OR not in the list
+                removed = [
+                    {label: 'The Clinic is closed in the current date', value: 'The Clinic is closed in the current date'}
+                ];
+            }
+            //setNewTime(removed); output: list without the trimming if the time already exists in the API
+            if (dateSelection.includes(date.toLocaleDateString()) == true){ 
+                // if the selected date exists in the API, this will remove the time that already exists in the API
+                myArray = removed.filter(ar => !timeSelection.find(rm => (rm.label === ar.label && ar.value === rm.value)) )
+                setNewTime(myArray); // output: list of time that is available or doesnt exists in the API
+            } 
+        } else  { // if the selected date is NOT equal to current date
+            if (dateSelection.includes(date.toLocaleDateString()) == true){ 
+                // if the selected date exists in the API, this will remove the time that already exists in the API
+                myArray = data.filter(ar => !timeSelection.find(rm => (rm.label === ar.label && ar.value === rm.value)) )
+                setNewTime(myArray);
+            } 
+            if (dateSelection.includes(date.toLocaleDateString()) == false){
+                // if not, return all time in data
+                setNewTime(data);
+            } 
+        }
     }
 
     const getTimes = async () => {
@@ -187,20 +206,7 @@ const AppointmentDateAndTimeScreen = ( {navigation, route} ) => {
         }
     }
 
-    const getAppointments = async () => {
-        try {
-        const response = await fetch('http://localhost:8000/api/appointments/{id}');
-        const json = await response.json();
-        setData(json.appointments);
-        } catch (error) {
-        console.error(error);
-        } finally {
-        setLoading(false);
-        }
-    }
-
     useEffect(() => {
-        getAppointments();
         getPets();
         getProcedures();
         getTimes();
@@ -240,6 +246,24 @@ const AppointmentDateAndTimeScreen = ( {navigation, route} ) => {
         console.error(error);
         } finally {
         setLoading(false);
+        }
+    }
+
+    const showAppointmentBtn = () => {
+        currentTime = newtime.findIndex(obj => obj.value=='The Clinic is closed in the current date');
+        if (currentTime == 0){
+            return(
+                <TouchableOpacity style = {styles.btn2}>
+                    <Text style = {styles.btnText}>Please Select Another Date</Text>
+                </TouchableOpacity>
+                
+            )
+        } else {
+            return(
+                <TouchableOpacity style = {styles.btn} onPress={ AddAppointmentBtn }>
+                    <Text style = {styles.btnText}>Book Appointment</Text>
+                </TouchableOpacity>
+            )
         }
     }
 
@@ -325,10 +349,7 @@ const AppointmentDateAndTimeScreen = ( {navigation, route} ) => {
                 setIsFocus(false);
             }}
             />
-            <TouchableOpacity style = {styles.btn} onPress={ AddAppointmentBtn }>
-                <Text style = {styles.btnText}>Book Appointment</Text>
-            </TouchableOpacity>
-
+            {showAppointmentBtn()}
             
 
             </ScrollView>
@@ -435,6 +456,15 @@ const styles = StyleSheet.create({
     },
     btn:{
     backgroundColor: 'rgb(80, 140, 2)',
+    color: 'white',
+    width: 300,
+    height: 35,
+    borderRadius: 5,
+    alignSelf: 'center',
+    marginTop: 20,
+    },
+    btn2:{
+    backgroundColor: 'red',
     color: 'white',
     width: 300,
     height: 35,

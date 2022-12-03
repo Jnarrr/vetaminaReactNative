@@ -3,13 +3,29 @@ import {View, Button, Text, StyleSheet, Image, Dimensions, TouchableOpacity, Ale
 import { ScrollView } from 'react-native-gesture-handler';
 
 const ProfileDetailsScreen = ( {navigation} ) => {
+
+    
     const [username, setUsername] = useState(global.username);
     const [email, setEmail] = useState(global.email);
     const [phone, setPhone] = useState(global.mobile_number);
 
+    const [userdata, setUserData] = useState([]);
+    let x = global.id;
+
+    const getUserDetails = async () => {
+        try {
+        const response = await fetch(`http://localhost:8000/api/getUser/${x}`);
+        const json = await response.json();
+        setUserData(json.customeruser);
+        } catch (error) {
+        console.error(error);
+        }
+    }
+
+
     const updateProfile = async () => {
         try{
-            const response = await fetch(`http://localhost:8000/api/update-profile/${global.id}`, {
+            const response = await fetch(`http://localhost:8000/api/update-profile/${x}`, {
                 method: 'PUT',
                 headers: {
                     'Accept': 'application/json',
@@ -21,22 +37,24 @@ const ProfileDetailsScreen = ( {navigation} ) => {
                     mobile_number: phone,
                 })
             });
-            if ((response).status === 201) {
+            if ((response).status === 200) {
                 setUsername('');
                 setEmail('');
                 setPhone('');
+                global.username = username;
+                global.email = email;
+                global.mobile_number = phone;
+                Alert.alert('Profile Information Updated!');
+                navigation.navigate('Home');
             }
         } catch (error) {
         console.error(error);
-        } finally {
-        global.username = username
-        global.email = email
-        global.mobile_number = phone
-        console.log(username,email,phone);
-        Alert.alert('Profile Information Updated!');
-        navigation.navigate('Home');
         }
     }
+
+    useEffect(() => {
+        getUserDetails();
+      }, []);  
 
     return(
         <View style = {{ flex: 1, padding: 30 }}>
@@ -57,7 +75,7 @@ const ProfileDetailsScreen = ( {navigation} ) => {
             onChangeText = { (text) => [setEmail(text)] }
             placeholder='Enter Email Address'
             placeholderTextColor= 'gray'
-            maxLength={15}
+            maxLength={50}
             value = {email}
             />
             <TextInput 

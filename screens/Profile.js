@@ -1,14 +1,32 @@
-import React from 'react';
+import React, { useState, useEffect} from 'react';
 import {View, Button, Text, StyleSheet, Image, TouchableOpacity, Alert} from 'react-native';
 
 const ProfileScreen = ( {navigation} ) => {
+
+    const [userdata, setUserData] = useState([]);
+    let x = global.id;
+
+    const getUserDetails = async () => {
+        try {
+        const response = await fetch(`http://localhost:8000/api/getUser/${x}`);
+        const json = await response.json();
+        setUserData(json.customeruser);
+        } catch (error) {
+        console.error(error);
+        }
+    }
+
+    useEffect(() => {
+        getUserDetails();
+      }, []);  
+
     return(
         <View style = {{ padding: 20 }}>
             <View style = {[styles.box, styles.elevation]}>
                 <View style = {styles.profileIcon2}/>
                 <Image source = { require('../images/1paw.png')} style = {styles.paw}/>
-                <Text style = { styles.boxText }>{global.username}</Text>
-                <Text style = { styles.boxText2 }>{global.email}</Text>
+                <Text style = { styles.boxText }>{userdata.username}</Text>
+                <Text style = { styles.boxText2 }>{userdata.email}</Text>
             </View>
             <View style = {styles.whiteBox}>
                 <TouchableOpacity style = {{ marginBottom: 25 }} onPress={ () => navigation.navigate('ProfileDetails')}>

@@ -7,6 +7,21 @@ const HomeScreen = ( {navigation} ) => {
     const [data, setData] = useState([]);
     const [petdata, setPetData] = useState([]);
 
+    const [userdata, setUserData] = useState([]);
+    let x = global.id;
+
+    const getUserDetails = async () => {
+        try {
+        const response = await fetch(`http://localhost:8000/api/getUser/${x}`);
+        const json = await response.json();
+        setUserData(json.customeruser);
+        } catch (error) {
+        console.error(error);
+        } finally {
+        setLoading(false);
+        }
+    }
+
     const getAppointments = async () => {
         try {
         const response = await fetch(`http://localhost:8000/api/recentAppointment/${id}`);
@@ -100,21 +115,24 @@ const HomeScreen = ( {navigation} ) => {
             )
         }
     }
-    
+
     const refresh = () => {
         setLoading(true);
+        setPetLoading(true);
         getAppointments();
         getPets();
+        getUserDetails();
     }
 
     useEffect(() => {
         getAppointments();
         getPets();
+        getUserDetails();
     }, [global.id]);
 
     return(
         <View style = {{ flex: 1, padding: 30 }}>
-            <Text style = {styles.header}>Hello {global.username}</Text>
+            <Text style = {styles.header}>Hello {userdata.username}</Text>
             <View style={{borderBottomColor: 'gray', borderBottomWidth: StyleSheet.hairlineWidth, margin: 10}}>
                 <Text style = {{ color: 'gray', position: 'absolute', right: 10, bottom: 0.5 }}>Recent Appointments</Text>
             </View>
@@ -123,6 +141,10 @@ const HomeScreen = ( {navigation} ) => {
                 <Text style = {{ color: 'gray', position: 'absolute', right: 10, bottom: 0.5 }}>Recent Pets</Text>
             </View>
             {showRecentPet()}
+
+            <TouchableOpacity style = {styles.refresh} onPress={ refresh }>
+                <Text style = {{ fontSize: 16, color: 'white' }}>Refresh</Text>
+            </TouchableOpacity>
         </View>
     );
 };
@@ -174,6 +196,17 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     alignSelf: 'center',
     marginBottom: 100
+    },
+    refresh: {
+    position: 'absolute',
+    width: 100,
+    height: 50,
+    alignItems: 'center',
+    justifyContent: 'center',
+    left: 30,
+    bottom: 50,
+    backgroundColor: 'brown',
+    borderRadius: 50,
     },
 });
 

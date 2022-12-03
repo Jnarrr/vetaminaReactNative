@@ -44,9 +44,9 @@ const ProductDetailsScreen = ( {navigation, route} ) => {
                         <Text style = { styles.semiHeader }>{item.email}</Text>
                         <Image source = { require('../images/phone.png')} style = {styles.email}/>
                         <Text style = { styles.semiHeader }>{item.phone_number}</Text>
-                        <TouchableOpacity style = { styles.btn } onPress={ () => navigation.navigate('AppointmentDateAndTime', {clinicID:item.id, clinicNAME:item.clinic_name, clinicADDRESS:item.address}) }>
+                        {/*<TouchableOpacity style = { styles.btn } onPress={ () => navigation.navigate('AppointmentDateAndTime', {clinicID:item.id, clinicNAME:item.clinic_name, clinicADDRESS:item.address}) }>
                             <Text style = {styles.btnText}>Appoint now</Text>
-                        </TouchableOpacity>
+                        </TouchableOpacity>*/}
                     </View>
                     
                     
