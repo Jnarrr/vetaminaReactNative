@@ -62,7 +62,6 @@ const ProductDetailsScreen = ( {navigation, route} ) => {
 const styles = StyleSheet.create({
     square:{
         backgroundColor: 'white',
-        width: 300,
         height: 330,
         borderRadius: 20,
         padding: 20,

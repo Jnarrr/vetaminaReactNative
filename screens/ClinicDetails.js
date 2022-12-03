@@ -66,7 +66,7 @@ const ClinicDetailsScreen = ( {navigation, route} ) => {
         }
         if ( productdata.length == 0 ) {
             return (
-                <Text style = {{ fontSize: 20, color: 'gray', justifyContent: 'center', textAlign: 'center', marginTop: 25, marginBottom: 25 }}> No Available Services :{'('}</Text>
+                <Text style = {{ fontSize: 20, color: 'gray', justifyContent: 'center', textAlign: 'center', marginTop: 25, marginBottom: 25 }}> No Available Products :{'('}</Text>
             )
         } else {
             return (

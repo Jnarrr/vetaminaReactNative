@@ -94,7 +94,6 @@ const SearchScreen = ( {navigation} ) => {
 const styles = StyleSheet.create({
     input: {
     padding: 2,
-    width: 290,
     height: 40,
     backgroundColor: '#E8E8E8',
     borderRadius: 10,
@@ -106,7 +105,7 @@ const styles = StyleSheet.create({
     icon: {
     width:20,
     height:20,
-    marginLeft: 255,
+    marginLeft: 30,
     marginTop: -30
     },
     clock: {

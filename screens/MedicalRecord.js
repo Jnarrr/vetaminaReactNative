@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import {View, Text, StyleSheet, ScrollView, TouchableOpacity, Image, ActivityIndicator, FlatList} from 'react-native';
+import {View, Text, StyleSheet, ScrollView, TouchableOpacity, Image, ActivityIndicator, FlatList, Dimensions} from 'react-native';
 
 const MedicalRecordScreen = ( {navigation, route} ) => {
     var pet_ID = route.params.petID;
@@ -129,7 +129,7 @@ const styles = StyleSheet.create({
         marginLeft: 220
     },
     whiteBox: {
-        width: 360,
+        width: Dimensions.get('window').width,
         flex: 1,
         marginTop: 180,
         padding: 30,
