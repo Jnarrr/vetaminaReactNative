@@ -42,6 +42,7 @@ const MedicalRecordScreen = ( {navigation, route} ) => {
             renderItem={({ item }) => (
             <View style = {{ margin: 5 }}>
                 <Text style = {styles.date}>{item.Date}</Text>
+                <Text style = {styles.td}>Weight       Against/LotNo                        Vet Name</Text>
                 <Text style = {styles.weight}>{item.Weight} kg</Text>
                 <Text style = {styles.lotNo}>{item.Against_Manufacturer_LotNo}</Text>
                 <Text style = {styles.vet}>{item.vet_name}</Text>
@@ -72,7 +73,6 @@ const MedicalRecordScreen = ( {navigation, route} ) => {
                 <Text style = {{ fontSize: 16, color: 'white' }}>Refresh</Text>
             </TouchableOpacity>
             
-
         </View>
     );
 };
@@ -115,6 +115,10 @@ const styles = StyleSheet.create({
         fontSize: 14,
         borderBottomColor: 'lightgray',
         borderBottomWidth: 1,
+    },
+    td:{
+        color:'gray',
+        fontSize: 14,
     },
     lotNo:{
         fontSize: 16,
