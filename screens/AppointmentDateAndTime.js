@@ -105,6 +105,8 @@ const AppointmentDateAndTimeScreen = ( {navigation, route} ) => {
     }
 
     const trim = () => {
+        getTimes();
+
         var hours = new Date().getHours(); //To get the Current Hours
         var min = new Date().getMinutes(); //To get the Current Minutes
 
@@ -158,7 +160,7 @@ const AppointmentDateAndTimeScreen = ( {navigation, route} ) => {
         //console.log(today.toLocaleDateString()); output: MM/DD/YYYY example: 12/3/2022
         if (today.toLocaleDateString() == date.toLocaleDateString()){ // if the selected date is equal to current date
             currentTime = data.findIndex(obj => obj.value==roundTime); // get index
-            // console.log(currentTime); output: index of the current time in the list
+            //console.log(currentTime); output: index of the current time in the list
 
             let removed = data.splice(currentTime); // remove the before time using splice with current time
             //console.log(removed) // output: list of time that is ahead of the current time
@@ -166,6 +168,8 @@ const AppointmentDateAndTimeScreen = ( {navigation, route} ) => {
                 removed = [
                     {label: 'The Clinic is currently closed', value: 'The Clinic is currently closed'}
                 ];
+            } else {
+                setNewTime(removed)
             }
             //setNewTime(removed); output: list without the trimming if the time already exists in the API
             if (dateSelection.includes(date.toLocaleDateString()) == true){ 
@@ -173,7 +177,7 @@ const AppointmentDateAndTimeScreen = ( {navigation, route} ) => {
                 myArray = removed.filter(ar => !timeSelection.find(rm => (rm.label === ar.label && ar.value === rm.value)) )
                 setNewTime(myArray); // output: list of time that is available or doesnt exists in the API
             } 
-        } else  { // if the selected date is NOT equal to current date
+        } else if (today.toLocaleDateString() != date.toLocaleDateString())  { // if the selected date is NOT equal to current date
             if (dateSelection.includes(date.toLocaleDateString()) == true){ 
                 // if the selected date exists in the API, this will remove the time that already exists in the API
                 myArray = data.filter(ar => !timeSelection.find(rm => (rm.label === ar.label && ar.value === rm.value)) )
@@ -184,6 +188,7 @@ const AppointmentDateAndTimeScreen = ( {navigation, route} ) => {
                 setNewTime(data);
             } 
         }
+        console.log(newtime)
     }
 
     const getTimes = async () => {

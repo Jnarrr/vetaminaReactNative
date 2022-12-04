@@ -89,6 +89,25 @@ const EditPetDetailsScreen = ( {navigation, route} ) => {
     ];
     const [isFocuspetBreed, setIsFocuspetBreed] = useState(false);
 
+    const verifyInput = () => {
+        errors = [];
+
+        if (name.length == 0){
+            errors.push("Name has no value")
+        };
+        if (weight.length == 0){
+            errors.push("Weight has no value")
+        };
+        if (description.length == 0){
+            errors.push("Description has no value")
+        };
+        if (errors.length == 0){
+            updatePet();
+        }else{
+            Alert.alert("Error!", errors.join('\n'))
+        };
+    }
+
     const updatePet = async () => {
         try{
             const response = await fetch(`http://localhost:8000/api/update-pets/${pet_id}`, {
@@ -110,12 +129,9 @@ const EditPetDetailsScreen = ( {navigation, route} ) => {
                 setName('');
                 setWeight('');
                 setDescription('');
-                console.log(name,type,sex,breed,weight,description);
+                //console.log(name,type,sex,breed,weight,description);
                 Alert.alert('Pet Information Updated!');
                 navigation.navigate('Pets');
-            }
-            else {
-                Alert.alert('Please Complete The Form')
             }
         } catch (error) {
         console.error(error);
@@ -210,7 +226,7 @@ const EditPetDetailsScreen = ( {navigation, route} ) => {
         value = {description}
         />
         
-        <TouchableOpacity style = {styles.btn} onPress = { updatePet }>
+        <TouchableOpacity style = {styles.btn} onPress = { verifyInput }>
             <Text style = { styles.btnText }>Finish</Text>
         </TouchableOpacity>
 
