@@ -8,6 +8,14 @@ const ChangePasswordNewScreen = ( {navigation} ) => {
 
     let x = global.id;
 
+    const verifyInput = () => {
+        if (password.length == 0) {
+            Alert.alert("New Password Cannot be Empty")
+        } else {
+            updatePassword();
+        }
+    }
+
     const updatePassword = async () => {
         try{
             const response = await fetch(`http://localhost:8000/api/update-customeruser/${x}`, {
@@ -66,7 +74,7 @@ const ChangePasswordNewScreen = ( {navigation} ) => {
             )
             }
 
-            <TouchableOpacity activeOpacity={.6} style = { styles.btn } onPress={ updatePassword }>
+            <TouchableOpacity activeOpacity={.6} style = { styles.btn } onPress={ verifyInput }>
                 <Text style = {styles.btnText}>Change Password</Text>
             </TouchableOpacity>
 
