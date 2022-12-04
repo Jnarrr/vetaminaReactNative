@@ -105,7 +105,6 @@ const AppointmentDateAndTimeScreen = ( {navigation, route} ) => {
     }
 
     const trim = () => {
-        getTimes();
 
         var hours = new Date().getHours(); //To get the Current Hours
         var min = new Date().getMinutes(); //To get the Current Minutes
@@ -168,15 +167,16 @@ const AppointmentDateAndTimeScreen = ( {navigation, route} ) => {
                 removed = [
                     {label: 'The Clinic is currently closed', value: 'The Clinic is currently closed'}
                 ];
+                setNewTime(removed)
             } else {
                 setNewTime(removed)
+                if (dateSelection.includes(date.toLocaleDateString()) == true){ 
+                    // if the selected date exists in the API, this will remove the time that already exists in the API
+                    myArray = removed.filter(ar => !timeSelection.find(rm => (rm.label === ar.label && ar.value === rm.value)) )
+                    setNewTime(myArray); // output: list of time that is available or doesnt exists in the API
+                } 
             }
             //setNewTime(removed); output: list without the trimming if the time already exists in the API
-            if (dateSelection.includes(date.toLocaleDateString()) == true){ 
-                // if the selected date exists in the API, this will remove the time that already exists in the API
-                myArray = removed.filter(ar => !timeSelection.find(rm => (rm.label === ar.label && ar.value === rm.value)) )
-                setNewTime(myArray); // output: list of time that is available or doesnt exists in the API
-            } 
         } else if (today.toLocaleDateString() != date.toLocaleDateString())  { // if the selected date is NOT equal to current date
             if (dateSelection.includes(date.toLocaleDateString()) == true){ 
                 // if the selected date exists in the API, this will remove the time that already exists in the API
@@ -188,7 +188,7 @@ const AppointmentDateAndTimeScreen = ( {navigation, route} ) => {
                 setNewTime(data);
             } 
         }
-        console.log(newtime)
+        //console.log(newtime)
     }
 
     const getTimes = async () => {
@@ -266,7 +266,7 @@ const AppointmentDateAndTimeScreen = ( {navigation, route} ) => {
         if (currentTime == 0){
             return(
                 <TouchableOpacity style = {styles.btn2} onPress={ errorMessage }>
-                    <Text style = {styles.btnText}>Please Select Another Date</Text>
+                    <Text style = {styles.btnText}>Please Select Another Date and Time</Text>
                 </TouchableOpacity>
             )
         } else {

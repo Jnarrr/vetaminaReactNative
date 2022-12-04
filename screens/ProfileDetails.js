@@ -12,6 +12,25 @@ const ProfileDetailsScreen = ( {navigation} ) => {
     const [userdata, setUserData] = useState([]);
     let x = global.id;
 
+    const verifyInput = () => {
+        errors = [];
+
+        if (username.length == 0){
+            errors.push("Username has no value")
+        };
+        if (email.length == 0){
+            errors.push("Email has no value")
+        };
+        if (phone.length == 0){
+            errors.push("Mobile Number has no value")
+        };
+        if (errors.length == 0){
+            updateProfile();
+        }else{
+            Alert.alert("Error!", errors.join('\n'))
+        };
+    }
+
     const getUserDetails = async () => {
         try {
         const response = await fetch(`http://localhost:8000/api/getUser/${x}`);
@@ -88,7 +107,7 @@ const ProfileDetailsScreen = ( {navigation} ) => {
             value = {phone}
             />
 
-            <TouchableOpacity style = {styles.btn} onPress = { updateProfile }>
+            <TouchableOpacity style = {styles.btn} onPress = { verifyInput }>
                 <Text style = { styles.btnText }>Finish</Text>
             </TouchableOpacity>
 

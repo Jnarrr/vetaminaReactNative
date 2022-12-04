@@ -24,13 +24,13 @@ const PetDetailsScreen = ( {navigation, route} ) => {
             <Text style = { styles.header }>{route.params.item.pet_name}</Text>
             <View style = {{ margin: 10 }}>
 
-                <View style = {{ flexDirection: 'row', justifyContent: 'space-around' }}> 
+                <View style = {{ flexDirection: 'row', justifyContent: 'space-evenly' }}> 
                 <Text style = { styles.petText }>{route.params.item.pet_sex}</Text>
                 <Text style = { styles.petText }>{route.params.item.pet_breed}</Text>
                 </View>
                 <View style = {{ flexDirection: 'row', justifyContent: 'space-evenly' }}> 
-                <Text style = { styles.petText }>{route.params.item.pet_birthdate}</Text>
                 <Text style = { styles.petText }>{route.params.item.pet_weight}kg</Text>
+                <Text style = { styles.petText }>{route.params.item.pet_birthdate}</Text>
                 </View>
                 <View style={{borderBottomColor: 'gray', borderBottomWidth: StyleSheet.hairlineWidth}}>
                     <Text style = {{ color: 'gray' }}> Description </Text>

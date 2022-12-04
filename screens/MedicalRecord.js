@@ -36,16 +36,22 @@ const MedicalRecordScreen = ( {navigation, route} ) => {
         } else {
           return (
             <FlatList
-            style = {{ height: 450 }}
+            style = {{ height: 350 }}
             data={data}
             keyExtractor={({ id }, index) => id}
             renderItem={({ item }) => (
             <View style = {{ margin: 5 }}>
                 <Text style = {styles.date}>{item.Date}</Text>
-                <Text style = {styles.td}>Weight       Against/LotNo                        Vet Name</Text>
-                <Text style = {styles.weight}>{item.Weight} kg</Text>
-                <Text style = {styles.lotNo}>{item.Against_Manufacturer_LotNo}</Text>
-                <Text style = {styles.vet}>{item.vet_name}</Text>
+                <View style = {{ flexDirection: 'row', justifyContent: 'space-around' }}> 
+                    <Text style = { styles.td }>Weight</Text>
+                    <Text style = { styles.td }>Against/LotNo</Text>
+                    <Text style = { styles.td }>Vet Name</Text>
+                </View>
+                <View style = {{ flexDirection: 'row', justifyContent: 'space-around' }}> 
+                    <Text style = {styles.weight}>{item.Weight} kg</Text>
+                    <Text style = {styles.weight}>{item.Against_Manufacturer_LotNo}</Text>
+                    <Text style = {styles.weight}>{item.vet_name}</Text>
+                </View>
             </View>
             )}
             />
@@ -89,7 +95,7 @@ const styles = StyleSheet.create({
         fontWeight: 'bold'
     },
     weight:{
-        fontSize: 16,
+        fontSize: 14,
         color: 'black',
     },
     paw: {

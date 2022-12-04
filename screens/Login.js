@@ -109,7 +109,7 @@ const LoginScreen = ( {navigation} ) => {
             </ScrollView>
             </KeyboardAvoidingView>
             <View style = {{ backgroundColor: 'white', 
-            width: 360,
+            width: Dimensions.get('window').width,
             height: 300, }}>
 
             </View>

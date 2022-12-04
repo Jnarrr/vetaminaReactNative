@@ -15,6 +15,7 @@ import {
     ScrollView,
     KeyboardAvoidingView,
     Keyboard,
+    Dimensions,
 } from 'react-native';
 import { DateTimePickerAndroid } from '@react-native-community/datetimepicker';
 
@@ -341,7 +342,7 @@ const styles = StyleSheet.create({
     marginTop: -120
     },
     whiteBox: {
-    width: 360,
+    width: Dimensions.get('window').width,
     height: 550,
     marginTop: 50,
     borderTopLeftRadius: 30,
@@ -364,13 +365,13 @@ const styles = StyleSheet.create({
     padding: 2,
     width: 300,
     height: 40,
-    marginLeft: 30,
     marginBottom: 10,
     borderColor: 'gray',
     borderBottomWidth: 1.5,
     shadowRadius: 10,
     fontSize: 20,
     color: 'black',
+    alignSelf: 'center',
     },
     hello: {
     fontSize: 30,
