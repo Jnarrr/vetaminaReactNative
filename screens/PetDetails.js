@@ -20,6 +20,7 @@ const PetDetailsScreen = ( {navigation, route} ) => {
             </TouchableOpacity>
 
             <ScrollView style = {styles.whiteBox}>
+            <Text>Pet No. {route.params.item.id}</Text>
             {showImage(route.params.item.pet_type)}
             <Text style = { styles.header }>{route.params.item.pet_name}</Text>
             <View style = {{ margin: 10 }}>

@@ -36,7 +36,7 @@ const MedicalRecordScreen = ( {navigation, route} ) => {
         } else {
           return (
             <FlatList
-            style = {{ height: 350 }}
+            style = {{ height: 250 }}
             data={data}
             keyExtractor={({ id }, index) => id}
             renderItem={({ item }) => (

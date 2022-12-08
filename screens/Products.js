@@ -44,6 +44,11 @@ const ProductsScreen = ( {navigation} ) => {
         })
     }
 
+    const refresh =  () => {
+        setLoading(true);
+        fetchProducts();
+    }
+
     useEffect(() => {
         fetchProducts();
     }, []);
@@ -76,6 +81,10 @@ const ProductsScreen = ( {navigation} ) => {
           />
           )}
 
+            <TouchableOpacity style = {styles.refresh} onPress={ refresh }>
+                <Text style = {{ fontSize: 16, color: 'white' }}>Refresh</Text>
+            </TouchableOpacity>
+
         </View>
     );
 };
@@ -92,6 +101,17 @@ const styles = StyleSheet.create({
     flex: 1,
     borderTopColor: 'green',
     borderTopWidth: 3
+    },
+    refresh: {
+    position: 'absolute',
+    width: 100,
+    height: 50,
+    alignItems: 'center',
+    justifyContent: 'center',
+    right: 30,
+    bottom: -30,
+    backgroundColor: 'brown',
+    borderRadius: 50,
     },
     input: {
     padding: 2,

@@ -84,6 +84,7 @@ const AddPetScreen = ( {navigation} ) => {
             onChange,
             mode: currentMode,
             is24Hour: true,
+            maximumDate: new Date(),
         }, 
         );
     };

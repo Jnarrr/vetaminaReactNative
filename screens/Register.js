@@ -47,6 +47,7 @@ const RegisterScreen = ( {navigation} ) => {
               onChange,
               mode: currentMode,
               is24Hour: true,
+              maximumDate: new Date(),
           }, 
           );
       };
