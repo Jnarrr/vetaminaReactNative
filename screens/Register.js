@@ -26,6 +26,9 @@ const RegisterScreen = ( {navigation} ) => {
     const [checkValidUsername, setCheckValidUsername] = useState(false);
     const [password, setPassword] = useState('');
     const [checkValidPassword, setCheckValidPassword] = useState(false);
+    const [checkSpecialChar, setCheckSpecialChar] = useState(false);
+    const [checkUpperChar, setCheckUpperChar] = useState(false);
+    const [checkDigitChar, setCheckDigitChar] = useState(false);
     const [confirmPassword, setConfirmPassword] = useState('');
     const [checkValidConfirmPassword, setCheckValidConfirmPassword] = useState(false);
     const [email, setEmail] = useState('');
@@ -77,6 +80,11 @@ const RegisterScreen = ( {navigation} ) => {
                 setPassword('');
                 setEmail('');
                 setMobileNum('');
+                Alert.alert('User Created Successfully!');
+                navigation.navigate('Login');
+            }
+            if ((response).status === 500){
+                Alert.alert('Username Already Exists');
             }
         const json = await response.json();
         setData(json.customeruser);
@@ -106,11 +114,33 @@ const RegisterScreen = ( {navigation} ) => {
     }
 
     const handleCheckPassword = text => {
+        let regex = /^(?=(?:[^A-Z]*[A-Z]){1})(?=(?:[^0-9]*[0-9]){1}).{8,}$/;
+        let upper = /(?=(?:[^A-Z]*[A-Z]){1})/;
+        let special = /(?=[^!@#$&*]*[!@#$&*])/;
+        let digit = /(?=(?:[^0-9]*[0-9]){1})/;
+        setPassword(text)
         if (text.length < 8){
             setCheckValidPassword(true);
-        }else{
+        } else {
             setCheckValidPassword(false);
         }
+        if(upper.test(text)){
+            setCheckUpperChar(false);
+        } else {
+            setCheckUpperChar(true);
+        }
+        if(special.test(text)){
+            setCheckSpecialChar(false);
+        } else {
+            setCheckSpecialChar(true);
+        }
+        if(digit.test(text)){
+            setCheckDigitChar(false);
+        } else {
+            setCheckDigitChar(true);
+        }
+        
+        
     }
 
     const handleCheckConfirmPassword = (text, password) => {
@@ -152,6 +182,15 @@ const RegisterScreen = ( {navigation} ) => {
         if (password.length < 8){
             errors.push("Password should have at least 8 characters")
         }
+        if(checkUpperChar == true){
+            errors.push("Password should have at least 1 Uppercase character")
+        }
+        if(checkSpecialChar == true){
+            errors.push("Password should have at least 1 Special character")
+        }
+        if(checkDigitChar == true){
+            errors.push("Password should have at least 1 Digit");
+        }
         if (password != confirmPassword){
             errors.push("Password is not the same as Confirm Password")
         }
@@ -160,8 +199,6 @@ const RegisterScreen = ( {navigation} ) => {
         }
         if (errors.length == 0){
             RegisterUser();
-            Alert.alert('User Created Successfully!');
-            navigation.navigate('Login')
         }else{
             Alert.alert("Error!", errors.join('\n'))
         }
@@ -229,13 +266,27 @@ const RegisterScreen = ( {navigation} ) => {
             secureTextEntry = {true}
             onChangeText = { (text) => [handleCheckPassword(text), setPassword(text)] } />
             <Image source = { require('../images/password.png')} style = {styles.userIcon}/>
-            {
-            checkValidPassword ? (
+            {checkValidPassword ? (
                 <Text style = {styles.textFailed}>Password should be at least 8 Characters</Text>
                 ) : (
-                <Text style = {styles.textFailed}> </Text>
-            )
-            }
+                <Text style = {styles.noText}> </Text>
+            )}
+            {checkUpperChar ? (
+                <Text style = {styles.textFailed}>Password should contain atleast 1 Uppercase character</Text>
+                ) : (
+                <Text style = {styles.noText}> </Text>
+            )}
+            {checkSpecialChar ? (
+                <Text style = {styles.textFailed}>Password should contain atleast 1 Special character</Text>
+                ) : (
+                <Text style = {styles.noText}> </Text>
+            )}
+            {checkDigitChar ? (
+                <Text style = {styles.textFailed}>Password should contain atleast 1 Digit</Text>
+                ) : (
+                <Text style = {styles.noText}> </Text>
+            )}
+            
 
             <TextInput 
             style = { styles.input }
@@ -323,6 +374,10 @@ const styles = StyleSheet.create({
     color: 'red',
     marginLeft: 30,
     marginTop: 10,
+    },
+    noText: {
+    marginTop: -6,
+    marginBottom: -6,
     },
     paw: {
     width: 300,
