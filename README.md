@@ -7,6 +7,16 @@
 
 > Simply go to https://github.com/Jnarrr/vetaminaLaravel for more information
 
+## About Vetamina
+Vetamina comes from the word Veterinarian and Bitamina a filipino language for Vitamin as it aids the problems present in a traditional practice and processes
+in a veterinary clinic by using the system.
+
+## Features
+- Pet Information Management
+- Pet owner Login/Register
+- Browse Clinics and Products
+- Create an Appointment
+
 ## Download Manually
 <p>create a folder</p>
 <p>open cmd in the folder then type</p>
