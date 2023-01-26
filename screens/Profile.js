@@ -62,7 +62,7 @@ const styles = StyleSheet.create({
     },
     boxText:{
         color: 'white',
-        marginLeft: 35,
+        marginLeft: 20,
         marginTop: -95,
         fontWeight: 'bold',
         fontSize: 16,

@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import {View, Button, Text, StyleSheet, TextInput, ScrollView, Image, TouchableOpacity, Dimensions, Alert} from 'react-native';
 import { Dropdown } from 'react-native-element-dropdown';
 import { DateTimePickerAndroid } from '@react-native-community/datetimepicker';
+import CheckBox from '@react-native-community/checkbox';
+
 
 const AppointmentDateAndTimeScreen = ( {navigation, route} ) => {
     //inputs
@@ -30,10 +32,15 @@ const AppointmentDateAndTimeScreen = ( {navigation, route} ) => {
     const [petselection, setPetSelection] = useState([]);
     const [petselectedID, setPetSelectedID] = useState([]);
 
+    //Checkbox (walk-in)
+    const [isSelected, setSelection] = useState(false);
+
     //Time Selection Dropdown
     const [isTimeFocus, setIsTimeFocus] = useState(false);
     const [timedata, setTimeData] = useState([]);
+
     const [value, setValue] = useState(null);
+
     const [timeSelection, setTimeSelection] = useState([]);
     const [dateSelection, setDateSelection] = useState([]);
     const [newtime, setNewTime] = useState([]);
@@ -67,6 +74,18 @@ const AppointmentDateAndTimeScreen = ( {navigation, route} ) => {
     var clinic_ID = route.params.clinicID;
     var clinic_NAME = route.params.clinicNAME;
     var clinic_ADDRESS = route.params.clinicADDRESS;
+
+    //Current Rounded Time
+    var hours = new Date().getHours(); //To get the Current Hours
+    var min = new Date().getMinutes(); //To get the Current Minutes
+
+    // console.log(hours+':'+min) output: '18:49' (current time)
+    if(min <= 30){min = 30};
+    if(min > 30){hours += 1, min = '00'};
+    //console.log(hours+':'+min) // output: '19:00' (round off in 30mins)
+
+    var roundTime = hours+':'+min;
+    //setValue(roundTime); error
 
     const getProcedures = async () => {
         try {
@@ -152,7 +171,9 @@ const AppointmentDateAndTimeScreen = ( {navigation, route} ) => {
             {label: '21:30', value: '21:30'},
             {label: '22:00', value: '22:00'},
             {label: '22:30', value: '22:30'},
-            {label: '23:00', value: '23:00'},*/
+            {label: '23:00', value: '23:00'},
+            {label: '23:30', value: '23:30'},
+            {label: '24:00', value: '24:00'},*/
         ];
 
         var today = new Date()
@@ -213,12 +234,53 @@ const AppointmentDateAndTimeScreen = ( {navigation, route} ) => {
         }
     }
 
-    useEffect(() => {
-        getPets();
-        getProcedures();
-        getTimes();
-        trim();
-    }, []);
+    const walkIn = () => {
+        if(!isSelected){
+            return (
+            <View>
+            <Text style = {styles.birthdateText}>{date.toLocaleDateString()}</Text>
+            <TouchableOpacity style = {styles.btnBirthdate} onPress={showDatepicker} title="Show date picker!">
+                <Text style = {styles.btnText}>Select Date</Text>
+            </TouchableOpacity>
+            
+            <Dropdown
+            style={[styles.input, isTimeFocus && { borderColor: 'green' }]}
+            placeholderStyle={styles.placeholderStyle}
+            selectedTextStyle={styles.selectedTextStyle}
+            inputSearchStyle={styles.inputSearchStyle}
+            iconStyle={styles.iconStyle}
+            data={newtime}
+            search
+            maxHeight={300}
+            labelField="label"
+            valueField="value"
+            placeholder={!isFocus ? 'Select Time' : '...'}
+            searchPlaceholder="Search..."
+            value={value}
+            onFocus={() => [setIsTimeFocus(true), trim()]}
+            onBlur={() => setIsTimeFocus(false)}
+            onChange={item => {
+            setValue(item.value);
+            setIsTimeFocus(false);
+            }}
+            />
+            </View>
+            );
+        } else {
+            return(
+            <View>
+                <View style = {{ flexDirection: 'row', justifyContent: 'space-evenly', marginTop: 10, marginBottom: 10 }}>
+                    <Text style = {styles.labelDate}>Current Date:</Text>
+                    <Text style = {styles.timeText}>{date.toLocaleDateString()}</Text>
+                </View>
+                <View style = {{ flexDirection: 'row', justifyContent: 'space-evenly', marginTop: 10, marginBottom: 10 }}>
+                    <Text style = {styles.labelDate}>Current Time:</Text>
+                    <Text style = {styles.timeText}>{value}</Text>
+                </View>
+            </View>
+            );
+        }
+    }
 
     const AddAppointmentBtn = async () => {
         try{
@@ -258,7 +320,7 @@ const AppointmentDateAndTimeScreen = ( {navigation, route} ) => {
     }
 
     const errorMessage = () => {
-        Alert.alert('The Clinic is currently Not Opened yet or Closed')
+        Alert.alert('The Clinic is currently Not Open yet or Closed')
     }
 
     const showAppointmentBtn = () => {
@@ -278,6 +340,13 @@ const AppointmentDateAndTimeScreen = ( {navigation, route} ) => {
         }
     }
 
+    useEffect(() => {
+        getPets();
+        getProcedures();
+        getTimes();
+        trim();
+    }, []);
+
     return(
         <View style = { styles.body }>
             <Image source = { require('../images/paw.png')} style = {styles.paw}/>
@@ -288,6 +357,17 @@ const AppointmentDateAndTimeScreen = ( {navigation, route} ) => {
 
             <ScrollView style = {styles.whiteBox}>
             <Text style = { styles.header }>Book Appointment</Text>
+
+            <View style = {{ flexDirection: 'row', justifyContent: 'space-evenly', marginBottom: 10 }}> 
+                <TouchableOpacity onPress={() => [setValue(null), setSelection(false)]}>
+                    <Text style={[styles.appointment, !isSelected && styles.clicked]}>Appointment</Text>
+                </TouchableOpacity>
+
+                <TouchableOpacity onPress={() => [setValue(roundTime), setSelection(true)]}>
+                    <Text style={[styles.appointment, isSelected && styles.clicked]}>Walk In</Text>
+                </TouchableOpacity>
+            </View>
+            
             <Dropdown
             style={[styles.input, isFocus && { borderColor: 'green' }]}
             placeholderStyle={styles.placeholderStyle}
@@ -310,32 +390,7 @@ const AppointmentDateAndTimeScreen = ( {navigation, route} ) => {
                 setIsFocusProcedure(false);
             }}
             />
-            <Text style = {styles.birthdateText}>{date.toLocaleDateString()}</Text>
-            <TouchableOpacity style = {styles.btnBirthdate} onPress={showDatepicker} title="Show date picker!">
-                <Text style = {styles.btnText}>Select Date</Text>
-            </TouchableOpacity>
-            
-            <Dropdown
-            style={[styles.input, isTimeFocus && { borderColor: 'green' }]}
-            placeholderStyle={styles.placeholderStyle}
-            selectedTextStyle={styles.selectedTextStyle}
-            inputSearchStyle={styles.inputSearchStyle}
-            iconStyle={styles.iconStyle}
-            data={newtime}
-            search
-            maxHeight={300}
-            labelField="label"
-            valueField="value"
-            placeholder={!isFocus ? 'Select Time' : '...'}
-            searchPlaceholder="Search..."
-            value={value}
-            onFocus={() => [setIsTimeFocus(true), trim()]}
-            onBlur={() => setIsTimeFocus(false)}
-            onChange={item => {
-            setValue(item.value);
-            setIsTimeFocus(false);
-            }}
-            />
+            {walkIn()}
             
             <Dropdown
             style={[styles.input, isFocus && { borderColor: 'green' }]}
@@ -387,6 +442,10 @@ const styles = StyleSheet.create({
     fontSize: 16,
     color: 'black',
     },
+    label: {
+    marginTop: -25,
+    marginLeft: 30
+    },
     inputSearchStyle: {
     height: 40,
     fontSize: 16,
@@ -401,12 +460,33 @@ const styles = StyleSheet.create({
     width: 18,
     height: 22,
     },
+    labelDate:{
+    width: 100,
+    fontSize: 18,
+    color: 'gray'
+    },
+    timeText:{
+    width: 100,
+    fontSize: 18,
+    color: 'gray'
+    },
     semiHeader:{
     color: 'rgb(73, 80, 74)',
     marginTop: -22,
     marginLeft: 24,
     fontSize: 18,
     marginBottom: 10,
+    },
+    clicked: {
+    borderBottomColor: 'rgb(80, 140, 2)',
+    borderBottomWidth: 2,
+    textAlign: 'center',
+    color: 'green',
+    fontWeight: 'normal'
+    },
+    appointment: {
+    fontSize: 16,
+    fontWeight: 'bold'
     },
     clinic: {
     color: 'rgb(73, 80, 74)',

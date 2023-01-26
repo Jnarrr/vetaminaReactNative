@@ -21,7 +21,6 @@ import { DateTimePickerAndroid } from '@react-native-community/datetimepicker';
 
 const RegisterScreen = ( {navigation} ) => {
     const [date, setDate] = useState(new Date());
-    const [checkValidDate, setCheckValidDate] = useState(false);
     const [username, setUsername] = useState('');
     const [checkValidUsername, setCheckValidUsername] = useState(false);
     const [password, setPassword] = useState('');
@@ -103,18 +102,8 @@ const RegisterScreen = ( {navigation} ) => {
         }
     }
 
-    const handleCheckDate = text => {
-        let regex = /^(0[1-9]|1[012])[- /.](0[1-9]|[12][0-9]|3[01])[-/.](19|20)\d\d$/;
-        setDate(text)
-        if(regex.test(text)){
-            setCheckValidDate(false);
-        } else {
-            setCheckValidDate(true);
-        }
-    }
-
     const handleCheckPassword = text => {
-        let regex = /^(?=(?:[^A-Z]*[A-Z]){1})(?=(?:[^0-9]*[0-9]){1}).{8,}$/;
+        //let strongpassword = /^(?=(?:[^A-Z]*[A-Z]){1})(?=(?:[^0-9]*[0-9]){1}).{8,}$/;
         let upper = /(?=(?:[^A-Z]*[A-Z]){1})/;
         let special = /(?=[^!@#$&*]*[!@#$&*])/;
         let digit = /(?=(?:[^0-9]*[0-9]){1})/;
@@ -139,8 +128,6 @@ const RegisterScreen = ( {navigation} ) => {
         } else {
             setCheckDigitChar(true);
         }
-        
-        
     }
 
     const handleCheckConfirmPassword = (text, password) => {
@@ -234,29 +221,7 @@ const RegisterScreen = ( {navigation} ) => {
                 ) : (
                 <Text style = {styles.textFailed}> </Text>
             )
-            }
-
-            <Text style = {styles.birthdateText}>{date.toLocaleDateString()}</Text>
-            <TouchableOpacity style = {styles.btnBirthdate} onPress={showDatepicker} title="Show date picker!">
-                <Text style = {styles.btnText}>Select Birthdate</Text>
-            </TouchableOpacity>
-            
-
-            {/*<TextInput 
-            style = { styles.input }
-            placeholder = 'Enter Birthdate'
-            placeholderTextColor= 'gray'
-            maxLength={10}
-            onChangeText = { (text) => [handleCheckDate(text), setDate(text)] } />
-            <Image source = { require('../images/date.png')} style = {styles.userIcon}/>
-            {
-            checkValidDate ? (
-                <Text style = {styles.textFailed}>BirthDate format should be MM/DD/YYYY</Text>
-                ) : (
-                <Text style = {styles.textFailed}> </Text>
-            )
-            }*/}
-                
+            }    
 
             <TextInput 
             style = { styles.input }
@@ -457,23 +422,6 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     marginTop: 20,
     },
-    btnBirthdate:{
-    backgroundColor: 'rgb(80, 140, 2)',
-    color: 'white',
-    width: 150,
-    height: 35,
-    borderRadius: 5,
-    marginLeft: 180,
-    marginTop: 10,
-    marginBottom: 10,
-    },
-    birthdateText:{
-    color: 'gray',
-    fontSize: 20,
-    marginLeft: 50,
-    marginBottom: -40,
-    marginTop: 10,
-    }
 });
 
 
