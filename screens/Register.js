@@ -304,6 +304,11 @@ const RegisterScreen = ( {navigation} ) => {
             <TouchableOpacity style = { styles.btn } onPress={ handleUserValidation }>
             <Text style = {styles.btnText}>Sign Up</Text>
             </TouchableOpacity>
+
+            <TouchableOpacity style = { styles.btn } onPress={ () => navigation.navigate('Otp')}>
+            <Text style = {styles.btnText}>OTP</Text>
+            </TouchableOpacity>
+
             </ScrollView>
             </KeyboardAvoidingView>
             <View style = {{ backgroundColor: 'white', 

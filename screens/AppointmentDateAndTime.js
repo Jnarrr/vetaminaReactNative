@@ -363,7 +363,7 @@ const AppointmentDateAndTimeScreen = ( {navigation, route} ) => {
                     <Text style={[styles.appointment, !isSelected && styles.clicked]}>Appointment</Text>
                 </TouchableOpacity>
 
-                <TouchableOpacity onPress={() => [setValue(roundTime), setSelection(true)]}>
+                <TouchableOpacity onPress={() => [setValue(roundTime), setDate(new Date()), trim(), setSelection(true)]}>
                     <Text style={[styles.appointment, isSelected && styles.clicked]}>Walk In</Text>
                 </TouchableOpacity>
             </View>

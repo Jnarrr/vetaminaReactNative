@@ -26,6 +26,7 @@ import ChangePasswordScreen from './screens/ChangePassword';
 import ChangePasswordNewScreen from './screens/ChangePasswordNew';
 import EditPetDetailsScreen from './screens/EditPetDetails';
 import ProductDetailsScreen from './screens/ProductDetails';
+import OtpScreen from './screens/Otp';
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -86,6 +87,7 @@ const MyStack = () => {
         <Stack.Screen name="MedicalRecord" component={ MedicalRecordScreen } options = {{ title: 'Medical Record', headerShown: false }} />
         <Stack.Screen name="ChangePassword" component={ ChangePasswordScreen } options = {{ title: 'Change Password', headerShown: false }} />
         <Stack.Screen name="ChangePasswordNew" component={ ChangePasswordNewScreen } options = {{ title: 'Change Password', headerShown: false }} />
+        <Stack.Screen name="Otp" component={ OtpScreen } options = {{ title: 'Verify Email', headerShown: false }} />
       </Stack.Navigator>
     </NavigationContainer>
   );
