@@ -5,6 +5,27 @@ const OtpScreen = ( {navigation} ) => {
     const [otp, setOtp] = useState('');
     const [isSelected, setSelection] = useState(false);
 
+    let x = global.email;
+
+    const verifyEmail = async () => {
+        await fetch('http://localhost:8000/api/verifyEmail', {
+          method:'POST',
+          headers:{
+            'Accept':'application/json',
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({'email':x, 'otp':otp})
+        }).then(res => res.json())
+        .then(resData =>{
+          if ("error" in resData) {
+            Alert.alert('Error', 'Incorrect OTP')
+          } else {
+            Alert.alert('Success', 'Your email has been verified successfully!');
+            navigation.navigate('Login')
+          }
+        })
+    }
+
     return(
         <View style = { styles.body }>
             <Image source = { require('../images/paw.png')} style = {styles.paw}/>
@@ -29,7 +50,7 @@ const OtpScreen = ( {navigation} ) => {
             <Image source = { require('../images/password.png')} style = {styles.userIcon}/>
 
 
-            <TouchableOpacity activeOpacity={.6} style = { styles.btn } onPress={ () => navigation.navigate('Login')}>
+            <TouchableOpacity activeOpacity={.6} style = { styles.btn } onPress={ verifyEmail }>
                 <Text style = {styles.btnText}>Verify</Text>
             </TouchableOpacity>
 

@@ -5,8 +5,8 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
 const LoginScreen = ( {navigation} ) => {
-    const [username, setUsername] = useState('');
-    const [checkValidUsername, setCheckValidUsername] = useState(false);
+    const [email, setEmail] = useState('');
+    const [checkValidEmail, setCheckValidEmail] = useState(false);
     const [password, setPassword] = useState('');
     const [checkValidPassword, setCheckValidPassword] = useState(false);
     const [isSelected, setSelection] = useState(false);
@@ -18,11 +18,15 @@ const LoginScreen = ( {navigation} ) => {
             'Accept':'application/json',
             'Content-Type': 'application/json'
           },
-          body: JSON.stringify({'username':username, 'password':password})
+          body: JSON.stringify({'email':email, 'password':password})
         }).then(res => res.json())
         .then(resData =>{
           if ("error" in resData) {
-            Alert.alert('Error', 'Incorrect Username or Password')
+            Alert.alert('Error', 'Incorrect Email or Password')
+          } else if ("notVerified" in resData){
+            Alert.alert('Error', 'The user is not yet Verified')
+            global.email = email
+            navigation.navigate('Otp')
           } else {
             //console.log(resData)
             global.id = resData.id
@@ -36,11 +40,13 @@ const LoginScreen = ( {navigation} ) => {
         })
     }
 
-    const handleCheckUsername = text => {
-        if (text.length < 1){
-            setCheckValidUsername(true);
-        }else{
-            setCheckValidUsername(false);
+    const handleCheckEmail = text => {
+        let regex = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+        setEmail(text)
+        if(regex.test(text)){
+            setCheckValidEmail(false);
+        } else {
+            setCheckValidEmail(true);
         }
     }
 
@@ -67,15 +73,15 @@ const LoginScreen = ( {navigation} ) => {
 
             <TextInput 
             style = { styles.input }
-            onChangeText = { (text) => [handleCheckUsername(text), setUsername(text)] }
-            placeholder='Enter Username'
+            onChangeText = { (text) => [handleCheckEmail(text), setEmail(text)] }
+            placeholder='Enter Email'
             placeholderTextColor= 'gray'
-            maxLength={15} 
+            maxLength={50} 
             />
-            <Image source = { require('../images/userIcon.png')} style = {styles.userIcon}/>
+            <Image source = { require('../images/email.png')} style = {styles.email}/>
             {
-            checkValidUsername ? (
-                <Text style = {styles.textFailed}>Username is Required</Text>
+            checkValidEmail ? (
+                <Text style = {styles.textFailed}>Invalid Email format</Text>
                 ) : (
                 <Text style = {styles.textFailed}> </Text>
             )
@@ -148,6 +154,12 @@ const styles = StyleSheet.create({
     height: 30,
     marginLeft: 15,
     marginTop: -150
+    },
+    email: {
+    width:25,
+    height:20,
+    marginLeft: 295,
+    marginTop: -35
     },
     whiteBox: {
     width: Dimensions.get('window').width,

@@ -79,8 +79,9 @@ const RegisterScreen = ( {navigation} ) => {
                 setPassword('');
                 setEmail('');
                 setMobileNum('');
-                Alert.alert('User Created Successfully!');
-                navigation.navigate('Login');
+                global.email = email;
+                Alert.alert('Thank you for registering your account, Please check your inbox');
+                navigation.navigate('Otp');
             }
             if ((response).status === 500){
                 Alert.alert('Username Already Exists');
@@ -305,9 +306,9 @@ const RegisterScreen = ( {navigation} ) => {
             <Text style = {styles.btnText}>Sign Up</Text>
             </TouchableOpacity>
 
-            <TouchableOpacity style = { styles.btn } onPress={ () => navigation.navigate('Otp')}>
+            {/*<TouchableOpacity style = { styles.btn } onPress={ () => navigation.navigate('Otp')}>
             <Text style = {styles.btnText}>OTP</Text>
-            </TouchableOpacity>
+            </TouchableOpacity>*/}
 
             </ScrollView>
             </KeyboardAvoidingView>
