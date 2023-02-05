@@ -24,7 +24,7 @@ const LoginScreen = ( {navigation} ) => {
           if ("error" in resData) {
             Alert.alert('Error', 'Incorrect Email or Password')
           } else if ("notVerified" in resData){
-            Alert.alert('Error', 'The user is not yet Verified')
+            Alert.alert('Error', 'Your email is not yet Verified, We sent an OTP code in your mail, Please check your Inbox')
             global.email = email
             navigation.navigate('Otp')
           } else {
